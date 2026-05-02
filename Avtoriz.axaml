@@ -1,0 +1,56 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
+        x:Class="FitClub.Avtoriz"
+        Title="Фитнес-клуб - Авторизация"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen">
+  <Grid>
+        <!-- Фон -->
+        <Image Source="/Assets/11.png" Stretch="UniformToFill"/>
+
+        <!-- Центрированный блок -->
+        <Border Width="545" Height="354" Background="#FFFFFF" CornerRadius="30"
+                VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Spacing="20" Margin="30" VerticalAlignment="Center">
+                
+                <TextBlock Text="Авторизация" FontSize="28" HorizontalAlignment="Center" Foreground="#ea5e28" FontWeight="Bold"/>
+
+                <TextBox x:Name="EmailTextBox" Watermark="Введите email" Background="#fdf5e1" Foreground="#ea5e28"
+                         FontSize="16" Padding="10" CornerRadius="15" BorderBrush="#ea5e28"/>
+
+                <TextBox x:Name="PasswordTextBox" Watermark="Введите пароль" Background="#fdf5e1" Foreground="#ea5e28"
+                         FontSize="16" Padding="10" CornerRadius="15" PasswordChar="•" BorderBrush="#ea5e28"/>
+
+                <Button Content="Войти" Background="#ea5e28" Foreground="White"
+                        FontSize="16" Padding="10" CornerRadius="10" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                        Click="Login_Click" Margin="0 5 0 0" Width="120"/>
+
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"  
+                            Spacing="5">
+                    
+                    <TextBlock Text="Нет аккаунта?" 
+                            FontSize="14" 
+                            Foreground="#ea5e28"  
+                            VerticalAlignment="Center"/>  
+                    
+                    <Button Content="Зарегистрироваться" 
+                            Background="Transparent" 
+                            Foreground="#ea5e28"  
+                            FontSize="14" 
+                            BorderThickness="0" 
+                            Cursor="Hand"  
+                            Click="OpenReg_Click" 
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"/>  
+                    
+                </StackPanel>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

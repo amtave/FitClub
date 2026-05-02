@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="FitClub.Client.Views.MyApplicationsView">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="30" Spacing="25">
+            
+            <!-- Заголовок -->
+            <TextBlock Text="📂 Мои заявки на работу" 
+                      FontSize="28" 
+                      FontWeight="Bold" 
+                      Foreground="#2C3E50"
+                      HorizontalAlignment="Center"/>
+            
+            <!-- Информационное сообщение -->
+            <Border Background="#F8F9FA" 
+                    BorderBrush="#BDC3C7" 
+                    BorderThickness="1"
+                    CornerRadius="10" 
+                    Padding="50"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+                    <TextBlock Text="📋" 
+                              FontSize="64"
+                              HorizontalAlignment="Center"/>
+                    <TextBlock Text="Здесь будут отображаться ваши заявки" 
+                              FontSize="18" 
+                              FontWeight="SemiBold"
+                              HorizontalAlignment="Center"
+                              Foreground="#2C3E50"/>
+                    <TextBlock Text="Функционал в разработке" 
+                              FontSize="14"
+                              HorizontalAlignment="Center"
+                              Foreground="#7F8C8D"
+                              FontStyle="Italic"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- Кнопка возврата -->
+            <Button Content="← Вернуться на главную"
+                    Background="#3498DB"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Padding="20,10"
+                    FontSize="14"
+                    HorizontalAlignment="Center"
+                    Width="200"
+                    Cursor="Hand"
+                    Click="BackButton_Click"/>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,176 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="clr-namespace:FitClub.Models;assembly=FitClub"
+             x:Class="FitClub.Client.Views.HomeView"
+             x:CompileBindings="False"
+             Background="#F4F7F9">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="30" Spacing="25">
+            
+            <StackPanel Spacing="5" Margin="0,0,0,5">
+                <TextBlock Text="{Binding GreetingText}" FontSize="28" FontWeight="Black" Foreground="#2C3E50"/>
+                <Border Height="4" Width="100" Background="#3498DB" HorizontalAlignment="Left" CornerRadius="2"/>
+            </StackPanel>
+
+            <Border Background="White" BorderBrush="#E0E6ED" BorderThickness="2" CornerRadius="15" Padding="25" HorizontalAlignment="Stretch">
+                <StackPanel>
+                    <TextBlock Text="О КЛУБЕ" FontSize="13" FontWeight="Bold" Foreground="#95A5A6" LetterSpacing="1" Margin="0,0,0,15"/>
+
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Border Grid.Column="0" Width="450" Height="150" CornerRadius="15" ClipToBounds="True" Margin="0,0,25,0" BorderBrush="#E0E6ED" BorderThickness="1" Background="#F8F9FA">
+                            <Panel>
+                                <TextBlock x:Name="LogoPlaceholder" Text="📷" FontSize="50" Foreground="#BDC3C7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Image x:Name="LogoImage" Stretch="UniformToFill"/>
+                            </Panel>
+                        </Border>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="10">
+                            <TextBlock Text="{Binding ClubInfo.ClubName}" FontSize="32" FontWeight="Black" Foreground="#2C3E50" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding ClubInfo.WelcomeText}" FontSize="15" Foreground="#7F8C8D" TextWrapping="Wrap" LineHeight="22"/>
+                        </StackPanel>
+                    </Grid>
+                    
+                    <Border Background="#FAFBFC" CornerRadius="12" Padding="15,20" BorderBrush="#E0E6ED" BorderThickness="1" Margin="0,15,0,0">
+                        <Grid ColumnDefinitions="*, *, *">
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Left" Margin="10,0,0,0">
+                                <Border Background="#EBF5FB" Width="40" Height="40" CornerRadius="20">
+                                    <TextBlock Text="📍" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                                </Border>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="Адрес клуба" FontSize="11" FontWeight="Bold" Foreground="#95A5A6"/>
+                                    <TextBlock Text="{Binding ClubInfo.Address}" FontSize="14" FontWeight="Bold" Foreground="#2C3E50" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Center">
+                                <Border Background="#FFF0EA" Width="40" Height="40" CornerRadius="20">
+                                    <TextBlock Text="📞" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                                </Border>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="Телефон" FontSize="11" FontWeight="Bold" Foreground="#95A5A6"/>
+                                    <TextBlock Text="{Binding ClubInfo.Phone}" FontSize="14" FontWeight="Bold" Foreground="#2C3E50"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Right" Margin="0,0,10,0">
+                                <Border Background="#F4FFF7" Width="40" Height="40" CornerRadius="20">
+                                    <TextBlock Text="🕒" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                                </Border>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="Режим работы" FontSize="11" FontWeight="Bold" Foreground="#95A5A6"/>
+                                    <TextBlock Text="{Binding ClubInfo.WorkingHours}" FontSize="14" FontWeight="Bold" Foreground="#2C3E50"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <Border Background="White" CornerRadius="15" Padding="20" BorderBrush="#3498DB" BorderThickness="2" HorizontalAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border Grid.Column="0" Width="100" Height="100" CornerRadius="50" BorderBrush="#3498DB" BorderThickness="2" Margin="0,0,20,0" ClipToBounds="True" Background="#3498DB">
+                        <Image Source="/Assets/job_vacancy.jpg" Width="100" Height="100" Stretch="UniformToFill"/>
+                    </Border>
+                    
+                    <StackPanel Grid.Column="1" Spacing="10" VerticalAlignment="Center">
+                        <TextBlock Text="💼 ВАКАНСИИ НА РАБОТУ" FontSize="20" FontWeight="Bold" Foreground="#2C3E50"/>
+                        
+                        <TextBlock Text="Нравится тренироваться и хочешь тренировать других? Присоединяйся к нашему дружному спортивному коллективу! Мы ищем талантливых и энергичных тренеров." 
+                                   FontSize="14" Foreground="#7F8C8D" TextWrapping="Wrap" LineHeight="20"/>
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="20" Margin="0,5,0,0">
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <TextBlock Text="🏋️" FontSize="16"/>
+                                <TextBlock Text="Современное оборудование" FontSize="12" Foreground="#27AE60" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <TextBlock Text="👥" FontSize="16"/>
+                                <TextBlock Text="Дружный коллектив" FontSize="12" Foreground="#27AE60" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <TextBlock Text="📈" FontSize="16"/>
+                                <TextBlock Text="Карьерный рост" FontSize="12" Foreground="#27AE60" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="2" Orientation="Vertical" Spacing="10" VerticalAlignment="Center" Margin="20,0,0,0">
+                        <Button x:Name="ApplyJobButton" Content="📋 Оставить заявку" Background="#FF8955" Foreground="White" BorderThickness="0" Padding="20,10" FontSize="13" FontWeight="Bold" Cursor="Hand" Click="OpenJobApplicationForm_Click" MinWidth="160" CornerRadius="8" HorizontalContentAlignment="Center"/>
+                        
+                        <Button x:Name="MyApplicationsButton" Content="📂 Мои заявки" Background="#27AE60" Foreground="White" BorderThickness="0" Padding="20,10" FontSize="13" FontWeight="Bold" Cursor="Hand" Click="OpenMyApplications_Click" IsVisible="False" MinWidth="160" CornerRadius="8" HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <StackPanel Spacing="15" HorizontalAlignment="Stretch">
+                <TextBlock Text="🎁 Акции и специальные предложения" FontSize="22" FontWeight="Bold" Foreground="#2C3E50"/>
+                
+                <ItemsControl Name="PromotionsItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="models:Promotion">
+                            <Border BorderBrush="#E0E6ED" BorderThickness="1" CornerRadius="12" Margin="0,0,15,15" Padding="15" Width="330" Background="White">
+                                <StackPanel Spacing="10">
+                                    <Border Background="#E74C3C" CornerRadius="5" Padding="8,3" HorizontalAlignment="Left">
+                                        <TextBlock Text="{Binding DiscountInfo}" FontSize="11" FontWeight="Bold" Foreground="White"/>
+                                    </Border>
+                                    
+                                    <Border Height="110" CornerRadius="8" BorderBrush="#E0E6ED" BorderThickness="1" ClipToBounds="True">
+                                        <Image Source="{Binding PromotionImage}" Height="110" Stretch="UniformToFill"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="{Binding Title}" FontSize="15" FontWeight="Bold" Foreground="#2C3E50" TextWrapping="Wrap"/>
+                                    
+                                    <TextBlock Text="{Binding Description}" FontSize="13" Foreground="#7F8C8D" TextWrapping="Wrap" Height="60"/>
+                                    
+                                    <TextBlock Text="{Binding ValidUntilFormatted, StringFormat='{}Действует до: {0}'}" FontSize="11" Foreground="#95A5A6" HorizontalAlignment="Right"/>
+                                    
+                                    <Button Content="Подробнее" Background="#FF8955" Foreground="White" BorderThickness="0" Padding="15,8" FontSize="12" CornerRadius="6" Cursor="Hand" IsEnabled="False" Opacity="0.8" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <StackPanel Spacing="15" HorizontalAlignment="Stretch">
+                <TextBlock Text="📰 Последние новости" FontSize="22" FontWeight="Bold" Foreground="#2C3E50"/>
+                
+                <ItemsControl Name="NewsItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="models:News">
+                            <Border BorderBrush="#E0E6ED" BorderThickness="1" CornerRadius="12" Margin="0,0,15,15" Padding="15" Width="330" Background="White">
+                                <StackPanel Spacing="10">
+                                    <Border Height="130" CornerRadius="8" BorderBrush="#E0E6ED" BorderThickness="1" ClipToBounds="True">
+                                        <Image Source="{Binding NewsImage}" Height="130" Stretch="UniformToFill"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="{Binding Title}" FontSize="15" FontWeight="Bold" Foreground="#2C3E50" TextWrapping="Wrap" Height="40"/>
+                                    
+                                    <TextBlock Text="{Binding Description}" FontSize="13" Foreground="#7F8C8D" TextWrapping="Wrap" Height="80" TextTrimming="CharacterEllipsis"/>
+                                    
+                                    <TextBlock Text="{Binding CreatedAtFormatted, StringFormat='{}Опубликовано: {0}'}" FontSize="11" Foreground="#95A5A6" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

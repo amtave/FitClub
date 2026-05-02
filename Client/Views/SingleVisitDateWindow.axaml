@@ -1,0 +1,71 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:FitClub.Views"
+        x:Class="FitClub.Views.SingleVisitDateWindow"
+        Title="Выбор даты посещения" Width="420" Height="650"
+        WindowStartupLocation="CenterOwner" CanResize="False"
+        Background="#F4F7F9">
+        
+    <StackPanel Margin="25" Spacing="20">
+        <StackPanel Spacing="5">
+            <TextBlock Text="📅 РАЗОВОЕ ПОСЕЩЕНИЕ" FontSize="20" FontWeight="Heavy" Foreground="#2C3E50" HorizontalAlignment="Center" LetterSpacing="1"/>
+            <TextBlock Text="Выберите удобную дату для тренировки" FontSize="13" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <Border Background="White" CornerRadius="16" Padding="20" BoxShadow="0 4 15 0 #08000000">
+            <StackPanel Spacing="15">
+                <Grid ColumnDefinitions="Auto, *, Auto">
+                    <Button Grid.Column="0" Content="&lt;" Click="PrevMonthClick" Background="Transparent" Foreground="#3498DB" FontWeight="Bold" FontSize="18"/>
+                    <TextBlock Grid.Column="1" Name="MonthText" FontSize="16" FontWeight="Bold" Foreground="#2C3E50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Grid.Column="2" Content="&gt;" Click="NextMonthClick" Background="Transparent" Foreground="#3498DB" FontWeight="Bold" FontSize="18"/>
+                </Grid>
+
+                <UniformGrid Columns="7" Margin="0,10,0,5">
+                    <TextBlock Text="Пн" HorizontalAlignment="Center" Foreground="#95A5A6" FontWeight="Bold" FontSize="12"/>
+                    <TextBlock Text="Вт" HorizontalAlignment="Center" Foreground="#95A5A6" FontWeight="Bold" FontSize="12"/>
+                    <TextBlock Text="Ср" HorizontalAlignment="Center" Foreground="#95A5A6" FontWeight="Bold" FontSize="12"/>
+                    <TextBlock Text="Чт" HorizontalAlignment="Center" Foreground="#95A5A6" FontWeight="Bold" FontSize="12"/>
+                    <TextBlock Text="Пт" HorizontalAlignment="Center" Foreground="#95A5A6" FontWeight="Bold" FontSize="12"/>
+                    <TextBlock Text="Сб" HorizontalAlignment="Center" Foreground="#E74C3C" FontWeight="Bold" FontSize="12"/>
+                    <TextBlock Text="Вс" HorizontalAlignment="Center" Foreground="#E74C3C" FontWeight="Bold" FontSize="12"/>
+                </UniformGrid>
+
+                <ItemsControl Name="CalendarControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><UniformGrid Columns="7"/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="local:SingleVisitCalendarDay">
+                            <Button Content="{Binding DayText}" 
+                                    IsEnabled="{Binding IsEnabled}" 
+                                    Background="{Binding BackgroundBrush}" 
+                                    Foreground="{Binding ForegroundBrush}" 
+                                    Click="DayClick"
+                                    DataContext="{Binding}"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    Height="42"
+                                    Margin="2"
+                                    CornerRadius="8"
+                                    FontWeight="Bold"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+
+        <Border Background="#EBF5FB" CornerRadius="12" Padding="15">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+                <TextBlock Text="Выбранная дата:" FontSize="14" FontWeight="SemiBold" Foreground="#34495E" VerticalAlignment="Center"/>
+                <TextBlock Name="SelectedDateText" FontSize="16" FontWeight="Bold" Foreground="#3498DB" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="15" Margin="0,10,0,0">
+            <Button Name="PayButton" Content="К оплате" Background="#27AE60" Foreground="White" FontWeight="Bold" Padding="30,12" CornerRadius="10" Click="PayButton_Click"/>
+            <Button Content="Отмена" Background="#FEF5F0" Foreground="#E74C3C" FontWeight="Bold" Padding="30,12" CornerRadius="10" Click="CloseButton_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

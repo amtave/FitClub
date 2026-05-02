@@ -1,0 +1,200 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="700"
+        x:Class="FitClub.Admin.Views.TariffEditWindow"
+        Title="Редактирование тарифа"
+        Width="600"
+        Height="700"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="30" Spacing="20">
+
+            <!-- Заголовок -->
+            <TextBlock x:Name="WindowTitleText" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Foreground="#2C3E50"/>
+
+            <Border Height="2" Background="#FF8955" HorizontalAlignment="Stretch"/>
+
+            <!-- Статус сообщение -->
+            <Border x:Name="StatusBorder" 
+                    Background="#27AE60"
+                    CornerRadius="5" 
+                    Padding="15"
+                    IsVisible="False">
+                <TextBlock x:Name="StatusText" 
+                           Foreground="White"
+                           FontWeight="SemiBold"/>
+            </Border>
+
+            <!-- Форма редактирования тарифа -->
+            <StackPanel Spacing="15">
+
+                <!-- Название тарифа -->
+                <StackPanel Spacing="5">
+                    <TextBlock Text="Название тарифа *" 
+                               FontWeight="SemiBold"
+                               Foreground="#34495E"/>
+                    <TextBox x:Name="TariffNameBox"
+                             Watermark="Введите название тарифа"
+                             Padding="12,8"
+                             CornerRadius="5"/>
+                </StackPanel>
+
+                <!-- Описание -->
+                <StackPanel Spacing="5">
+                    <TextBlock Text="Описание" 
+                               FontWeight="SemiBold"
+                               Foreground="#34495E"/>
+                    <TextBox x:Name="TariffDescriptionBox"
+                             Watermark="Введите описание тарифа"
+                             Padding="12,8"
+                             CornerRadius="5"
+                             Height="80"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"/>
+                </StackPanel>
+
+                <!-- Категория -->
+                <StackPanel Spacing="5">
+                    <TextBlock Text="Категория *" 
+                               FontWeight="SemiBold"
+                               Foreground="#34495E"/>
+                    <ComboBox x:Name="CategoryComboBox"
+                              PlaceholderText="Выберите категорию"
+                              Padding="12,8"
+                              CornerRadius="5"/>
+                </StackPanel>
+
+                <!-- Цена -->
+                <StackPanel Spacing="5">
+                    <TextBlock Text="Цена (₽) *" 
+                               FontWeight="SemiBold"
+                               Foreground="#34495E"/>
+                    <TextBox x:Name="TariffPriceBox"
+                             Watermark="0"
+                             Padding="12,8"
+                             CornerRadius="5"
+                             TextChanged="TariffPriceBox_TextChanged"/>
+                </StackPanel>
+
+                <!-- Срок действия -->
+                <StackPanel Spacing="5">
+                    <TextBlock Text="Срок действия (дней) *" 
+                               FontWeight="SemiBold"
+                               Foreground="#34495E"/>
+                    <TextBox x:Name="TariffDurationBox"
+                             Watermark="30"
+                             Padding="12,8"
+                             CornerRadius="5"
+                             TextChanged="TariffDurationBox_TextChanged"/>
+                </StackPanel>
+
+                <!-- Изображение тарифа -->
+                <StackPanel Spacing="5">
+                    <TextBlock Text="Изображение тарифа" 
+                               FontWeight="SemiBold"
+                               Foreground="#34495E"/>
+                    
+                    <!-- Предпросмотр изображения -->
+                    <Border x:Name="ImageBorder"
+                            Width="200"
+                            Height="150"
+                            CornerRadius="8"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA"
+                            ClipToBounds="True"
+                            Margin="0,5">
+                        
+                        <Grid>
+                            <Image x:Name="TariffImagePreview"
+                                   Stretch="Uniform"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+                            
+                            <!-- Текст-заглушка -->
+                            <Border x:Name="ImagePlaceholder"
+                                    Background="#ECF0F1" 
+                                    CornerRadius="8"
+                                    IsVisible="True">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock x:Name="PlaceholderIcon" Text="📦" FontSize="40"/>
+                                    <TextBlock Text="Нет изображения" 
+                                               FontSize="12"
+                                               Foreground="#7F8C8D"
+                                               Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Кнопка загрузки изображения -->
+                    <Button x:Name="LoadImageButton"
+                            Content="📁 Загрузить изображение"
+                            Background="#3498DB"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Padding="15,8"
+                            CornerRadius="5"
+                            HorizontalAlignment="Left"
+                            Click="LoadImageButton_Click"/>
+                    
+                    <!-- Скрытое поле для пути к изображению -->
+                    <TextBox x:Name="ImagePathBox"
+                             IsVisible="False"/>
+                </StackPanel>
+
+                <!-- Статус активности -->
+                <CheckBox x:Name="IsActiveCheckBox"
+                          Content="Активен (доступен для покупки)"
+                          IsChecked="True"
+                          Margin="0,5"/>
+
+                <!-- Кнопки действий -->
+                <Grid ColumnDefinitions="*,*,*" Margin="0,20,0,0">
+                    <Button Grid.Column="0"
+                            Content="Сохранить"
+                            Background="#27AE60"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Padding="20,10"
+                            CornerRadius="5"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Margin="0,0,5,0"
+                            Click="SaveButton_Click"/>
+                    
+                    <Button Grid.Column="1"
+                            Content="Отмена"
+                            Background="#95A5A6"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Padding="20,10"
+                            CornerRadius="5"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Margin="5,0"
+                            Click="CancelButton_Click"/>
+                    
+                    <Button Grid.Column="2"
+                            Content="Применить"
+                            Background="#3498DB"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Padding="20,10"
+                            CornerRadius="5"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Margin="5,0,0,0"
+                            IsVisible="False"/>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

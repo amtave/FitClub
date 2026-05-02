@@ -1,0 +1,126 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="FitClub.Admin.Views.TrainerCreateWindow"
+        Title="Оформление тренера" Width="700" Height="900"
+        WindowStartupLocation="CenterOwner" CanResize="False"
+        Background="#F4F7F9">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <Border Height="4" Background="#FF8955" HorizontalAlignment="Stretch"/>
+            
+            <Border Padding="30" Background="White" Margin="20" CornerRadius="15" BorderBrush="#E0E6ED" BorderThickness="2">
+                <StackPanel Spacing="25">
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="ОФОРМЛЕНИЕ НОВОГО ТРЕНЕРА" FontSize="20" FontWeight="Bold" Foreground="#2C3E50" HorizontalAlignment="Center"/>
+                        <Border Height="2" Width="60" Background="#FF8955" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                    
+                    <Grid ColumnDefinitions="Auto, *">
+                        <StackPanel Grid.Column="0" Spacing="15" Margin="0,0,35,0" VerticalAlignment="Top">
+                            <Border Width="180" Height="180" CornerRadius="15" ClipToBounds="True" BorderBrush="#FF8955" BorderThickness="2" Background="#F8F9FA">
+                                <Image x:Name="PreviewImage" Stretch="UniformToFill"/>
+                            </Border>
+                            <Button Content="📸 Изменить фото" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" 
+                                    Background="#3498DB" Foreground="White" Click="SelectImageButton_Click" 
+                                    CornerRadius="8" Padding="0,10" FontWeight="SemiBold"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Spacing="18">
+                            <TextBlock Text="ЛИЧНЫЕ ДАННЫЕ" FontSize="12" FontWeight="Bold" Foreground="#FF8955" LetterSpacing="1"/>
+                            
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                                <StackPanel Grid.Row="0" Grid.Column="0" Spacing="5" Margin="0,0,10,12">
+                                    <TextBlock Text="Фамилия" Foreground="#7F8C8D" FontSize="12" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="LastNameTextBox" CornerRadius="6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Grid.Column="1" Spacing="5" Margin="0,0,0,12">
+                                    <TextBlock Text="Имя" Foreground="#7F8C8D" FontSize="12" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="FirstNameTextBox" CornerRadius="6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="0" Spacing="5" Margin="0,0,10,12">
+                                    <TextBlock Text="Отчество" Foreground="#7F8C8D" FontSize="12" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="MiddleNameTextBox" CornerRadius="6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="1" Spacing="5" Margin="0,0,0,12">
+                                    <TextBlock Text="Телефон" Foreground="#7F8C8D" FontSize="12" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="PhoneTextBox" Watermark="+7..." CornerRadius="6" TextChanged="OnPhoneTextChanged"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <Border Height="1" Background="#ECF0F1" Margin="0,5"/>
+                            <TextBlock Text="ДАННЫЕ АВТОРИЗАЦИИ" FontSize="12" FontWeight="Bold" Foreground="#FF8955" LetterSpacing="1"/>
+
+                            <StackPanel Spacing="5">
+                                <TextBlock Text="Логин для входа" Foreground="#7F8C8D" FontSize="12" FontWeight="SemiBold"/>
+                                <TextBox x:Name="EmailTextBox" CornerRadius="6"/>
+                            </StackPanel>
+                            
+                            <Grid ColumnDefinitions="*, Auto">
+                                <StackPanel Grid.Column="0" Spacing="5" Margin="0,0,10,0">
+                                    <TextBlock Text="Пароль" Foreground="#7F8C8D" FontSize="12" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="PasswordTextBox" CornerRadius="6" PasswordChar="*"/>
+                                </StackPanel>
+                                <Button Grid.Column="1" Content="Сгенерировать" Background="#95A5A6" Foreground="White" 
+                                        VerticalAlignment="Bottom" Height="32" CornerRadius="6" Cursor="Hand" Click="GeneratePassword_Click"/>
+                            </Grid>
+
+                            <Border Height="1" Background="#ECF0F1" Margin="0,5"/>
+                            <TextBlock Text="ПРОФЕССИОНАЛЬНЫЕ ДАННЫЕ" FontSize="12" FontWeight="Bold" Foreground="#FF8955" LetterSpacing="1"/>
+
+                            <StackPanel Spacing="5">
+                                <TextBlock Text="Специализация" Foreground="#7F8C8D" FontSize="12" FontWeight="SemiBold"/>
+                                <ComboBox x:Name="SpecComboBox" HorizontalAlignment="Stretch" CornerRadius="6">
+                                    <ComboBoxItem Content="Кардио"/>
+                                    <ComboBoxItem Content="Силовой тренинг"/>
+                                    <ComboBoxItem Content="Йога"/>
+                                    <ComboBoxItem Content="Функциональный"/>
+                                    <ComboBoxItem Content="Танцевальная"/>
+                                    <ComboBoxItem Content="Единоборства"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <Grid ColumnDefinitions="*,*">
+                                <StackPanel Grid.Column="0" Spacing="5" Margin="0,0,10,0">
+                                    <TextBlock Text="Опыт (лет)" Foreground="#7F8C8D" FontSize="12" FontWeight="SemiBold"/>
+                                    <NumericUpDown x:Name="ExpNumeric" Minimum="0" Maximum="50" CornerRadius="6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Spacing="5">
+                                    <TextBlock Text="Цена тренировки (₽)" Foreground="#7F8C8D" FontSize="12" FontWeight="SemiBold"/>
+                                    <NumericUpDown x:Name="PriceNumeric" Minimum="0" Maximum="100000" Increment="100" CornerRadius="6" Value="2000"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <StackPanel Spacing="5">
+                                <TextBlock Text="Рабочий график" Foreground="#7F8C8D" FontSize="12" FontWeight="SemiBold"/>
+                                <ComboBox x:Name="ScheduleComboBox" HorizontalAlignment="Stretch" CornerRadius="6" SelectedIndex="0">
+                                    <ComboBoxItem Content="Пн-Пт (Будние дни)"/>
+                                    <ComboBoxItem Content="Ср-Вс (Включая выходные)"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <StackPanel Spacing="5">
+                                <TextBlock Text="Биография" Foreground="#7F8C8D" FontSize="12" FontWeight="SemiBold"/>
+                                <TextBox x:Name="BioTextBox" CornerRadius="6" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
+                            </StackPanel>
+
+                            <StackPanel Spacing="5">
+                                <TextBlock Text="Достижения" Foreground="#7F8C8D" FontSize="12" FontWeight="SemiBold"/>
+                                <TextBox x:Name="AchievementsTextBox" CornerRadius="6" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="15" Margin="0,10,0,0">
+                        <Button Content="Отмена" Width="160" Height="45" Background="#BDC3C7" Foreground="White" 
+                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+                                FontSize="15" CornerRadius="10" Click="CancelButton_Click"/>
+                        <Button Content="Создать профиль" Width="200" Height="45" Background="#FF8955" Foreground="White" 
+                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+                                FontSize="15" FontWeight="Bold" CornerRadius="10" Click="SaveButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

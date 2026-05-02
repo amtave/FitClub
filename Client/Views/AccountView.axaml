@@ -1,0 +1,778 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="FitClub.Client.Views.AccountView">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="20">
+            
+            <!-- Заголовок -->
+            <TextBlock Text="Мой аккаунт" 
+                      FontSize="28"  
+                      FontWeight="Bold" 
+                      Foreground="#3E5F8A"
+                      HorizontalAlignment="Center"
+                      Margin="0,0,0,10"/>
+            
+            <!-- Основной контейнер с аватаркой и информацией -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Левая колонка: Аватар и кнопки -->
+                <StackPanel Grid.Column="0" Spacing="15">
+                    <!-- Аватар -->
+                    <Border BorderBrush="#BDC3C7" 
+                            BorderThickness="1" 
+                            CornerRadius="10" 
+                            Padding="15"
+                            Width="300">
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="Аватар" 
+                                      FontSize="16" 
+                                      FontWeight="Bold" 
+                                      Foreground="#2C3E50"
+                                      HorizontalAlignment="Center"/>
+                            
+                            <Image Name="AvatarImage" 
+                                  Width="200" 
+                                  Height="200" 
+                                  Stretch="UniformToFill"
+                                  HorizontalAlignment="Center"/>
+                            
+                            <!-- Горизонтальное расположение кнопок -->
+                            <StackPanel Orientation="Horizontal" 
+                                       Spacing="10" 
+                                       HorizontalAlignment="Center">
+                                <Button Content="Изменить" 
+                                        Background="#3E5F8A" 
+                                        Foreground="White"
+                                        Padding="15,8"
+                                        Click="ChangeAvatar_Click"
+                                        FontSize="12"/>
+                                
+                                <Button Content="Удалить" 
+                                        Background="#8673A1" 
+                                        Foreground="White"
+                                        Padding="15,8"
+                                        Click="RemoveAvatar_Click"
+                                        FontSize="12"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                
+                <!-- Правая колонка: Основная информация -->
+                <StackPanel Grid.Column="2" Spacing="15">
+                    <!-- Основная информация -->
+                    <Border BorderBrush="#BDC3C7" 
+                            BorderThickness="1" 
+                            CornerRadius="10" 
+                            Padding="15">
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="Основная информация" 
+                                      FontSize="18" 
+                                      FontWeight="Bold" 
+                                      Foreground="#2C3E50"/>
+                            
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="15"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <!-- ФИО -->
+                                <TextBlock Grid.Row="0" Grid.Column="0"
+                                          Text="ФИО:" 
+                                          FontWeight="SemiBold"
+                                          Foreground="#2C3E50"/>
+                                <TextBlock Grid.Row="0" Grid.Column="2"
+                                          Name="FullNameText" 
+                                          FontSize="14"
+                                          Foreground="#2C3E50"/>
+                                
+                                <!-- Email -->
+                                <TextBlock Grid.Row="2" Grid.Column="0"
+                                          Text="Email:" 
+                                          FontWeight="SemiBold"
+                                          Foreground="#2C3E50"/>
+                                <TextBlock Grid.Row="2" Grid.Column="2"
+                                          Name="EmailText" 
+                                          FontSize="14"
+                                          Foreground="#2C3E50"/>
+                                
+                                <!-- Телефон -->
+                                <TextBlock Grid.Row="4" Grid.Column="0"
+                                          Text="Телефон:" 
+                                          FontWeight="SemiBold"
+                                          Foreground="#2C3E50"/>
+                                <TextBlock Grid.Row="4" Grid.Column="2"
+                                          Name="PhoneText" 
+                                          FontSize="14"
+                                          Foreground="#2C3E50"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+<!-- Редактирование основных данных (появляется при нажатии "Изменить данные") -->
+<Border x:Name="EditBasicInfoBorder"
+        BorderBrush="#3498DB" 
+        BorderThickness="2" 
+        CornerRadius="10" 
+        Padding="15"
+        Background="#EBF5FB"
+        IsVisible="False">
+    <StackPanel Spacing="15">
+        <TextBlock Text="✏️ Редактирование основных данных" 
+                  FontSize="18" 
+                  FontWeight="Bold" 
+                  Foreground="#2C3E50"/>
+        
+        <!-- Email -->
+<Grid>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="15"/>
+        <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    
+    <TextBlock Grid.Column="0"
+              Text="Email:" 
+              FontWeight="SemiBold"
+              Foreground="#2C3E50"/>
+    <TextBox Grid.Column="2"
+            x:Name="EditEmailTextBox"
+            FontSize="14"
+            TextChanged="EditEmailTextBox_TextChanged">
+        <TextBox.Styles>
+            <Style Selector="TextBox">
+                <Setter Property="MinWidth" Value="250"/>
+            </Style>
+        </TextBox.Styles>
+    </TextBox>
+</Grid>
+
+<!-- Телефон -->
+<Grid>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="15"/>
+        <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    
+    <TextBlock Grid.Column="0"
+              Text="Телефон:" 
+              FontWeight="SemiBold"
+              Foreground="#2C3E50"/>
+    <TextBox Grid.Column="2"
+            x:Name="EditPhoneTextBox"
+            FontSize="14"
+            TextChanged="EditPhoneTextBox_TextChanged">
+        <TextBox.Styles>
+            <Style Selector="TextBox">
+                <Setter Property="MinWidth" Value="250"/>
+            </Style>
+        </TextBox.Styles>
+    </TextBox>
+</Grid>
+        
+        <!-- Сообщение о неизменяемых данных -->
+        <Border Background="#FFF9E6" CornerRadius="8" Padding="10">
+            <StackPanel>
+                <TextBlock Text="ℹ️ Важно:" 
+                          FontSize="11" 
+                          FontWeight="Bold" 
+                          Foreground="#E67E22"
+                          Margin="0,0,0,5"/>
+                <TextBlock Text="ФИО и пол не могут быть изменены после регистрации. Для изменения этих данных обратитесь к администратору клуба."
+                          FontSize="10" 
+                          Foreground="#7F8C8D"
+                          TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Кнопки -->
+        <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
+            <Button Content="💾 Сохранить изменения" 
+                    Background="#27AE60" 
+                    Foreground="White"
+                    Padding="15,8"
+                    Click="SaveBasicInfo_Click"
+                    MinWidth="150"/>
+            
+            <Button Content="✖ Отменить" 
+                    Background="#E74C3C" 
+                    Foreground="White"
+                    Padding="15,8"
+                    Click="CancelBasicInfo_Click"
+                    MinWidth="120"/>
+        </StackPanel>
+    </StackPanel>
+</Border>
+                    <!-- Способы оплаты и Бонусная карта в одной строке -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Способы оплаты -->
+<Border Grid.Column="0"
+        BorderBrush="#BDC3C7" 
+        BorderThickness="1" 
+        CornerRadius="10" 
+        Padding="15">
+    <StackPanel Spacing="15">
+        <TextBlock Text="💳 Способы оплаты" 
+                  FontSize="18" 
+                  FontWeight="Bold" 
+                  Foreground="#2C3E50"/>
+        
+        <!-- Список карт -->
+        <ScrollViewer MaxHeight="250" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="PaymentCardsPanel" Spacing="8">
+                <!-- Карты будут добавляться динамически -->
+            </StackPanel>
+        </ScrollViewer>
+        
+        <!-- Кнопка добавления карты -->
+        <Button x:Name="AddCardButton"
+                Content="➕ Добавить карту" 
+                Background="#3498DB" 
+                Foreground="White"
+                Padding="15,8"
+                Click="AddPaymentCard_Click"
+                HorizontalAlignment="Stretch"/>
+        
+        <!-- Сообщение о максимальном количестве карт -->
+        <Border x:Name="MaxCardsMessage"
+                Background="#FFF9E6" 
+                CornerRadius="8" 
+                Padding="10"
+                IsVisible="False">
+            <TextBlock Text="Достигнуто максимальное количество карт (2)" 
+                      FontSize="10" 
+                      FontWeight="SemiBold" 
+                      Foreground="#E67E22"
+                      TextWrapping="Wrap"/>
+        </Border>
+    </StackPanel>
+</Border>
+
+                        <!-- Бонусная карта -->
+                        <Border Grid.Column="2"
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="1" 
+                                CornerRadius="10" 
+                                Padding="15">
+                            <StackPanel Spacing="10">
+                                <TextBlock Text="🎁 Бонусная карта" 
+                                          FontSize="18" 
+                                          FontWeight="Bold" 
+                                          Foreground="#2C3E50"/>
+                                
+                                <!-- Состояние: карта не оформлена -->
+                                <Border Name="NoBonusCardBorder"
+                                        Background="#F8F9FA" 
+                                        BorderBrush="#BDC3C7" 
+                                        BorderThickness="1" 
+                                        CornerRadius="8" 
+                                        Padding="20"
+                                        Height="200">
+                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+                                        <TextBlock Text="💳 Бонусная карта не активирована" 
+                                                  FontSize="14" 
+                                                  FontWeight="Bold" 
+                                                  Foreground="#7F8C8D"
+                                                  HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Оформите бонусную карту для накопления баллов и получения скидок"
+                                                  FontSize="10" 
+                                                  Foreground="#7F8C8D"
+                                                  TextWrapping="Wrap"
+                                                  TextAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                                        <Button Content="🎁 Оформить карту" 
+                                                Background="#27AE60" 
+                                                Foreground="White"
+                                                Padding="15,8"
+                                                Click="ApplyForBonusCard_Click"
+                                                HorizontalAlignment="Center"
+                                                Margin="0,10,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                
+                                <!-- Состояние: карта оформлена -->
+                                <Border Name="BonusCardBorder"
+                                        BorderBrush="#3E5F8A" 
+                                        BorderThickness="2" 
+                                        CornerRadius="12" 
+                                        Padding="20"
+                                        Height="200"
+                                        IsVisible="False">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Offset="0" Color="#667eea"/>
+                                            <GradientStop Offset="1" Color="#764ba2"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        
+                                        <!-- Логотип и название -->
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10">
+                                            <Border Background="White" CornerRadius="4" Padding="4">
+                                                <TextBlock Text="🏋️" FontSize="16"/>
+                                            </Border>
+                                            <TextBlock Text="FITCLUB PREMIUM" 
+                                                      FontSize="12" 
+                                                      FontWeight="Bold" 
+                                                      Foreground="White"/>
+                                        </StackPanel>
+                                        
+                                        <!-- Информация о карте -->
+                                        <StackPanel Grid.Row="1" VerticalAlignment="Center" Spacing="5">
+                                            <TextBlock Name="BonusCardNumberText"
+                                                      Text="1234 5678 9012 3456" 
+                                                      FontSize="18" 
+                                                      FontWeight="Bold" 
+                                                      Foreground="White"
+                                                      LetterSpacing="2"/>
+                                            <TextBlock Name="BonusCardHolderText"
+                                                      Text="ИВАНОВ ИВАН ИВАНОВИЧ" 
+                                                      FontSize="10" 
+                                                      FontWeight="SemiBold" 
+                                                      Foreground="White"/>
+                                            <TextBlock Name="BonusCardIssueDateText"
+                                                      Text="Выпуск: 01.01.2024" 
+                                                      FontSize="8" 
+                                                      Foreground="White"
+                                                      Opacity="0.8"/>
+                                        </StackPanel>
+                                        
+                                        <!-- Баланс баллов -->
+                                        <Border Grid.Row="2" 
+                                                Background="White" 
+                                                CornerRadius="6" 
+                                                Padding="8,4"
+                                                HorizontalAlignment="Left">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="🎯" FontSize="10"/>
+                                                <TextBlock Name="BonusCardPointsText"
+                                                          Text="500 баллов" 
+                                                          FontSize="10" 
+                                                          FontWeight="Bold" 
+                                                          Foreground="#2C3E50"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <!-- Активный абонемент -->
+            <Border BorderBrush="#27AE60" 
+                    BorderThickness="2" 
+                    CornerRadius="10" 
+                    Padding="15"
+                    Background="#E8F6F3"
+                    Name="ActiveSubscriptionBorder">
+                <StackPanel>
+                    <TextBlock Text="Активный абонемент" 
+                              FontSize="16" 
+                              FontWeight="Bold"
+                              Foreground="#8673A1"
+                              Margin="0,0,0,10"/>
+                    
+                    <TextBlock Name="ActiveSubscriptionText"
+                              FontSize="14"
+                              Foreground="#2C3E50"
+                              TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+            
+<!-- Паспортные данные -->
+<Border BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="10" Padding="15">
+    <StackPanel Spacing="10">
+        <TextBlock Text="Паспортные данные" 
+                  FontSize="18" 
+                  FontWeight="Bold" 
+                  Foreground="#2C3E50"/>
+        
+        <!-- Информационная панель (всегда видна с разным текстом) -->
+        <Border Name="InfoBorder" Background="#FFF9E6" CornerRadius="8" Padding="10">
+            <StackPanel>
+                <TextBlock Name="InfoTitle" 
+                          FontSize="12" 
+                          FontWeight="Bold" 
+                          Margin="0,0,0,5"/>
+                <TextBlock Name="InfoText" 
+                          FontSize="10" 
+                          Foreground="#7F8C8D"
+                          TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Панель с данными (видна только когда данные подтверждены) -->
+        <StackPanel Name="PassportDataPanel" Spacing="10" IsVisible="False">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                          Text="Серия паспорта:" 
+                          FontWeight="SemiBold"
+                          Foreground="#2C3E50"/>
+                <TextBlock Grid.Row="0" Grid.Column="2"
+                          Name="PassportSeriesText" 
+                          FontSize="14" 
+                          Foreground="#2C3E50"/>
+                
+                <TextBlock Grid.Row="0" Grid.Column="4"
+                          Text="Номер паспорта:" 
+                          FontWeight="SemiBold"
+                          Foreground="#2C3E50"/>
+                <TextBlock Grid.Row="0" Grid.Column="6"
+                          Name="PassportNumberText" 
+                          FontSize="14"
+                          Foreground="#2C3E50"/>
+            </Grid>
+        </StackPanel>
+        
+        <!-- Кнопка действия -->
+        <Button x:Name="ActionButton"
+        Background="#3E5F8A" 
+        Foreground="White"
+        Padding="15,10"
+        Click="ActionButton_Click"
+        HorizontalAlignment="Left"/>
+    </StackPanel>
+</Border>
+<!-- Дополнительная информация о клиенте -->
+<Border BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="10" Padding="15">
+    <StackPanel Spacing="10">
+        <TextBlock Text="Дополнительная информация" 
+                  FontSize="18" 
+                  FontWeight="Bold" 
+                  Foreground="#2C3E50"/>
+        
+        <!-- Состояние: данные не заполнены -->
+        <StackPanel x:Name="NoAdditionalInfoPanel" Spacing="10">
+            <Border Background="#F0F8FF" CornerRadius="8" Padding="10">
+                <StackPanel>
+                    <TextBlock Text="ℹ️ Дополнительная информация не указана" 
+                              FontSize="12" 
+                              FontWeight="Bold" 
+                              Foreground="#3498DB"
+                              Margin="0,0,0,5"/>
+                    <TextBlock Text="Укажите пол, рост, вес и цель тренировок для персонализации рекомендаций."
+                              FontSize="10" 
+                              Foreground="#7F8C8D"
+                              TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+            
+            <Button Content="➕ Заполнить информацию" 
+                    Background="#3E5F8A" 
+                    Foreground="White"
+                    Padding="15,10"
+                    Click="AddAdditionalInfo_Click"
+                    HorizontalAlignment="Left"/>
+        </StackPanel>
+        
+        <!-- Состояние: данные заполнены -->
+        <StackPanel x:Name="AdditionalInfoPanel" Spacing="15" IsVisible="False">
+            <!-- Сетка для отображения данных в режиме просмотра -->
+            <Grid x:Name="AdditionalInfoViewGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Пол -->
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                          Text="Пол:" 
+                          FontWeight="SemiBold"
+                          Foreground="#2C3E50"/>
+                <TextBlock Grid.Row="0" Grid.Column="2"
+                          x:Name="GenderText" 
+                          FontSize="14" 
+                          Foreground="#2C3E50"/>
+                
+                <!-- Рост -->
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                          Text="Рост:" 
+                          FontWeight="SemiBold"
+                          Foreground="#2C3E50"/>
+                <TextBlock Grid.Row="2" Grid.Column="2"
+                          x:Name="HeightText" 
+                          FontSize="14" 
+                          Foreground="#2C3E50"/>
+                
+                <!-- Вес -->
+                <TextBlock Grid.Row="4" Grid.Column="0"
+                          Text="Вес:" 
+                          FontWeight="SemiBold"
+                          Foreground="#2C3E50"/>
+                <TextBlock Grid.Row="4" Grid.Column="2"
+                          x:Name="WeightText" 
+                          FontSize="14" 
+                          Foreground="#2C3E50"/>
+                
+                <!-- Цель тренировок -->
+                <TextBlock Grid.Row="6" Grid.Column="0"
+                          Text="Цель:" 
+                          FontWeight="SemiBold"
+                          Foreground="#2C3E50"/>
+                <TextBlock Grid.Row="6" Grid.Column="2"
+                          x:Name="GoalText" 
+                          FontSize="14" 
+                          Foreground="#2C3E50"
+                          TextWrapping="Wrap"/>
+            </Grid>
+            
+            <!-- Сетка для редактирования данных -->
+            <StackPanel x:Name="AdditionalInfoEditGrid" Spacing="10" IsVisible="False">
+                <!-- Пол (только для просмотра при редактировании) -->
+                <!-- Пол (редактируемый) -->
+<Grid>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="15"/>
+        <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    
+    <TextBlock Grid.Column="0"
+              Text="Пол:" 
+              FontWeight="SemiBold"
+              Foreground="#2C3E50"/>
+    <ComboBox Grid.Column="2"
+             x:Name="GenderComboBox"
+             FontSize="14"
+             SelectedIndex="0">
+        <ComboBox.Items>
+            <ComboBoxItem Content="Не указан"/>
+            <ComboBoxItem Content="Мужской"/>
+            <ComboBoxItem Content="Женский"/>
+        </ComboBox.Items>
+        <ComboBox.Styles>
+            <Style Selector="ComboBox">
+                <Setter Property="MinWidth" Value="150"/>
+            </Style>
+        </ComboBox.Styles>
+    </ComboBox>
+</Grid>
+
+<!-- Сообщение о неизменяемости пола -->
+<Border x:Name="GenderLockedMessage"
+        Background="#FFF9E6" 
+        CornerRadius="8" 
+        Padding="10"
+        IsVisible="False"
+        Margin="0,5,0,0">
+    <StackPanel>
+        <TextBlock Text="⚠️ Внимание:" 
+                  FontSize="11" 
+                  FontWeight="Bold" 
+                  Foreground="#E67E22"
+                  Margin="0,0,0,3"/>
+        <TextBlock Text="Пол нельзя изменить после первого выбора. Для изменения обратитесь к администратору."
+                  FontSize="10" 
+                  Foreground="#7F8C8D"
+                  TextWrapping="Wrap"/>
+    </StackPanel>
+</Border>
+                
+                <!-- Рост -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Column="0"
+                              Text="Рост (см):" 
+                              FontWeight="SemiBold"
+                              Foreground="#2C3E50"/>
+                    <TextBox Grid.Column="2"
+                            x:Name="HeightEditTextBox"
+                            FontSize="14"
+                            Watermark="100-250">
+                        <TextBox.Styles>
+                            <Style Selector="TextBox">
+                                <Setter Property="MinWidth" Value="100"/>
+                            </Style>
+                        </TextBox.Styles>
+                    </TextBox>
+                </Grid>
+                
+                <!-- Вес -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Column="0"
+                              Text="Вес (кг):" 
+                              FontWeight="SemiBold"
+                              Foreground="#2C3E50"/>
+                    <TextBox Grid.Column="2"
+                            x:Name="WeightEditTextBox"
+                            FontSize="14"
+                            Watermark="30-500">
+                        <TextBox.Styles>
+                            <Style Selector="TextBox">
+                                <Setter Property="MinWidth" Value="100"/>
+                            </Style>
+                        </TextBox.Styles>
+                    </TextBox>
+                </Grid>
+                
+                <!-- Цель тренировок -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Column="0"
+                              Text="Цель:" 
+                              FontWeight="SemiBold"
+                              Foreground="#2C3E50"/>
+                    <ComboBox Grid.Column="2"
+                             x:Name="GoalComboBox"
+                             FontSize="14">
+                        <ComboBox.Styles>
+                            <Style Selector="ComboBox">
+                                <Setter Property="MinWidth" Value="200"/>
+                            </Style>
+                        </ComboBox.Styles>
+                    </ComboBox>
+                </Grid>
+                
+                <!-- Кнопки редактирования/сохранения -->
+                <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
+                    <Button Content="💾 Сохранить" 
+                            Background="#27AE60" 
+                            Foreground="White"
+                            Padding="15,8"
+                            Click="SaveAdditionalInfo_Click"
+                            MinWidth="120"/>
+                    
+                    <Button Content="✖ Отменить" 
+                            Background="#E74C3C" 
+                            Foreground="White"
+                            Padding="15,8"
+                            Click="CancelAdditionalInfo_Click"
+                            MinWidth="120"/>
+                </StackPanel>
+            </StackPanel>
+            
+            <!-- Кнопка "Изменить данные" (только в режиме просмотра) -->
+            <Button x:Name="EditAdditionalInfoButton"
+                    Content="✏️ Изменить данные" 
+                    Background="#3498DB" 
+                    Foreground="White"
+                    Padding="10,5"
+                    Click="EditAdditionalInfo_Click"
+                    HorizontalAlignment="Left"
+                    Margin="0,10,0,0"/>
+        </StackPanel>
+    </StackPanel>
+</Border>
+            <!-- Кнопки действий -->
+            <Border BorderBrush="#BDC3C7" 
+                    BorderThickness="1" 
+                    CornerRadius="10" 
+                    Padding="15" 
+                    Background="#F8F9FA">
+                <StackPanel>
+                    <TextBlock Text="Действия с аккаунтом" 
+                              FontSize="16" 
+                              FontWeight="Bold" 
+                              Foreground="#2C3E50"
+                              Margin="0,0,0,15"
+                              HorizontalAlignment="Center"/>
+                    
+                    <StackPanel Orientation="Horizontal" 
+                               Spacing="15" 
+                               HorizontalAlignment="Center">
+                        <Button Content="Изменить данные" 
+                                Background="#8673A1" 
+                                Foreground="White"
+                                Padding="20,10"
+                                Click="EditData_Click"
+                                MinWidth="120"/>
+                        
+                        <Button Content="Сменить пароль" 
+                                Background="#3E5F8A" 
+                                Foreground="White"
+                                Padding="20,10"
+                                Click="ChangePassword_Click"
+                                MinWidth="120"/>
+
+                        <Button Content="История покупок" 
+                                Background="#E67E22" 
+                                Foreground="White"
+                                Padding="20,10"
+                                Click="PurchaseHistory_Click"
+                                MinWidth="120"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,197 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:FitClub.Models;assembly=FitClub"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="FitClub.Admin.Views.TariffsAdminView">
+    
+    <UserControl.DataTemplates>
+        <DataTemplate DataType="models:Tariff">
+            <Border Background="White"
+                    CornerRadius="10"
+                    Padding="20"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1"
+                    Margin="0,0,0,15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0"
+                            Width="100"
+                            Height="100"
+                            CornerRadius="8"
+                            BorderBrush="#FF8955"
+                            BorderThickness="1"
+                            ClipToBounds="True"
+                            Background="#F8F9FA">
+                        <Image Source="{Binding TariffImage}"
+                               Width="100"
+                               Height="100"
+                               Stretch="UniformToFill"/>
+                    </Border>
+
+                    <StackPanel Grid.Column="1" 
+                                Margin="20,0"
+                                VerticalAlignment="Center"
+                                Spacing="8">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="{Binding Name}"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Foreground="#2C3E50"
+                                       TextWrapping="Wrap"/>
+                            <Border Grid.Column="1"
+                                    Background="{Binding CategoryColor}"
+                                    CornerRadius="5"
+                                    Padding="8,3"
+                                    Margin="10,0,0,0">
+                                <TextBlock Text="{Binding CategoryIconName}" 
+                                           FontSize="12"
+                                           FontWeight="Bold"
+                                           Foreground="White"/>
+                            </Border>
+                        </Grid>
+                        <TextBlock Text="{Binding ShortDescription}"
+                                   FontSize="14"
+                                   Foreground="#7F8C8D"
+                                   TextWrapping="Wrap"
+                                   MaxHeight="60"/>
+                        <StackPanel Orientation="Horizontal" Spacing="15">
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <TextBlock Text="💰" FontSize="14"/>
+                                <TextBlock Text="{Binding FormattedPrice}"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           Foreground="#27AE60"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <TextBlock Text="📅" FontSize="14"/>
+                                <TextBlock Text="{Binding DurationDays, StringFormat='{}Срок: {0} дней'}"
+                                           FontSize="14"
+                                           Foreground="#7F8C8D"/>
+                            </StackPanel>
+                            <Border Background="{Binding ActiveStatusColor}"
+                                    CornerRadius="3"
+                                    Padding="5,2">
+                                <TextBlock Text="{Binding ActiveStatusText}"
+                                           FontSize="11"
+                                           Foreground="White"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Button Grid.Column="2"
+                            Content="✏️"
+                            Background="#3498DB"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Width="40"
+                            Height="40"
+                            FontSize="18"
+                            CornerRadius="5"
+                            Margin="0,0,5,0"
+                            ToolTip.Tip="Редактировать"
+                            Click="EditTariffButton_Click"
+                            Tag="{Binding}"/>
+                    <Button Grid.Column="3"
+                            Content="🗑️"
+                            Background="#E74C3C"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Width="40"
+                            Height="40"
+                            FontSize="18"
+                            CornerRadius="5"
+                            ToolTip.Tip="Удалить"
+                            Click="DeleteTariffButton_Click"
+                            Tag="{Binding}"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </UserControl.DataTemplates>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" 
+                           Text="🏷️ Управление тарифами и абонементами" 
+                           FontSize="28" FontWeight="Bold" 
+                           Foreground="#2C3E50"
+                           VerticalAlignment="Center"/>
+                <Button Grid.Column="1"
+                        x:Name="AddTariffButton"
+                        Content="➕ Добавить тариф"
+                        Background="#FF8955"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Padding="20,10"
+                        CornerRadius="5"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Click="AddTariffButton_Click"/>
+            </Grid>
+
+            <Border Height="2" Background="#FF8955" HorizontalAlignment="Stretch"/>
+
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBox x:Name="SearchTextBox" 
+                         Grid.Column="0"
+                         Watermark="🔍 Поиск тарифа по названию..."
+                         Margin="0,0,10,0"
+                         KeyUp="SearchTextBox_KeyUp"/>
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+                    <TextBlock Text="Выбрать категорию:" VerticalAlignment="Center" Foreground="#7F8C8D"/>
+                    <ComboBox x:Name="CategoryFilterComboBox" Width="200" SelectionChanged="CategoryFilterComboBox_SelectionChanged">
+                        <ComboBoxItem Content="Все"/>
+                        <ComboBoxItem Content="Тренажерный зал"/>
+                        <ComboBoxItem Content="Групповые"/>
+                        <ComboBoxItem Content="Индивидуальные"/>
+                        <ComboBoxItem Content="Комбинированные"/>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+
+            <Border x:Name="StatusBorder" 
+                    Background="#27AE60"
+                    CornerRadius="5" 
+                    Padding="15"
+                    IsVisible="False">
+                <TextBlock x:Name="StatusText" 
+                           Foreground="White"
+                           FontWeight="SemiBold"/>
+            </Border>
+
+            <ItemsControl x:Name="TariffsItemsControl"/>
+
+            <Border x:Name="NoTariffsMessage"
+                    Background="#F8F9FA"
+                    CornerRadius="10"
+                    Padding="40"
+                    IsVisible="False">
+                <StackPanel Spacing="10" HorizontalAlignment="Center">
+                    <TextBlock Text="🏷️" FontSize="48" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Тарифов не найдено" 
+                               FontSize="18"
+                               Foreground="#7F8C8D"
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

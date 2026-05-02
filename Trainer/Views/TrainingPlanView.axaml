@@ -1,0 +1,246 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="clr-namespace:FitClub.Models;assembly=FitClub"
+             x:Class="FitClub.Trainer.Views.TrainingPlanView">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="20">
+            
+            <!-- Заголовок -->
+            <Border Background="#3E5F8A" CornerRadius="10" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Составление планов тренировок" 
+                              FontSize="28" 
+                              FontWeight="Bold" 
+                              Foreground="White"
+                              HorizontalAlignment="Center"/>
+                    <TextBlock Text="Управление тренировочными планами для клиентов с индивидуальными абонементами"
+                              FontSize="16"
+                              Foreground="White"
+                              HorizontalAlignment="Center"
+                              Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Основной контент -->
+            <Grid ColumnDefinitions="1*,1*" ColumnSpacing="20">
+                
+                <!-- Левая колонка - Клиенты без планов -->
+                <Border Grid.Column="0" 
+                        Background="White" 
+                        CornerRadius="10" 
+                        Padding="20"
+                        BorderBrush="#BDC3C7" 
+                        BorderThickness="1">
+                    <StackPanel Spacing="15">
+                        <TextBlock Text="Клиенты без планов тренировок" 
+                                  FontSize="20" 
+                                  FontWeight="Bold"
+                                  Foreground="#3E5F8A"/>
+                        
+                        <Border Background="#F8F9FA" CornerRadius="8" Padding="10" BorderBrush="#BDC3C7" BorderThickness="1">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <TextBlock Text="🔍" FontSize="16" VerticalAlignment="Center"/>
+                                <TextBox Name="SearchWithoutPlanBox" 
+                                        Watermark="Поиск по ФИО клиента..."
+                                        FontSize="14"
+                                        Padding="10,8"
+                                        BorderThickness="0"
+                                        Background="Transparent"
+                                        TextChanged="OnSearchWithoutPlanTextChanged"/>
+                            </StackPanel>
+                        </Border>
+
+                        <ItemsControl Name="ClientsWithoutPlanList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="models:ClientSubscription">
+                                    <Border Background="#F8F9FA" 
+                                           CornerRadius="8" 
+                                           Padding="15" 
+                                           Margin="0,5"
+                                           BorderBrush="#BDC3C7"
+                                           BorderThickness="1">
+                                        <Grid ColumnDefinitions="60,*,120">
+                                            <!-- Аватар -->
+                                            <Border Grid.Column="0" 
+                                                   Width="50" 
+                                                   Height="50" 
+                                                   CornerRadius="25"
+                                                   Background="#E8F6F3" 
+                                                   BorderBrush="#3E5F8A" 
+                                                   BorderThickness="2"
+                                                   Margin="0,0,10,0">
+                                                <Image Source="{Binding Client.AvatarBitmap}" 
+                                                       Width="46" 
+                                                       Height="46" 
+                                                       Stretch="UniformToFill"/>
+                                            </Border>
+                                            
+                                            <!-- Информация -->
+                                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                                <TextBlock Text="{Binding Client.FullName}"
+                                                          FontSize="14"
+                                                          FontWeight="SemiBold"
+                                                          Foreground="#2C3E50"/>
+                                                <TextBlock Text="{Binding Tariff.Name}"
+                                                          FontSize="12"
+                                                          Foreground="#7F8C8D"
+                                                          Margin="0,2,0,0"/>
+                                                <TextBlock Text="{Binding VisitsInfo}"
+                                                          FontSize="11"
+                                                          Foreground="#27AE60"
+                                                          FontWeight="SemiBold"
+                                                          Margin="0,2,0,0"/>
+                                            </StackPanel>
+                                            
+                                            <!-- Кнопка создания плана -->
+                                            <Button Grid.Column="2" 
+                                                   Content="Создать план"
+                                                   Background="#3E5F8A"
+                                                   Foreground="White"
+                                                   FontSize="12"
+                                                   FontWeight="SemiBold"
+                                                   Click="OnCreatePlanClick"
+                                                   Tag="{Binding}"
+                                                   HorizontalAlignment="Stretch"
+                                                   Height="40"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <Border Name="NoClientsWithoutPlanMessage" 
+                               Background="#FFF9E6" 
+                               CornerRadius="8" 
+                               Padding="20"
+                               IsVisible="False">
+                            <TextBlock Text="Все клиенты имеют планы тренировок"
+                                      FontSize="14"
+                                      Foreground="#E67E22"
+                                      HorizontalAlignment="Center"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Правая колонка - Существующие планы -->
+                <Border Grid.Column="1" 
+                        Background="White" 
+                        CornerRadius="10" 
+                        Padding="20"
+                        BorderBrush="#BDC3C7" 
+                        BorderThickness="1">
+                    <StackPanel Spacing="15">
+                        <TextBlock Text="Существующие планы тренировок" 
+                                  FontSize="20" 
+                                  FontWeight="Bold"
+                                  Foreground="#8673A1"/>
+                        
+                        <Border Background="#F8F9FA" CornerRadius="8" Padding="10" BorderBrush="#BDC3C7" BorderThickness="1">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <TextBlock Text="🔍" FontSize="16" VerticalAlignment="Center"/>
+                                <TextBox Name="SearchWithPlanBox" 
+                                        Watermark="Поиск по ФИО клиента..."
+                                        FontSize="14"
+                                        Padding="10,8"
+                                        BorderThickness="0"
+                                        Background="Transparent"
+                                        TextChanged="OnSearchWithPlanTextChanged"/>
+                            </StackPanel>
+                        </Border>
+
+                        <ItemsControl Name="ExistingPlansList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="models:TrainingPlan">
+                                    <Border Background="#F8F9FA" 
+                                           CornerRadius="8" 
+                                           Padding="15" 
+                                           Margin="0,5"
+                                           BorderBrush="#BDC3C7"
+                                           BorderThickness="1">
+                                        <Grid ColumnDefinitions="60,*,100,120">
+                                            <!-- Аватар -->
+                                            <Border Grid.Column="0" 
+                                                   Width="50" 
+                                                   Height="50" 
+                                                   CornerRadius="25"
+                                                   Background="#E8F6F3" 
+                                                   BorderBrush="#8673A1" 
+                                                   BorderThickness="2"
+                                                   Margin="0,0,10,0">
+                                                <Image Source="{Binding Client.AvatarBitmap}" 
+                                                       Width="46" 
+                                                       Height="46" 
+                                                       Stretch="UniformToFill"/>
+                                            </Border>
+                                            
+                                            <!-- Информация -->
+                                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                                <TextBlock Text="{Binding Client.FullName}"
+                                                          FontSize="14"
+                                                          FontWeight="SemiBold"
+                                                          Foreground="#2C3E50"/>
+                                                <TextBlock Text="{Binding Goal.Name}"
+                                                          FontSize="12"
+                                                          Foreground="#7F8C8D"
+                                                          Margin="0,2,0,0"/>
+                                                <TextBlock Text="{Binding CreatedDate, StringFormat='Создан: {0:dd.MM.yy}'}"
+                                                          FontSize="10"
+                                                          Foreground="#95A5A6"
+                                                          Margin="0,2,0,0"/>
+                                            </StackPanel>
+                                            
+                                            <!-- Статус -->
+                                            <Border Grid.Column="2" 
+                                                   Background="{Binding StatusColor}"
+                                                   CornerRadius="5" 
+                                                   Padding="8,4"
+                                                   Margin="0,0,10,0"
+                                                   VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding StatusText}"
+                                                          FontSize="11"
+                                                          Foreground="White"
+                                                          FontWeight="SemiBold"
+                                                          HorizontalAlignment="Center"/>
+                                            </Border>
+                                            
+                                            <!-- Кнопки действий -->
+                                            <StackPanel Grid.Column="3" Spacing="5">
+                                                <Button Content="Просмотр"
+                                                       Background="#8673A1"
+                                                       Foreground="White"
+                                                       FontSize="11"
+                                                       FontWeight="SemiBold"
+                                                       Click="OnViewPlanClick"
+                                                       Tag="{Binding}"
+                                                       Height="30"/>
+                                                <Button Content="Редактировать"
+                                                       Background="#3498DB"
+                                                       Foreground="White"
+                                                       FontSize="11"
+                                                       FontWeight="SemiBold"
+                                                       Click="OnEditPlanClick"
+                                                       Tag="{Binding}"
+                                                       Height="30"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <Border Name="NoExistingPlansMessage" 
+                               Background="#FFF9E6" 
+                               CornerRadius="8" 
+                               Padding="20"
+                               IsVisible="False">
+                            <TextBlock Text="Нет созданных планов тренировок"
+                                      FontSize="14"
+                                      Foreground="#E67E22"
+                                      HorizontalAlignment="Center"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,30 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="FitClub.Admin.Views.DuplicateScheduleWindow"
+        Title="Дублировать расписание" Width="400" Height="280"
+        WindowStartupLocation="CenterOwner" CanResize="False">
+    <Grid RowDefinitions="Auto, Auto, *, Auto" Margin="20">
+        <TextBlock Grid.Row="0" Text="Дублирование расписания" FontSize="18" FontWeight="Bold" Margin="0,0,0,5"/>
+        <TextBlock Grid.Row="1" x:Name="SourceDateText" Foreground="#7F8C8D" Margin="0,0,0,20"/>
+        
+        <StackPanel Grid.Row="2" Spacing="10">
+            <TextBlock Text="Выберите период для копирования:" FontWeight="SemiBold"/>
+            <Grid ColumnDefinitions="*, 20, *">
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="С даты:" FontSize="12" Foreground="Gray"/>
+                    <CalendarDatePicker x:Name="StartDatePicker" Width="160"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="По дату:" FontSize="12" Foreground="Gray"/>
+                    <CalendarDatePicker x:Name="EndDatePicker" Width="160"/>
+                </StackPanel>
+            </Grid>
+            <TextBlock Text="* Если нужен только 1 день, укажите его в обоих полях" FontSize="11" Foreground="#95A5A6" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button Content="Отмена" Click="Cancel_Click" Width="80"/>
+            <Button Content="Дублировать" Click="Ok_Click" Width="100" Background="#F39C12" Foreground="White"/>
+        </StackPanel>
+    </Grid>
+</Window>

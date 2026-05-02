@@ -1,0 +1,123 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:FitClub.Models;assembly=FitClub"
+        xmlns:views="clr-namespace:FitClub.Client.Views"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
+        x:Class="FitClub.Client.Menu_client"
+        Title="Фитнес-клуб - Панель клиента"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#FF8955" Height="70" Padding="20,0">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <TextBlock Grid.Column="1" Text="ФИТНЕС-КЛУБ" FontSize="32" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                
+                <Button Grid.Column="2" Background="Transparent" BorderThickness="0" Click="Notifications_Click" VerticalAlignment="Center" Padding="10">
+                    <Grid>
+                        <Path Fill="White" Data="M12,22C13.1,22 14,21.1 14,20H10C10,21.1 10.89,22 12,22M18,16V11C18,7.93 16.36,5.36 13.5,4.68V4C13.5,3.17 12.83,2.5 12,2.5C11.17,2.5 10.5,3.17 10.5,4V4.68C7.63,5.36 6,7.92 6,11V16L4,18V19H20V18L18,16Z" Stretch="Uniform" Width="24" Height="24" VerticalAlignment="Center"/>
+                        <Border Name="NotificationBadge" Background="#E74C3C" CornerRadius="10" MinWidth="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-8,-8,0" IsVisible="False">
+                            <TextBlock Name="NotificationCountText" Foreground="White" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0"/>
+                        </Border>
+                    </Grid>
+                    <Button.Flyout>
+                        <Flyout Placement="BottomEdgeAlignedRight">
+                            <Border Width="300" MaxHeight="400" Background="White" CornerRadius="8">
+                                <Grid RowDefinitions="Auto, *">
+                                    <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="10">
+                                        <TextBlock Text="Уведомления" FontSize="16" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                                        <Button Grid.Column="1" Content="Очистить" Background="Transparent" Foreground="#3498DB" FontSize="12" FontWeight="Bold" Cursor="Hand" Click="ClearNotifications_Click" Padding="5,0"/>
+                                    </Grid>
+                                    <ScrollViewer Grid.Row="1">
+                                        <ItemsControl Name="NotificationsList">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="models:ClientNotification">
+                                                    <Border BorderBrush="#EEEEEE" BorderThickness="0,0,0,1" Padding="10">
+                                                        <StackPanel>
+                                                            <TextBlock Text="{Binding CreatedAt, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" FontSize="10" Foreground="#95A5A6"/>
+                                                            <TextBlock Text="{Binding Message}" FontSize="13" Foreground="#2C3E50" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Border>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Background="#FFCFC7" Grid.Column="0">
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="OpenHome_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/home.png" Width="40" Height="40"/>
+                        <TextBlock Text="Главная" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="OpenAccount_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/account.png" Width="40" Height="40"/>
+                        <TextBlock Text="Мой аккаунт" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="OpenTariffs_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/subscription.png" Width="40" Height="40"/>
+                        <TextBlock Text="Абонементы" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="OpenSchedule_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/schedule.png" Width="40" Height="40"/>
+                        <TextBlock Text="Групповые тренировки" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="OpenMyWorkouts_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/workout.png" Width="40" Height="40"/>
+                        <TextBlock Text="Мои тренировки" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="OpenTrainers_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/trainer.png" Width="40" Height="40"/>
+                        <TextBlock Text="Тренеры" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <Border Height="1" Background="#8673A1" Margin="10,5"/>
+
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="Exit_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/exit.png" Width="40" Height="40"/>
+                        <TextBlock Text="Выход" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <ContentControl x:Name="MainContentControl" Grid.Column="1" Background="#F0F8F0"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="clr-namespace:FitClub.Models"
+             x:Class="FitClub.Admin.Views.ClientsView">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="20">
+            <TextBlock Text="👥 Управление клиентами и паспорта" FontSize="28" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+            <Border Height="2" Background="#FF8955" HorizontalAlignment="Stretch"/>
+
+            <Grid ColumnDefinitions="*, Auto" Margin="0,5">
+                <TextBox Grid.Column="0" x:Name="SearchBox" Watermark="Поиск по ФИО..." Margin="0,0,15,0" Height="40" VerticalContentAlignment="Center" KeyUp="SearchBox_KeyUp"/>
+                <ComboBox Grid.Column="1" x:Name="StatusFilter" Width="220" Height="40" SelectedIndex="0" SelectionChanged="StatusFilter_SelectionChanged">
+                    <ComboBoxItem Content="Все клиенты"/>
+                    <ComboBoxItem Content="На проверке (Новые)"/>
+                    <ComboBoxItem Content="Подтверждены"/>
+                    <ComboBoxItem Content="Отклонены / Нет данных"/>
+                </ComboBox>
+            </Grid>
+
+            <ItemsControl x:Name="ClientsList">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="15"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="models:ClientRequestView" x:CompileBindings="False">
+                        <Border Background="White" CornerRadius="8" Padding="15" BorderBrush="{Binding StatusColor}" BorderThickness="1" Cursor="Hand" Tag="{Binding .}" Tapped="Client_Tapped">
+                            <Grid ColumnDefinitions="Auto, *, Auto">
+                                <Border Grid.Column="0" CornerRadius="25" Width="50" Height="50" Margin="0,0,15,0" ClipToBounds="True" BorderBrush="{Binding StatusColor}" BorderThickness="2">
+                                    <Image Source="{Binding AvatarBitmap}" Stretch="UniformToFill"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Ellipse Fill="#E74C3C" Width="10" Height="10" IsVisible="{Binding IsPending}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding ClientFullName}" FontSize="18" FontWeight="Bold" Foreground="#2C3E50"/>
+                                    </StackPanel>
+                                    <TextBlock Margin="0,4,0,0" FontSize="12">
+                                        <Run Text="Статус паспорта: " Foreground="#7F8C8D"/>
+                                        <Run Text="{Binding StatusDisplay}" Foreground="{Binding StatusColor}" FontWeight="Bold"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center" IsVisible="{Binding IsPending}">
+                                    <Button Content="Отказать" Background="Transparent" Foreground="#E74C3C" BorderBrush="#E74C3C" BorderThickness="1" Padding="15,8" FontWeight="SemiBold" Cursor="Hand" Click="QuickReject_Click" Tag="{Binding .}"/>
+                                    <Button Content="Подтвердить" Background="#27AE60" Foreground="White" Padding="15,8" FontWeight="SemiBold" Cursor="Hand" Click="QuickApprove_Click" Tag="{Binding .}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Border x:Name="EmptyMessage" Background="#F8F9FA" CornerRadius="8" Padding="20" IsVisible="False">
+                <TextBlock Text="Клиенты не найдены" FontSize="14" Foreground="#95A5A6" HorizontalAlignment="Center"/>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

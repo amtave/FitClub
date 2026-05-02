@@ -1,0 +1,340 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FitClub.Trainer.Views;assembly=FitClub"
+             x:Class="FitClub.Trainer.Views.HomeView">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="25">
+            
+            <!-- Заголовок и приветствие -->
+            <Border Background="#3E5F8A" CornerRadius="10" Padding="20">
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Name="WelcomeText" 
+                                  Text="Добро пожаловать!"
+                                  FontSize="22" 
+                                  FontWeight="Bold" 
+                                  Foreground="White"
+                                  Margin="0,0,0,5"/>
+                        <TextBlock Name="CurrentDateText"
+                                  Text="Загрузка даты..."
+                                  FontSize="14"
+                                  Foreground="#E8F4FD"
+                                  FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <Button Grid.Column="1"
+                            Content="🔄 Обновить"
+                            Background="#2C5F8A"
+                            Foreground="White"
+                            FontSize="12"
+                            FontWeight="SemiBold"
+                            Padding="15,8"
+                            VerticalAlignment="Center"
+                            Click="RefreshButton_Click"/>
+                </Grid>
+            </Border>
+
+            <!-- Общая статистика -->
+            <Border Background="#F8F9FA" BorderBrush="#DCDCDC" BorderThickness="1" CornerRadius="8" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Статистика на сегодня" 
+                              FontSize="18" 
+                              FontWeight="Bold"
+                              Foreground="#3E5F8A"
+                              Margin="0,0,0,15"
+                              HorizontalAlignment="Center"/>
+                    
+                    <Grid ColumnDefinitions="*,*,*" Margin="0,10">
+                        <!-- Всего тренировок -->
+                        <Border Grid.Column="0" 
+                               Background="#E8F4FD" 
+                               CornerRadius="8" 
+                               Padding="15"
+                               Margin="5">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Всего тренировок"
+                                          FontSize="12"
+                                          Foreground="#3E5F8A"
+                                          HorizontalAlignment="Center"/>
+                                <TextBlock Name="TotalTrainingsText" 
+                                          Text="0"
+                                          FontSize="24"
+                                          FontWeight="Bold"
+                                          Foreground="#3E5F8A"
+                                          HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- Индивидуальные -->
+                        <Border Grid.Column="1" 
+                               Background="#F1F8FE" 
+                               CornerRadius="8" 
+                               Padding="15"
+                               Margin="5">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Индивидуальные"
+                                          FontSize="12"
+                                          Foreground="#3E5F8A"
+                                          HorizontalAlignment="Center"/>
+                                <TextBlock Name="IndividualCountText" 
+                                          Text="0"
+                                          FontSize="24"
+                                          FontWeight="Bold"
+                                          Foreground="#3E5F8A"
+                                          HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- Групповые -->
+                        <Border Grid.Column="2" 
+                               Background="#F5F1F9" 
+                               CornerRadius="8" 
+                               Padding="15"
+                               Margin="5">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Групповые"
+                                          FontSize="12"
+                                          Foreground="#8673A1"
+                                          HorizontalAlignment="Center"/>
+                                <TextBlock Name="GroupCountText" 
+                                          Text="0"
+                                          FontSize="24"
+                                          FontWeight="Bold"
+                                          Foreground="#8673A1"
+                                          HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Ближайшие индивидуальные тренировки -->
+            <Border BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Заголовок секции -->
+                    <Border Grid.Row="0" 
+                            Background="#3E5F8A" 
+                            CornerRadius="8,8,0,0" 
+                            Padding="15,12">
+                        <TextBlock Text="📅 Индивидуальные тренировки сегодня"
+                                  FontSize="16" 
+                                  FontWeight="Bold"
+                                  Foreground="White"/>
+                    </Border>
+
+                    <!-- Список тренировок -->
+                    <ScrollViewer Grid.Row="1" MaxHeight="400" VerticalScrollBarVisibility="Auto" Padding="10">
+                        <StackPanel>
+                            <ItemsControl Name="IndividualTrainingsControl">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="local:IndividualTrainingViewModel">
+                                        <Border Background="#F8F9FA" 
+                                               CornerRadius="6" 
+                                               Padding="12" 
+                                               Margin="0,4"
+                                               BorderBrush="#E0E0E0"
+                                               BorderThickness="1">
+                                            <Grid ColumnDefinitions="100,*,120,60">
+                                                <!-- Время -->
+                                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding TimeRangeFormatted}"
+                                                              FontSize="13"
+                                                              FontWeight="Bold"
+                                                              Foreground="#2C3E50"/>
+                                                    <TextBlock Text="{Binding DurationFormatted}"
+                                                              FontSize="10"
+                                                              Foreground="#7F8C8D"/>
+                                                </StackPanel>
+                                                
+                                                <!-- Информация о клиенте -->
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
+                                                    <TextBlock Text="{Binding ClientFullName}"
+                                                              FontSize="13"
+                                                              FontWeight="SemiBold"
+                                                              Foreground="#2C3E50"/>
+                                                    <TextBlock Text="{Binding ClientPhone}"
+                                                              FontSize="11"
+                                                              Foreground="#7F8C8D"/>
+                                                </StackPanel>
+                                                
+                                                <!-- Статус -->
+                                                <Border Grid.Column="2" 
+                                                       Background="#E8F6F3" 
+                                                       CornerRadius="4" 
+                                                       Padding="8,4"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center">
+                                                    <TextBlock Text="Индивидуальная"
+                                                              FontSize="10"
+                                                              FontWeight="Bold"
+                                                              Foreground="#27AE60"/>
+                                                </Border>
+                                                
+                                                <!-- Аватар -->
+                                                <Border Grid.Column="3" 
+                                                       Width="40" 
+                                                       Height="40" 
+                                                       CornerRadius="20"
+                                                       Background="#E8F6F3" 
+                                                       BorderBrush="#3498DB" 
+                                                       BorderThickness="1"
+                                                       HorizontalAlignment="Center">
+                                                    <Image Source="{Binding ClientAvatar}" 
+                                                           Width="36" 
+                                                           Height="36" 
+                                                           Stretch="UniformToFill"/>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Сообщение если нет тренировок -->
+                            <TextBlock Name="NoIndividualTrainingsMessage"
+                                      Text="На сегодня индивидуальных тренировок нет"
+                                      FontSize="12"
+                                      Foreground="#7F8C8D"
+                                      FontStyle="Italic"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Margin="0,20"
+                                      IsVisible="False"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <!-- Ближайшие групповые тренировки -->
+            <Border BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Заголовок секции -->
+                    <Border Grid.Row="0" 
+                            Background="#8673A1" 
+                            CornerRadius="8,8,0,0" 
+                            Padding="15,12">
+                        <TextBlock Text="👥 Групповые тренировки сегодня"
+                                  FontSize="16" 
+                                  FontWeight="Bold"
+                                  Foreground="White"/>
+                    </Border>
+
+                    <!-- Список тренировок -->
+                    <ScrollViewer Grid.Row="1" MaxHeight="400" VerticalScrollBarVisibility="Auto" Padding="10">
+                        <StackPanel>
+                            <ItemsControl Name="GroupTrainingsControl">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="local:GroupTrainingHomeViewModel">
+                                        <Border Background="#F8F9FA" 
+                                               CornerRadius="6" 
+                                               Padding="12" 
+                                               Margin="0,4"
+                                               BorderBrush="#E0E0E0"
+                                               BorderThickness="1">
+                                            <!-- Увеличиваем ширину колонок и добавляем кнопку -->
+                                            <Grid ColumnDefinitions="80,*,80,80,100,80">
+                                                <!-- Время -->
+                                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding TimeFormatted}"
+                                                              FontSize="13"
+                                                              FontWeight="Bold"
+                                                              Foreground="#2C3E50"/>
+                                                    <TextBlock Text="{Binding DurationFormatted}"
+                                                              FontSize="10"
+                                                              Foreground="#7F8C8D"/>
+                                                </StackPanel>
+                                                
+                                                <!-- Информация о тренировке -->
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
+                                                    <TextBlock Text="{Binding TrainingName}"
+                                                              FontSize="13"
+                                                              FontWeight="SemiBold"
+                                                              Foreground="#2C3E50"/>
+                                                    <TextBlock Text="{Binding TrainingType}"
+                                                              FontSize="11"
+                                                              Foreground="#7F8C8D"/>
+                                                </StackPanel>
+                                                
+                                                <!-- Участники -->
+                                                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding ParticipantsInfo}"
+                                                              FontSize="12"
+                                                              FontWeight="Bold"
+                                                              Foreground="#27AE60"
+                                                              HorizontalAlignment="Center"/>
+                                                    <TextBlock Text="участников"
+                                                              FontSize="9"
+                                                              Foreground="#7F8C8D"
+                                                              HorizontalAlignment="Center"/>
+                                                </StackPanel>
+                                                
+                                                <!-- Интенсивность -->
+                                                <Border Grid.Column="3" 
+                                                       Background="#FFEAA7" 
+                                                       CornerRadius="4" 
+                                                       Padding="6,2"
+                                                       VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding IntensityLevel}"
+                                                              FontSize="9"
+                                                              FontWeight="Bold"
+                                                              Foreground="#E17055"
+                                                              HorizontalAlignment="Center"/>
+                                                </Border>
+                                                
+                                                <!-- Статус -->
+                                                <Border Grid.Column="4" 
+                                                       Background="#F1E8F7" 
+                                                       CornerRadius="4" 
+                                                       Padding="8,4"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center">
+                                                    <TextBlock Text="Групповая"
+                                                              FontSize="10"
+                                                              FontWeight="Bold"
+                                                              Foreground="#8673A1"/>
+                                                </Border>
+                                                
+                                                <!-- Кнопка открыть -->
+                                                <Button Grid.Column="5"
+                                                        Content="Открыть"
+                                                        Background="#8673A1"
+                                                        Foreground="White"
+                                                        FontSize="11"
+                                                        FontWeight="SemiBold"
+                                                        Padding="10,6"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalAlignment="Stretch"
+                                                        Command="{Binding OpenDetailsCommand}"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Сообщение если нет тренировок -->
+                            <TextBlock Name="NoGroupTrainingsMessage"
+                                      Text="На сегодня групповых тренировок нет"
+                                      FontSize="12"
+                                      Foreground="#7F8C8D"
+                                      FontStyle="Italic"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Margin="0,20"
+                                      IsVisible="False"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,99 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:FitClub.Trainer.Views"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
+        x:Class="FitClub.Trainer.Menu_trainer"
+        Title="Фитнес-клуб - Панель тренера"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#8673A1" Height="70">
+            <TextBlock Text="ФИТНЕС-КЛУБ" FontSize="28" FontWeight="Bold"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+        </Border>
+
+        <!-- Main -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Sidebar -->
+            <StackPanel Background="#DCDCDC" Grid.Column="0">
+                
+                <!-- Главная -->
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="OpenHome_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/home.png" Width="40" Height="40"/>
+                        <TextBlock Text="Главная" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Мой аккаунт -->
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="OpenAccount_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/account.png" Width="40" Height="40"/>
+                        <TextBlock Text="Мой аккаунт" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Индивидуальные занятия -->
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="OpenIndividual_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/individual.png" Width="40" Height="40"/>
+                        <TextBlock Text="Индивидуальные занятия" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Групповые занятия -->
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="OpenGroup_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/group.png" Width="40" Height="40"/>
+                        <TextBlock Text="Групповые занятия" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Мои клиенты с абонементами -->
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="OpenClients_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/clients.png" Width="40" Height="40"/>
+                        <TextBlock Text="Мои клиенты" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Составление плана -->
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="OpenPlan_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/plan.png" Width="40" Height="40"/>
+                        <TextBlock Text="Составление плана" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Разделитель -->
+                <Border Height="1" Background="#8673A1" Margin="10,5"/>
+
+                <!-- Выход -->
+                <Button Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Left" Click="Exit_Click">
+                    <StackPanel Orientation="Horizontal" Margin="15,10">
+                        <Image Source="/Assets/exit.png" Width="40" Height="40"/>
+                        <TextBlock Text="Выход" FontSize="16" Margin="15,0,0,0" Foreground="Black" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+
+            <!-- Content -->
+            <ContentControl x:Name="MainContentControl" Grid.Column="1" Background="#F0F8F0"/>
+        </Grid>
+    </Grid>
+</Window>

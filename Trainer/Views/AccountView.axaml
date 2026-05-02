@@ -1,0 +1,205 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="FitClub.Trainer.Views.AccountView">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="20">
+            
+            <!-- Заголовок -->
+            <TextBlock Text="Мой аккаунт" 
+                      FontSize="28"  
+                      FontWeight="Bold" 
+                      Foreground="#3E5F8A"
+                      HorizontalAlignment="Center"
+                      Margin="0,0,0,10"/>
+            
+            <!-- Основной блок с фото и основной информацией -->
+            <Border BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="10" Padding="20" Background="White">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Левая колонка - Фото и кнопки -->
+                    <StackPanel Grid.Column="0" Spacing="15" Width="300">
+                        <!-- Фото профиля -->
+                        <Border BorderBrush="#DCDCDC" BorderThickness="1" CornerRadius="8" Background="#F8F9FA">
+                            <Image Name="PhotoImage" 
+                                  Width="300" 
+                                  Height="300" 
+                                  Stretch="UniformToFill"/>
+                        </Border>
+                        
+                        <!-- Кнопки управления фото в строку -->
+                        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+                            <Button Content="Изменить фото" 
+                                    Background="#3E5F8A" 
+                                    Foreground="White"
+                                    BorderThickness="0"
+                                    CornerRadius="5"
+                                    Padding="15,8"
+                                    FontWeight="SemiBold"
+                                    Click="ChangePhoto_Click"/>
+                            
+                            <Button Content="Удалить фото" 
+                                    Background="#8673A1" 
+                                    Foreground="White"
+                                    BorderThickness="0"
+                                    CornerRadius="5"
+                                    Padding="15,8"
+                                    FontWeight="SemiBold"
+                                    Click="RemovePhoto_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Правая колонка - Основная информация -->
+                    <StackPanel Grid.Column="2" Spacing="15">
+                        <TextBlock Text="Основная информация" 
+                                  FontSize="20" 
+                                  FontWeight="Bold" 
+                                  Foreground="#3E5F8A"
+                                  Margin="0,0,0,10"/>
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Grid.Column="0" Spacing="12">
+                                <StackPanel Spacing="5">
+                                    <TextBlock Text="ФИО:" 
+                                              FontWeight="SemiBold"
+                                              Foreground="#3E5F8A"/>
+                                    <Border Background="#F8F9FA" CornerRadius="5" Padding="10,8">
+                                        <TextBlock Name="FullNameText" 
+                                                  FontSize="14"
+                                                  Foreground="#2C3E50"/>
+                                    </Border>
+                                </StackPanel>
+                                
+                                <StackPanel Spacing="5">
+                                    <TextBlock Text="Email:" 
+                                              FontWeight="SemiBold"
+                                              Foreground="#3E5F8A"/>
+                                    <Border Background="#F8F9FA" CornerRadius="5" Padding="10,8">
+                                        <TextBlock Name="EmailText" 
+                                                  FontSize="14"
+                                                  Foreground="#2C3E50"/>
+                                    </Border>
+                                </StackPanel>
+                                
+                                <StackPanel Spacing="5">
+                                    <TextBlock Text="Телефон:" 
+                                              FontWeight="SemiBold"
+                                              Foreground="#3E5F8A"/>
+                                    <Border Background="#F8F9FA" CornerRadius="5" Padding="10,8">
+                                        <TextBlock Name="PhoneText" 
+                                                  FontSize="14"
+                                                  Foreground="#2C3E50"/>
+                                    </Border>
+                                </StackPanel>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Column="2" Spacing="12">
+                                <StackPanel Spacing="5">
+                                    <TextBlock Text="Специализация:" 
+                                              FontWeight="SemiBold"
+                                              Foreground="#3E5F8A"/>
+                                    <Border Background="#F8F9FA" CornerRadius="5" Padding="10,8">
+                                        <TextBlock Name="SpecializationText" 
+                                                  FontSize="14"
+                                                  Foreground="#2C3E50"/>
+                                    </Border>
+                                </StackPanel>
+                                
+                                <StackPanel Spacing="5">
+                                    <TextBlock Text="Стаж работы:" 
+                                              FontWeight="SemiBold"
+                                              Foreground="#3E5F8A"/>
+                                    <Border Background="#F8F9FA" CornerRadius="5" Padding="10,8">
+                                        <TextBlock Name="ExperienceText" 
+                                                  FontSize="14"
+                                                  Foreground="#2C3E50"/>
+                                    </Border>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Дополнительная информация -->
+            <Border BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="10" Padding="20" Background="White">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Дополнительная информация" 
+                              FontSize="20" 
+                              FontWeight="Bold" 
+                              Foreground="#3E5F8A"/>
+                    
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Биография:" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#3E5F8A"/>
+                        <Border Background="#F8F9FA" CornerRadius="5" Padding="15">
+                            <TextBlock Name="BioText" 
+                                      FontSize="14"
+                                      Foreground="#2C3E50"
+                                      TextWrapping="Wrap"/>
+                        </Border>
+                    </StackPanel>
+                    
+                    <StackPanel Spacing="8" Margin="0,10,0,0">
+                        <TextBlock Text="Достижения:" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#3E5F8A"/>
+                        <Border Background="#F8F9FA" CornerRadius="5" Padding="15">
+                            <TextBlock Name="AchievementsText" 
+                                      FontSize="14"
+                                      Foreground="#2C3E50"
+                                      TextWrapping="Wrap"/>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Кнопки действий -->
+            <Border BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="10" Padding="20" Background="#F8F9FA">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Действия с аккаунтом" 
+                              FontSize="18" 
+                              FontWeight="Bold" 
+                              Foreground="#3E5F8A"
+                              HorizontalAlignment="Center"/>
+                    
+                    <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
+                        <Button Content="Изменить данные" 
+                                Background="#3E5F8A" 
+                                Foreground="White"
+                                BorderThickness="0"
+                                CornerRadius="5"
+                                Padding="20,12"
+                                FontWeight="SemiBold"
+                                Click="EditData_Click"/>
+                        
+                        <Button Content="Сменить пароль" 
+                                Background="#8673A1" 
+                                Foreground="White"
+                                BorderThickness="0"
+                                CornerRadius="5"
+                                Padding="20,12"
+                                FontWeight="SemiBold"
+                                Click="ChangePassword_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

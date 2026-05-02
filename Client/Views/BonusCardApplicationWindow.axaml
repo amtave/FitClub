@@ -1,0 +1,112 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Оформление бонусной карты"
+        Width="400"
+        Height="450"
+        WindowStartupLocation="CenterOwner"
+        x:Class="FitClub.Client.Views.BonusCardApplicationWindow">
+    
+    <StackPanel Margin="20" Spacing="15">
+        <TextBlock Text="🎁 Оформление бонусной карты" 
+                  FontSize="20" 
+                  FontWeight="Bold" 
+                  Foreground="#3E5F8A"
+                  HorizontalAlignment="Center"/>
+        
+        <Border Background="#F8F9FA" 
+                CornerRadius="8" 
+                Padding="15">
+            <StackPanel Spacing="10">
+                <TextBlock Text="Проверьте ваши данные:" 
+                          FontSize="14" 
+                          FontWeight="SemiBold" 
+                          Foreground="#2C3E50"/>
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="8"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="8"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                              Text="ФИО:" 
+                              FontWeight="SemiBold"
+                              Foreground="#2C3E50"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2"
+                              Name="FullNameText" 
+                              FontSize="14"
+                              Foreground="#2C3E50"/>
+                    
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                              Text="Телефон:" 
+                              FontWeight="SemiBold"
+                              Foreground="#2C3E50"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2"
+                              Name="PhoneText" 
+                              FontSize="14"
+                              Foreground="#2C3E50"/>
+                    
+                    <TextBlock Grid.Row="4" Grid.Column="0"
+                              Text="Паспорт:" 
+                              FontWeight="SemiBold"
+                              Foreground="#2C3E50"/>
+                    <TextBlock Grid.Row="4" Grid.Column="2"
+                              Name="PassportText" 
+                              FontSize="14"
+                              Foreground="#2C3E50"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+        
+        <Border Background="#E8F5E8" 
+                CornerRadius="8" 
+                Padding="15">
+            <StackPanel Spacing="5">
+                <TextBlock Text="🎯 Преимущества бонусной карты:" 
+                          FontSize="12" 
+                          FontWeight="Bold" 
+                          Foreground="#27AE60"/>
+                <TextBlock Text="• 100 баллов при оформлении" 
+                          FontSize="10" 
+                          Foreground="#2C3E50"/>
+                <TextBlock Text="• 1 балл = 1 рубль скидки" 
+                          FontSize="10" 
+                          Foreground="#2C3E50"/>
+                <TextBlock Text="• Специальные акции для владельцев карт" 
+                          FontSize="10" 
+                          Foreground="#2C3E50"/>
+                <TextBlock Text="• Персональные предложения" 
+                          FontSize="10" 
+                          Foreground="#2C3E50"/>
+            </StackPanel>
+        </Border>
+        
+        <StackPanel Orientation="Horizontal" 
+                   Spacing="15" 
+                   HorizontalAlignment="Center"
+                   Margin="0,10,0,0">
+            <Button Content="✅ Оформить карту" 
+                    Background="#27AE60" 
+                    Foreground="White"
+                    Padding="20,10"
+                    Click="ApplyButton_Click"
+                    MinWidth="120"/>
+            
+            <Button Content="❌ Отмена" 
+                    Background="#E74C3C" 
+                    Foreground="White"
+                    Padding="20,10"
+                    Click="CancelButton_Click"
+                    MinWidth="120"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

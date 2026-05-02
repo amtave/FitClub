@@ -1,0 +1,78 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="FitClub.Admin.Views.TrainerAbsenceWindow"
+        Title="Оформление пропуска/больничного" Width="550" Height="650"
+        WindowStartupLocation="CenterOwner" CanResize="False"
+        Background="#F4F7F9">
+    
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Spacing="10" Margin="0,0,0,20">
+            <TextBlock Text="ОФОРМЛЕНИЕ ПРОПУСКА" FontSize="22" FontWeight="ExtraBold" Foreground="#2C3E50" HorizontalAlignment="Center"/>
+            <Border Height="3" Width="80" Background="#E74C3C" HorizontalAlignment="Center" CornerRadius="2"/>
+            <TextBlock x:Name="DateText" FontSize="14" FontWeight="SemiBold" Foreground="#7F8C8D" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Spacing="20">
+                <Border Background="White" CornerRadius="12" Padding="20" BorderBrush="#E0E6ED" BorderThickness="1">
+                    <StackPanel Spacing="15">
+                        <TextBlock Text="ДЕТАЛИ ПРОПУСКА" FontSize="13" FontWeight="Bold" Foreground="#95A5A6" LetterSpacing="1"/>
+                        
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Тип причины:" FontWeight="SemiBold" Foreground="#2C3E50"/>
+                            <ComboBox x:Name="ReasonComboBox" HorizontalAlignment="Stretch" CornerRadius="6">
+                                <ComboBoxItem Content="Больничный"/>
+                                <ComboBoxItem Content="Заявление (отгул по уваж. причине)"/>
+                                <ComboBoxItem Content="Неуважительная причина (прогул)"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel x:Name="DaysCountPanel" Spacing="8" IsVisible="False">
+                            <TextBlock Text="Количество дней (для больничного):" FontWeight="SemiBold" Foreground="#2C3E50"/>
+                            <NumericUpDown x:Name="DaysCountPicker" Value="1" Minimum="1" Maximum="30" FormatString="0" CornerRadius="6"/>
+                        </StackPanel>
+                        
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Комментарий администратора:" FontWeight="SemiBold" Foreground="#2C3E50"/>
+                            <TextBox x:Name="CommentTextBox" Height="80" AcceptsReturn="True" TextWrapping="Wrap" CornerRadius="6" Watermark="Например: Заболел, предупредил утром..."/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="White" CornerRadius="12" Padding="20" BorderBrush="#E0E6ED" BorderThickness="1">
+                    <StackPanel Spacing="15">
+                        <TextBlock Text="ПРИКРЕПЛЕНИЕ ДОКУМЕНТА" FontSize="13" FontWeight="Bold" Foreground="#95A5A6" LetterSpacing="1"/>
+                        
+                        <Border x:Name="PhotoBorder" BorderBrush="#BDC3C7" BorderThickness="2" CornerRadius="6" Padding="5" Height="150" Background="#F8F9FA">
+                            <Image x:Name="DocumentPhotoPreview" Stretch="Uniform"/>
+                        </Border>
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+                            <Button Content="📁 Выбрать фото/скан" Background="#3498DB" Foreground="White" CornerRadius="6" Padding="15,8" FontWeight="SemiBold" Click="SelectPhoto_Click"/>
+                            <Button x:Name="ClearPhotoButton" Content="🗑️ Очистить" Background="#E74C3C" Foreground="White" CornerRadius="6" Padding="15,8" FontWeight="SemiBold" Click="ClearPhoto_Click" IsVisible="False"/>
+                        </StackPanel>
+                        <TextBlock x:Name="PhotoStatusText" FontSize="11" Foreground="#7F8C8D" HorizontalAlignment="Center" FontWeight="Bold"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#FDEDEC" CornerRadius="8" Padding="15" BorderBrush="#E74C3C" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="⚠️ Внимание:" FontSize="12" FontWeight="Bold" Foreground="#E74C3C"/>
+                        <TextBlock Text="Все существующие расписания тренера на выбранные даты будут автоматически удалены." FontSize="11" Foreground="#2C3E50" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Отмена" Background="#BDC3C7" Foreground="White" Padding="20,10" FontWeight="Bold" CornerRadius="8" Cursor="Hand" Click="CancelButton_Click"/>
+            <Button Content="Оформить и удалить расписание" Background="#E74C3C" Foreground="White" Padding="20,10" FontWeight="Bold" CornerRadius="8" Cursor="Hand" Click="ConfirmButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

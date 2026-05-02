@@ -1,0 +1,338 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="clr-namespace:FitClub.Models;assembly=FitClub"
+             x:Class="FitClub.Trainer.Views.TrainerClientsView">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="20">
+            
+            <!-- Заголовок -->
+            <TextBlock Text="Мои клиенты с абонементами" 
+                      FontSize="28"  
+                      FontWeight="Bold" 
+                      Foreground="#3E5F8A"
+                      HorizontalAlignment="Center"/>
+            
+            <!-- Информация о тренере -->
+            <Border Background="#F8F9FA" CornerRadius="10" Padding="15" BorderBrush="#BDC3C7" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Name="TrainerInfoText"
+                              FontSize="16" 
+                              FontWeight="SemiBold"
+                              Foreground="#3E5F8A"
+                              Text="Загрузка информации о тренере..."/>
+                </StackPanel>
+            </Border>
+
+            <!-- Контент для индивидуальных тренировок -->
+            <Border Name="IndividualContent" 
+                    Background="White" 
+                    CornerRadius="10" 
+                    Padding="20"
+                    BorderBrush="#3E5F8A" 
+                    BorderThickness="2">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Клиенты с индивидуальными абонементами" 
+                              FontSize="20" 
+                              FontWeight="Bold"
+                              Foreground="#3E5F8A"/>
+                    
+                    <!-- Поиск для индивидуальных -->
+                    <Border Background="#F8F9FA" CornerRadius="8" Padding="10" BorderBrush="#BDC3C7" BorderThickness="1">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="🔍" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Name="IndividualSearchBox" 
+                                    Watermark="Поиск по ФИО клиента..."
+                                    FontSize="14"
+                                    Padding="10,8"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    TextChanged="OnIndividualSearchTextChanged"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <Button Content="Обновить данные" 
+                            Background="#3E5F8A"
+                            Foreground="White"
+                            Click="RefreshIndividualData"
+                            Padding="15,8"
+                            FontWeight="SemiBold"
+                            HorizontalAlignment="Left"/>
+
+                    <!-- Список клиентов -->
+                    <ItemsControl Name="IndividualClientsList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="models:ClientSubscription">
+                                <Border Background="#F8F9FA" 
+                                       CornerRadius="8" 
+                                       Padding="15" 
+                                       Margin="0,5"
+                                       BorderBrush="#BDC3C7"
+                                       BorderThickness="1">
+                                    <Grid ColumnDefinitions="80,*,200,180,120,120">
+                                        <!-- Аватар клиента -->
+                                        <Border Grid.Column="0" 
+                                               Width="70" 
+                                               Height="70" 
+                                               CornerRadius="8"
+                                               Background="#E8F6F3" 
+                                               BorderBrush="#3E5F8A" 
+                                               BorderThickness="2"
+                                               Margin="0,0,15,0">
+                                            <Image Source="{Binding Client.AvatarBitmap}" 
+                                                   Width="66" 
+                                                   Height="66" 
+                                                   Stretch="UniformToFill"/>
+                                        </Border>
+                                        
+                                        <!-- Информация о клиенте -->
+                                        <StackPanel Grid.Column="1" Margin="0,0,15,0">
+                                            <TextBlock Text="{Binding Client.FullName}"
+                                                      FontSize="14"
+                                                      FontWeight="SemiBold"
+                                                      Foreground="#2C3E50"/>
+                                            <TextBlock Text="{Binding Client.Phone}"
+                                                      FontSize="12"
+                                                      Foreground="#7F8C8D"
+                                                      Margin="0,2,0,0"/>
+                                            <TextBlock Text="{Binding Client.Email}"
+                                                      FontSize="11"
+                                                      Foreground="#3E5F8A"
+                                                      Margin="0,1,0,0"/>
+                                        </StackPanel>
+                                        
+                                        <!-- Информация об абонементе -->
+                                        <StackPanel Grid.Column="2" Margin="0,0,15,0">
+                                            <TextBlock Text="{Binding Tariff.Name}"
+                                                      FontSize="13"
+                                                      FontWeight="SemiBold"
+                                                      Foreground="#2C3E50"
+                                                      TextWrapping="Wrap"/>
+                                            <TextBlock Text="{Binding VisitsInfo}"
+                                                      FontSize="12"
+                                                      Foreground="#27AE60"
+                                                      FontWeight="SemiBold"
+                                                      Margin="0,3,0,0"/>
+                                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,3,0,0">
+                                                <TextBlock Text="{Binding StartDate, StringFormat='с {0:dd.MM.yy}'}"
+                                                          FontSize="10"
+                                                          Foreground="#7F8C8D"/>
+                                                <TextBlock Text="{Binding EndDate, StringFormat='по {0:dd.MM.yy}'}"
+                                                          FontSize="10"
+                                                      Foreground="#E74C3C"
+                                                      FontWeight="SemiBold"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        
+                                        <!-- Направление и интенсивность -->
+                                        <StackPanel Grid.Column="3" VerticalAlignment="Center" Margin="0,0,15,0">
+                                            <TextBlock Text="{Binding TrainingDirectionInfo}"
+                                                      FontSize="12"
+                                                      Foreground="#2C3E50"
+                                                      TextWrapping="Wrap"
+                                                      FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding IntensityInfo}"
+                                                      FontSize="11"
+                                                      Foreground="#8673A1"
+                                                      Margin="0,2,0,0"
+                                                      TextWrapping="Wrap"/>
+                                            <TextBlock Text="{Binding PlanStatusText}"
+                                                      FontSize="10"
+                                                      Foreground="{Binding PlanStatusColor}"
+                                                      FontWeight="SemiBold"
+                                                      Margin="0,4,0,0"/>
+                                        </StackPanel>
+                                        
+                                        <!-- Статус плана -->
+                                        <Border Grid.Column="4" 
+                                               Background="{Binding PlanStatusBackgroundColor}"
+                                               CornerRadius="5" 
+                                               Padding="8,4"
+                                               Margin="0,0,10,0"
+                                               VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding PlanStatusText}"
+                                                      FontSize="11"
+                                                      Foreground="{Binding PlanStatusColor}"
+                                                      FontWeight="SemiBold"
+                                                      HorizontalAlignment="Center"/>
+                                        </Border>
+                                        
+                                        <!-- Кнопка действий -->
+                                        <Button Grid.Column="5" 
+                                               Content="{Binding ActionButtonText}"
+                                               Background="#3E5F8A"
+                                               Foreground="White"
+                                               FontSize="12"
+                                               FontWeight="SemiBold"
+                                               Click="OnIndividualActionClick"
+                                               Tag="{Binding}"
+                                               HorizontalAlignment="Stretch"
+                                               Height="40"
+                                               Padding="10,0"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Сообщение если нет клиентов -->
+                    <Border Name="NoIndividualClientsMessage" 
+                           Background="#FFF9E6" 
+                           CornerRadius="8" 
+                           Padding="20"
+                           IsVisible="False">
+                        <TextBlock Text="Нет клиентов с индивидуальными абонементами"
+                                  FontSize="14"
+                                  Foreground="#E67E22"
+                                  HorizontalAlignment="Center"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Контент для групповых тренировок -->
+            <Border Name="GroupContent" 
+                    Background="White" 
+                    CornerRadius="10" 
+                    Padding="20"
+                    BorderBrush="#8673A1" 
+                    BorderThickness="2">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Клиенты с групповыми абонементами" 
+                              FontSize="20" 
+                              FontWeight="Bold"
+                              Foreground="#8673A1"/>
+                    
+                    <!-- Поиск для групповых -->
+                    <Border Background="#F8F9FA" CornerRadius="8" Padding="10" BorderBrush="#BDC3C7" BorderThickness="1">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="🔍" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Name="GroupSearchBox" 
+                                    Watermark="Поиск по ФИО клиента..."
+                                    FontSize="14"
+                                    Padding="10,8"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    TextChanged="OnGroupSearchTextChanged"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <Button Content="Обновить данные" 
+                            Background="#8673A1"
+                            Foreground="White"
+                            Click="RefreshGroupData"
+                            Padding="15,8"
+                            FontWeight="SemiBold"
+                            HorizontalAlignment="Left"/>
+
+                    <!-- Список клиентов групповых тренировок -->
+                    <ItemsControl Name="GroupClientsList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="models:ClientSubscription">
+                                <Border Background="#F8F9FA" 
+                                       CornerRadius="8" 
+                                       Padding="15" 
+                                       Margin="0,5"
+                                       BorderBrush="#BDC3C7"
+                                       BorderThickness="1">
+                                    <Grid ColumnDefinitions="80,*,200,150,120">
+                                        <!-- Аватар клиента -->
+                                        <Border Grid.Column="0" 
+                                               Width="70" 
+                                               Height="70" 
+                                               CornerRadius="8"
+                                               Background="#E8F6F3" 
+                                               BorderBrush="#8673A1" 
+                                               BorderThickness="2"
+                                               Margin="0,0,15,0">
+                                            <Image Source="{Binding Client.AvatarBitmap}" 
+                                                   Width="66" 
+                                                   Height="66" 
+                                                   Stretch="UniformToFill"/>
+                                        </Border>
+                                        
+                                        <!-- Информация о клиенте -->
+                                        <StackPanel Grid.Column="1" Margin="0,0,15,0">
+                                            <TextBlock Text="{Binding Client.FullName}"
+                                                      FontSize="14"
+                                                      FontWeight="SemiBold"
+                                                      Foreground="#2C3E50"/>
+                                            <TextBlock Text="{Binding Client.Phone}"
+                                                      FontSize="12"
+                                                      Foreground="#7F8C8D"
+                                                      Margin="0,2,0,0"/>
+                                            <TextBlock Text="{Binding Client.Email}"
+                                                      FontSize="11"
+                                                      Foreground="#8673A1"
+                                                      Margin="0,1,0,0"/>
+                                        </StackPanel>
+                                        
+                                        <!-- Информация об абонементе -->
+                                        <StackPanel Grid.Column="2" Margin="0,0,15,0">
+                                            <TextBlock Text="{Binding Tariff.Name}"
+                                                      FontSize="13"
+                                                      FontWeight="SemiBold"
+                                                      Foreground="#2C3E50"
+                                                      TextWrapping="Wrap"/>
+                                            <TextBlock Text="{Binding VisitsInfo}"
+                                                      FontSize="12"
+                                                      Foreground="#27AE60"
+                                                      FontWeight="SemiBold"
+                                                      Margin="0,3,0,0"/>
+                                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,3,0,0">
+                                                <TextBlock Text="{Binding StartDate, StringFormat='с {0:dd.MM.yy}'}"
+                                                          FontSize="10"
+                                                          Foreground="#7F8C8D"/>
+                                                <TextBlock Text="{Binding EndDate, StringFormat='по {0:dd.MM.yy}'}"
+                                                          FontSize="10"
+                                                          Foreground="#E74C3C"
+                                                          FontWeight="SemiBold"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        
+                                        <!-- Направление и интенсивность -->
+                                        <StackPanel Grid.Column="3" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding TrainingDirectionInfo}"
+                                                      FontSize="12"
+                                                      FontWeight="SemiBold"
+                                                      Foreground="#2C3E50"
+                                                      TextWrapping="Wrap"/>
+                                            <TextBlock Text="{Binding IntensityInfo}"
+                                                      FontSize="11"
+                                                      Foreground="#8673A1"
+                                                      Margin="0,2,0,0"
+                                                      TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        
+                                        <!-- Кнопка просмотра -->
+                                        <Button Grid.Column="4" 
+                                               Content="Подробнее"
+                                               Background="#8673A1"
+                                               Foreground="White"
+                                               FontSize="12"
+                                               FontWeight="SemiBold"
+                                               Click="OnGroupDetailsClick"
+                                               Tag="{Binding}"
+                                               HorizontalAlignment="Stretch"
+                                               Height="40"
+                                               Padding="10,0"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Сообщение если нет клиентов -->
+                    <Border Name="NoGroupClientsMessage" 
+                           Background="#FFF9E6" 
+                           CornerRadius="8" 
+                           Padding="20"
+                           IsVisible="False">
+                        <TextBlock Text="Нет клиентов с групповыми абонементами"
+                                  FontSize="14"
+                                  Foreground="#E67E22"
+                                  HorizontalAlignment="Center"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

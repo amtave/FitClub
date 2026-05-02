@@ -1,0 +1,84 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
+        x:Class="FitClub.Register"
+        Title="Фитнес-клуб - Регистрация"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen">
+  <Grid>
+        <!-- Фон -->
+        <Image Source="/Assets/22.png" Stretch="UniformToFill"/>
+
+        <!-- Центрированный блок -->
+        <Border Width="600" Height="680" Background="#FFFFFF" CornerRadius="30"
+                VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Spacing="12" Margin="30" VerticalAlignment="Center">
+                    
+                    <TextBlock Text="Регистрация клиента" FontSize="24" HorizontalAlignment="Center" Foreground="#ea5e28" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                    <!-- ФИО -->
+                    <TextBox x:Name="LastNameTextBox" Watermark="Фамилия *" Background="#fdf5e1" Foreground="#ea5e28"
+                             FontSize="14" Padding="10" CornerRadius="10" MaxLength="50" BorderBrush="#ea5e28"/>
+                    
+                    <TextBox x:Name="FirstNameTextBox" Watermark="Имя *" Background="#fdf5e1" Foreground="#ea5e28"
+                             FontSize="14" Padding="10" CornerRadius="10" MaxLength="50" BorderBrush="#ea5e28"/>
+                    
+                    <TextBox x:Name="MiddleNameTextBox" Watermark="Отчество *" Background="#fdf5e1" Foreground="#ea5e28"
+                             FontSize="14" Padding="10" CornerRadius="10" MaxLength="50" BorderBrush="#ea5e28"/>
+
+                    <!-- Контактные данные -->
+                    <StackPanel>
+                        <TextBox x:Name="PhoneTextBox" Watermark="+7 999 123-45-67 *" Background="#fdf5e1" Foreground="#ea5e28" BorderBrush="#ea5e28"
+                                 FontSize="14" Padding="10" CornerRadius="10" MaxLength="18"
+                                 TextChanged="OnPhoneTextChanged"/>
+                        <TextBlock Text="Формат: +7 999 123-45-67" FontSize="10" Foreground="#666" Margin="5,2,0,0"/>
+                    </StackPanel>
+                    
+                    <TextBox x:Name="EmailTextBox" Watermark="Email *" Background="#fdf5e1" Foreground="#ea5e28"
+                             FontSize="14" Padding="10" CornerRadius="10" MaxLength="100" BorderBrush="#ea5e28"/>
+
+                    <!-- Пароли -->
+                    <StackPanel>
+                        <Grid ColumnDefinitions="*, Auto">
+                            <TextBox x:Name="PasswordTextBox" Watermark="Пароль *" Background="#fdf5e1" Foreground="#ea5e28"
+                                     FontSize="14" Padding="10" CornerRadius="10" PasswordChar="•"
+                                     Grid.Column="0" TextChanged="OnPasswordChanged" BorderBrush="#ea5e28"/>
+                            <Button x:Name="ShowPasswordBtn" Content="👁" Background="Transparent" Foreground="#ea5e28"
+                                    FontSize="12" Width="30" Height="30" Grid.Column="1" Margin="5,0,0,0"
+                                    Click="OnShowPasswordClick" BorderBrush="#ea5e28"/>
+                        </Grid>
+                        <TextBlock x:Name="PasswordRequirements" Text="Минимум 8 символов, заглавная, цифра, спецсимвол" 
+                                   FontSize="10" Foreground="#666" Margin="5,2,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <Grid ColumnDefinitions="*, Auto">
+                            <TextBox x:Name="ConfirmPasswordTextBox" Watermark="Повторите пароль *" Background="#fdf5e1" Foreground="#ea5e28"
+                                     FontSize="14" Padding="10" CornerRadius="10" PasswordChar="•"
+                                     Grid.Column="0" TextChanged="OnConfirmPasswordChanged" BorderBrush="#ea5e28"/>
+                            <Button x:Name="ShowConfirmPasswordBtn" Content="👁" Background="Transparent" Foreground="#ea5e28"
+                                    FontSize="12" Width="30" Height="30" Grid.Column="1" Margin="5,0,0,0"
+                                    Click="OnShowConfirmPasswordClick"/>
+                        </Grid>
+                        <TextBlock x:Name="PasswordMatchText" Text="" FontSize="10" Margin="5,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Кнопки -->
+                    <Button Content="Зарегистрироваться" Background="#ea5e28" Foreground="White"
+                            FontSize="16" Padding="15" CornerRadius="10" HorizontalAlignment="Center"
+                            Click="Register_Click" Margin="0,20,0,10" Width="200"/>
+
+                    <Button Content="Назад к авторизации" Background="Transparent" 
+                            Foreground="#ea5e28" FontSize="14" BorderThickness="0" 
+                            Click="BackToLogin_Click" HorizontalAlignment="Center"/>
+
+                    <TextBlock Text="* - обязательные поля" FontSize="12" Foreground="#666" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,187 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="700" d:DesignHeight="700"
+        x:Class="FitClub.Admin.Views.NewsEditWindow"
+        Title="Редактирование новости"
+        Width="700"
+        Height="700"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+    
+    <!-- Добавляем ScrollViewer для возможности прокрутки, если контент не помещается -->
+    <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                  HorizontalScrollBarVisibility="Disabled">
+        <Border Background="White"
+                CornerRadius="10"
+                Padding="30">
+            <StackPanel Spacing="20">
+                
+                <!-- Заголовок окна -->
+                <TextBlock x:Name="WindowTitle"
+                           FontSize="26"
+                           FontWeight="Bold"
+                           Foreground="#2C3E50"
+                           HorizontalAlignment="Center"/>
+                
+                <Border Height="2" Background="#3498DB" HorizontalAlignment="Stretch"/>
+                
+                <!-- Поле для заголовка -->
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Заголовок новости:" 
+                               FontWeight="SemiBold"
+                               Foreground="#34495E"
+                               FontSize="15"/>
+                    
+                    <TextBox x:Name="TitleBox"
+                             Padding="15,12"
+                             CornerRadius="8"
+                             BorderBrush="#BDC3C7"
+                             BorderThickness="1"
+                             FontSize="15"
+                             Watermark="Введите заголовок новости"
+                             MaxLength="200"/>
+                </StackPanel>
+                
+                <!-- Поле для текста новости (УВЕЛИЧЕННОЕ) -->
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Текст новости:" 
+                               FontWeight="SemiBold"
+                               Foreground="#34495E"
+                               FontSize="15"/>
+                    
+                    <TextBox x:Name="DescriptionBox"
+                             Padding="15,12"
+                             CornerRadius="8"
+                             BorderBrush="#BDC3C7"
+                             BorderThickness="1"
+                             FontSize="15"
+                             Height="200"  
+                             MinHeight="150"
+                             MaxHeight="300"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             Watermark="Введите текст новости (можно использовать несколько абзацев)"/>
+                </StackPanel>
+                
+                <!-- Блок с изображением -->
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Изображение:" 
+                               FontWeight="SemiBold"
+                               Foreground="#34495E"
+                               FontSize="15"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Border Grid.Column="0"
+                                Height="180"  
+                                CornerRadius="8"
+                                BorderBrush="#BDC3C7"
+                                BorderThickness="1"
+                                Background="#F8F9FA"
+                                ClipToBounds="True"
+                                Margin="0,0,10,0">
+                            
+                            <Grid>
+                                <Image x:Name="PreviewImage"
+                                       Stretch="Uniform"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+                                
+                                <Border x:Name="ImagePlaceholder"
+                                        Background="#ECF0F1"
+                                        IsVisible="True">
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="🖼️" FontSize="60" Margin="0,0,0,10"/>
+                                        <TextBlock Text="Изображение не выбрано" 
+                                                   FontSize="15"
+                                                   Foreground="#7F8C8D"/>
+                                        <TextBlock Text="Рекомендуемый размер: 800x600px" 
+                                                   FontSize="12"
+                                                   Foreground="#95A5A6"
+                                                   Margin="0,5,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        
+                        <!-- Кнопка выбора файла -->
+                        <Button Grid.Column="1"
+                                x:Name="SelectImageButton"
+                                Content="Выбрать файл"
+                                Background="#3498DB"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Padding="20,15"
+                                CornerRadius="8"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Click="SelectImageButton_Click"
+                                VerticalAlignment="Top"/>
+                    </Grid>
+                </StackPanel>
+                
+                <!-- Информация о выбранном файле -->
+                <Border x:Name="SelectedFileInfoBorder"
+                        Background="#E8F8F5"
+                        CornerRadius="5"
+                        Padding="12"
+                        IsVisible="False">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="✓" 
+                                   FontSize="16"
+                                   Foreground="#27AE60"
+                                   FontWeight="Bold"/>
+                        <TextBlock x:Name="SelectedFileInfo"
+                                   FontSize="13"
+                                   Foreground="#27AE60"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Кнопки действий -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Spacing="15"
+                            Margin="0,25,0,10">
+                    
+                    <Button x:Name="CancelButton"
+                            Content="Отмена"
+                            Background="#95A5A6"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Padding="30,12"
+                            CornerRadius="8"
+                            FontSize="15"
+                            Width="120"
+                            Click="CancelButton_Click"/>
+                    
+                    <Button x:Name="SaveButton"
+                            Content="Сохранить"
+                            Background="#27AE60"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Padding="30,12"
+                            CornerRadius="8"
+                            FontSize="15"
+                            FontWeight="SemiBold"
+                            Width="120"
+                            Click="SaveButton_Click"/>
+                </StackPanel>
+                
+                <!-- Подсказка по форматированию -->
+                <TextBlock Text="💡 Совет: Для переноса строки используйте клавишу Enter"
+                           FontSize="11"
+                           Foreground="#95A5A6"
+                           HorizontalAlignment="Center"
+                           Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</Window>

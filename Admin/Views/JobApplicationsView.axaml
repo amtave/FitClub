@@ -1,0 +1,132 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="clr-namespace:FitClub.Models"
+             x:Class="FitClub.Admin.Views.JobApplicationsView">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="20">
+            <Grid ColumnDefinitions="*, Auto">
+                <TextBlock Grid.Column="0" 
+                           Text="📄 Заявки на работу" 
+                           FontSize="28" 
+                           FontWeight="Bold" 
+                           Foreground="#2C3E50"
+                           VerticalAlignment="Center"/>
+                
+                <Button Grid.Column="1"
+                        Content="← Назад"
+                        Background="#FF8955"
+                        Foreground="White"
+                        Padding="20,10"
+                        CornerRadius="5"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Cursor="Hand"
+                        Click="BackToTrainers_Click"/>
+            </Grid>
+
+            <Border Height="2" Background="#FF8955" HorizontalAlignment="Stretch"/>
+
+            <Grid ColumnDefinitions="*, Auto" Margin="0,5">
+                <TextBox Grid.Column="0"
+                         x:Name="SearchBox"
+                         Watermark="Поиск по ФИО..."
+                         Margin="0,0,15,0"
+                         Height="40"
+                         VerticalContentAlignment="Center"
+                         KeyUp="SearchBox_KeyUp"/>
+                
+                <ComboBox Grid.Column="1"
+                          x:Name="StatusFilter"
+                          Width="200"
+                          Height="40"
+                          SelectedIndex="0"
+                          SelectionChanged="StatusFilter_SelectionChanged">
+                    <ComboBoxItem Content="Все статусы"/>
+                    <ComboBoxItem Content="На рассмотрении"/>
+                    <ComboBoxItem Content="Принято"/>
+                    <ComboBoxItem Content="Отклонено"/>
+                </ComboBox>
+            </Grid>
+
+            <ItemsControl x:Name="ApplicationsList">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="15"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="models:JobApplicationView" x:CompileBindings="False">
+                        <Border Background="White"
+                                CornerRadius="8"
+                                Padding="15"
+                                BorderBrush="{Binding StatusColor}"
+                                BorderThickness="1"
+                                Cursor="Hand"
+                                Tag="{Binding .}"
+                                Tapped="Application_Tapped">
+                            <Grid ColumnDefinitions="Auto, *, Auto">
+                                <Border Grid.Column="0"
+                                        CornerRadius="25"
+                                        Width="50"
+                                        Height="50"
+                                        Margin="0,0,15,0"
+                                        ClipToBounds="True"
+                                        BorderBrush="{Binding StatusColor}"
+                                        BorderThickness="2">
+                                    <Image Source="{Binding AvatarBitmap}" Stretch="UniformToFill"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding ClientFullName}" FontSize="18" FontWeight="Bold" Foreground="#2C3E50"/>
+                                    <WrapPanel Margin="0,5,0,0">
+                                        <TextBlock Text="Специализация: " FontSize="12" Foreground="#7F8C8D"/>
+                                        <TextBlock Text="{Binding Specialization}" FontSize="12" FontWeight="SemiBold" Foreground="#2C3E50"/>
+                                    </WrapPanel>
+                                    <TextBlock Margin="0,2,0,0">
+                                        <Run Text="Опыт: " FontSize="12" Foreground="#7F8C8D"/>
+                                        <Run Text="{Binding ExperienceInfo}" FontSize="12" FontWeight="SemiBold" Foreground="#2C3E50"/>
+                                        <Run Text=" | Статус: " FontSize="12" Foreground="#7F8C8D"/>
+                                        <Run Text="{Binding StatusDisplay}" FontSize="12" FontWeight="Bold" Foreground="{Binding StatusColor}"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2" 
+                                            Orientation="Horizontal" 
+                                            Spacing="10" 
+                                            VerticalAlignment="Center"
+                                            IsVisible="{Binding IsPending}">
+                                    <Button Content="Отказать"
+                                            Background="Transparent"
+                                            Foreground="#E74C3C"
+                                            BorderBrush="#E74C3C"
+                                            BorderThickness="1"
+                                            Padding="15,8"
+                                            FontSize="12"
+                                            FontWeight="SemiBold"
+                                            Cursor="Hand"
+                                            Click="RejectApplication_Click"
+                                            Tag="{Binding .}"/>
+                                    <Button Content="Оформить карточку"
+                                            Background="#FF8955"
+                                            Foreground="White"
+                                            Padding="15,8"
+                                            FontSize="12"
+                                            FontWeight="SemiBold"
+                                            Cursor="Hand"
+                                            Click="CreateTrainerCard_Click"
+                                            Tag="{Binding .}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Border x:Name="EmptyMessage" Background="#F8F9FA" CornerRadius="8" Padding="20" IsVisible="False">
+                <TextBlock Text="Совпадений не найдено" FontSize="14" Foreground="#95A5A6" HorizontalAlignment="Center"/>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

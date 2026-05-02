@@ -1,0 +1,156 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="clr-namespace:FitClub.Models;assembly=FitClub"
+        xmlns:converters="clr-namespace:FitClub.Converters"
+        x:Class="FitClub.Client.Views.ClientViewTrainingPlanWindow"
+        Title="Мой план тренировок"
+        Width="900"
+        Height="700"
+        WindowStartupLocation="CenterOwner">
+    
+    <Window.Resources>
+        <converters:StringConverters x:Key="StringConverters"/>
+    </Window.Resources>
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="15">
+            
+            <!-- Заголовок -->
+            <Border Background="#9B59B6" CornerRadius="10" Padding="15">
+                <StackPanel>
+                    <TextBlock Text="Мой план тренировок" 
+                              FontSize="24" 
+                              FontWeight="Bold" 
+                              Foreground="White"
+                              HorizontalAlignment="Center"/>
+                    <TextBlock Name="ClientInfoText"
+                              FontSize="14"
+                              Foreground="White"
+                              HorizontalAlignment="Center"
+                              Margin="0,5,0,0"/>
+                    <TextBlock Name="GoalInfoText"
+                              FontSize="12"
+                              Foreground="White"
+                              HorizontalAlignment="Center"
+                              Margin="0,2,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Основная информация -->
+            <Border Background="White" CornerRadius="10" Padding="15" BorderBrush="#BDC3C7" BorderThickness="1">
+                <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Тренер:" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Name="TrainerInfoText"/>
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Дата создания:" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Name="CreatedDateText"/>
+                    
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Прогресс:" FontWeight="SemiBold"/>
+                    <Border Grid.Row="2" Grid.Column="1" 
+                           Name="StatusBorder"
+                           CornerRadius="5" 
+                           Padding="5,2"
+                           HorizontalAlignment="Left">
+                        <TextBlock Name="StatusText" 
+                                  Foreground="White"
+                                  FontWeight="SemiBold"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Дни тренировок -->
+            <Border Background="White" CornerRadius="10" Padding="15" BorderBrush="#BDC3C7" BorderThickness="1">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="План на 12 тренировок" 
+                              FontSize="18" 
+                              FontWeight="Bold"
+                              Foreground="#9B59B6"/>
+                    
+                    <ItemsControl Name="TrainingDaysList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="models:TrainingPlanDay">
+                                <Border Background="{Binding DayBackgroundView}" 
+                                       CornerRadius="8" 
+                                       Padding="15" 
+                                       Margin="0,5"
+                                       BorderBrush="{Binding BorderColor}"
+                                       BorderThickness="2">
+                                    <StackPanel Spacing="10">
+                                        <!-- Заголовок дня -->
+                                        <Border Background="{Binding NumberBackground}"
+                                               CornerRadius="5" 
+                                               Padding="10,5"
+                                               HorizontalAlignment="Left">
+                                            <TextBlock Text="{Binding DayNumber, StringFormat='День {0}'}"
+                                                      FontWeight="Bold"
+                                                      Foreground="White"
+                                                      HorizontalAlignment="Center"/>
+                                        </Border>
+                                        
+                                        <!-- Список упражнений -->
+                                        <ItemsControl ItemsSource="{Binding Exercises}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="models:Exercise">
+                                                    <Border Background="#E8F6F3" 
+                                                           CornerRadius="5" 
+                                                           Padding="10" 
+                                                           Margin="0,5,0,0"
+                                                           BorderBrush="#BDC3C7" 
+                                                           BorderThickness="1">
+                                                        <StackPanel Spacing="5">
+                                                            <TextBlock Text="{Binding Name}"
+                                                                      FontSize="14"
+                                                                      FontWeight="SemiBold"
+                                                                      Foreground="#2C3E50"/>
+                                                            
+                                                            <StackPanel Orientation="Horizontal" Spacing="15" Margin="0,5,0,0">
+                                                                <TextBlock Text="{Binding SetsDisplay}" 
+                                                                          FontSize="11" 
+                                                                          Foreground="#9B59B6"/>
+                                                                <TextBlock Text="{Binding RepsDisplay}" 
+                                                                          FontSize="11" 
+                                                                          Foreground="#9B59B6"/>
+                                                                <TextBlock Text="{Binding DurationDisplay}" 
+                                                                          FontSize="11" 
+                                                                          Foreground="#9B59B6"/>
+                                                                <TextBlock Text="{Binding RestDisplay}" 
+                                                                          FontSize="11" 
+                                                                          Foreground="#9B59B6"/>
+                                                            </StackPanel>
+
+                                                            <!-- Примечания упражнения -->
+                                                            <Border Background="#F8F9FA" 
+                                                                   CornerRadius="5" 
+                                                                   Padding="8" 
+                                                                   Margin="0,5,0,0"
+                                                                   IsVisible="{Binding Notes, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                                                <TextBlock Text="{Binding Notes}"
+                                                                          FontSize="11"
+                                                                          Foreground="#7F8C8D"
+                                                                          TextWrapping="Wrap"/>
+                                                            </Border>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+            <!-- Кнопка закрытия -->
+            <Button Content="Закрыть" 
+                   Background="#9B59B6"
+                   Foreground="White"
+                   FontSize="14"
+                   FontWeight="Bold"
+                   Click="OnCloseClick"
+                   Padding="20,10"
+                   HorizontalAlignment="Center"/>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

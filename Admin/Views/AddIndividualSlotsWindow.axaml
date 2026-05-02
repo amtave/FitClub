@@ -1,0 +1,32 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="FitClub.Admin.Views.AddIndividualSlotsWindow"
+        Title="Добавление слотов" Width="300" Height="450"
+        WindowStartupLocation="CenterOwner" CanResize="False">
+    <Grid RowDefinitions="Auto, *, Auto" Margin="20">
+        <TextBlock Grid.Row="0" Text="Выберите время:" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+        
+        <ScrollViewer Grid.Row="1">
+            <StackPanel x:Name="SlotsStack">
+                <CheckBox Content="08:00 - 09:00" Tag="08:00:00"/>
+                <CheckBox Content="09:00 - 10:00" Tag="09:00:00"/>
+                <CheckBox Content="10:00 - 11:00" Tag="10:00:00"/>
+                <CheckBox Content="11:00 - 12:00" Tag="11:00:00"/>
+                <CheckBox Content="12:00 - 13:00" Tag="12:00:00"/>
+                <CheckBox Content="13:00 - 14:00" Tag="13:00:00"/>
+                <CheckBox Content="14:00 - 15:00" Tag="14:00:00"/>
+                <CheckBox Content="15:00 - 16:00" Tag="15:00:00"/>
+                <CheckBox Content="16:00 - 17:00" Tag="16:00:00"/>
+                <CheckBox Content="17:00 - 18:00" Tag="17:00:00"/>
+                <CheckBox Content="18:00 - 19:00" Tag="18:00:00"/>
+                <CheckBox Content="19:00 - 20:00" Tag="19:00:00"/>
+                <CheckBox Content="20:00 - 21:00" Tag="20:00:00"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button Content="Отмена" Click="Cancel_Click" Width="80"/>
+            <Button Content="ОК" Click="Ok_Click" Width="80" Background="#3498DB" Foreground="White"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,87 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Подтверждение email"
+        Width="400"
+        Height="300"
+        WindowStartupLocation="CenterOwner"
+        x:Class="FitClub.Client.Views.EmailVerificationWindow">
+    
+    <StackPanel Margin="20" Spacing="15">
+        <TextBlock Text="📧 Подтверждение email" 
+                  FontSize="20" 
+                  FontWeight="Bold" 
+                  Foreground="#3E5F8A"
+                  HorizontalAlignment="Center"/>
+        
+        <!-- Информация о email -->
+        <Border Background="#E8F5E8" 
+                CornerRadius="8" 
+                Padding="15">
+            <StackPanel Spacing="5">
+                <TextBlock Text="✉️ Код отправлен на email" 
+                          FontSize="12" 
+                          FontWeight="Bold" 
+                          Foreground="#27AE60"/>
+                
+                <!-- УБРАЛИ Binding Email -->
+                <TextBlock x:Name="EmailText"
+                          FontSize="11"
+                          Foreground="#2C3E50"
+                          TextWrapping="Wrap"/>
+                
+                <TextBlock Text="Введите 6-значный код из письма:"
+                          FontSize="11"
+                          Foreground="#2C3E50"
+                          Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Поле для ввода кода -->
+        <StackPanel Spacing="8">
+            <TextBlock Text="Код подтверждения" 
+                      FontSize="12" 
+                      FontWeight="SemiBold" 
+                      Foreground="#2C3E50"/>
+            
+            <TextBox x:Name="VerificationCodeTextBox"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    TextAlignment="Center"
+                    MaxLength="6"/>
+            
+            <TextBlock x:Name="TimerText"
+                      Text="Код действителен: 05:00"
+                      FontSize="10"
+                      Foreground="#E74C3C"
+                      HorizontalAlignment="Center"/>
+        </StackPanel>
+        
+        <!-- Кнопки -->
+        <StackPanel Orientation="Horizontal" 
+                   Spacing="15" 
+                   HorizontalAlignment="Center"
+                   Margin="0,10,0,0">
+            <Button x:Name="ConfirmButton"
+                    Content="✅ Подтвердить" 
+                    Background="#27AE60" 
+                    Foreground="White"
+                    Padding="20,10"
+                    Click="ConfirmButton_Click"
+                    MinWidth="120"/>
+            
+            <Button Content="🔄 Отправить код повторно" 
+                    Background="#3498DB" 
+                    Foreground="White"
+                    Padding="15,10"
+                    Click="ResendCodeButton_Click"
+                    MinWidth="140"/>
+            
+            <Button Content="❌ Отмена" 
+                    Background="#E74C3C" 
+                    Foreground="White"
+                    Padding="20,10"
+                    Click="CancelButton_Click"
+                    MinWidth="120"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

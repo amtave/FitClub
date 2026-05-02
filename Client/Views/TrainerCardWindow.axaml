@@ -1,0 +1,113 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:FitClub.Views"
+        x:Class="FitClub.Views.TrainerCardWindow"
+        Title="Карточка тренера" Width="550" Height="720"
+        WindowStartupLocation="CenterOwner" CanResize="False"
+        Background="#F4F7F9">
+    
+    <Grid RowDefinitions="Auto, *">
+        <Border Grid.Row="0" Background="White" Padding="25" CornerRadius="0,0,25,25" BoxShadow="0 4 15 0 #08000000">
+            <Grid ColumnDefinitions="Auto, *">
+                <Border Grid.Column="0" Width="100" Height="100" CornerRadius="50" ClipToBounds="True" Background="#F2F4F4">
+                    <Image Name="TrainerPhoto" Stretch="UniformToFill"/>
+                </Border>
+                
+                <StackPanel Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Center" Spacing="5">
+                    <TextBlock Name="TrainerNameText" FontSize="22" FontWeight="Heavy" Foreground="#2C3E50" TextWrapping="Wrap"/>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <TextBlock Text="⭐" Foreground="#FFD700" VerticalAlignment="Center" FontSize="16"/>
+                            <TextBlock Name="AverageRatingText" FontSize="18" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock Name="TotalReviewsText" FontSize="12" Foreground="#95A5A6" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Margin="25" Spacing="25">
+                
+                <StackPanel Spacing="15">
+                    <StackPanel Margin="0,0,0,5">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="👤" FontSize="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="ИНФОРМАЦИЯ" FontSize="14" FontWeight="Heavy" Foreground="Black" LetterSpacing="1"/>
+                        </StackPanel>
+                        <Border Height="3" Width="40" Background="#FF8955" HorizontalAlignment="Left" Margin="28,4,0,0" CornerRadius="1.5"/>
+                    </StackPanel>
+
+                    <Border Background="White" CornerRadius="16" Padding="20" BoxShadow="0 2 8 0 #05000000">
+                        <StackPanel Spacing="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Специализация:" FontSize="11" FontWeight="Bold" Foreground="#BDC3C7"/>
+                                <TextBlock Name="SpecializationText" FontSize="14" Foreground="#2C3E50" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Опыт работы:" FontSize="11" FontWeight="Bold" Foreground="#BDC3C7"/>
+                                <TextBlock Name="ExperienceText" FontSize="14" Foreground="#2C3E50" FontWeight="SemiBold"/>
+                            </StackPanel>
+
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="О себе:" FontSize="11" FontWeight="Bold" Foreground="#BDC3C7"/>
+                                <TextBlock Text="Профессиональный подход к тренировкам, составление индивидуальных программ питания и контроль техники выполнения упражнений." 
+                                           FontSize="13" Foreground="#5D6D7E" TextWrapping="Wrap" LineHeight="20"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Spacing="15">
+                    <StackPanel Margin="0,0,0,5">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="💬" FontSize="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="ОТЗЫВЫ КЛИЕНТОВ" FontSize="14" FontWeight="Heavy" Foreground="Black" LetterSpacing="1"/>
+                        </StackPanel>
+                        <Border Height="3" Width="40" Background="#FF8955" HorizontalAlignment="Left" Margin="28,4,0,0" CornerRadius="1.5"/>
+                    </StackPanel>
+
+                    <ItemsControl Name="ReviewsControl">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:TrainerReviewDisplayItem">
+                                <Border Background="White" CornerRadius="16" Padding="15" Margin="0,0,0,12" BoxShadow="0 2 6 0 #03000000">
+                                    <StackPanel Spacing="10">
+                                        <Grid ColumnDefinitions="Auto, *, Auto">
+                                            <Border Grid.Column="0" Width="36" Height="36" CornerRadius="18" ClipToBounds="True" Background="#F2F4F4">
+                                                <Image Source="{Binding ClientPhoto}" Stretch="UniformToFill"/>
+                                            </Border>
+                                            
+                                            <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding ClientName}" FontSize="13" FontWeight="Bold" Foreground="#2C3E50"/>
+                                                <TextBlock Text="{Binding RelativeDate}" FontSize="10" Foreground="#BDC3C7"/>
+                                            </StackPanel>
+                                            
+                                            <TextBlock Grid.Column="2" Text="{Binding Stars}" Foreground="#FFD700" FontSize="12" VerticalAlignment="Top"/>
+                                        </Grid>
+                                        
+                                        <TextBlock Text="{Binding Comment}" FontSize="12" Foreground="#5D6D7E" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <Button Name="ShowMoreButton" 
+                            Content="Показать больше" 
+                            HorizontalAlignment="Center" 
+                            Background="Transparent"
+                            Foreground="#3498DB"
+                            FontWeight="Bold"
+                            FontSize="12"
+                            Click="ShowMore_Click"
+                            IsVisible="False"/>
+
+                    <StackPanel Name="NoReviewsPanel" IsVisible="False" Margin="0,20" Spacing="10">
+                        <TextBlock Text="Отзывов пока нет" FontSize="13" Foreground="#BDC3C7" HorizontalAlignment="Center" FontStyle="Italic"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>
