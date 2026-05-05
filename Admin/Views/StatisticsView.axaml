@@ -1,0 +1,148 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FitClub.Admin.Views;assembly=FitClub"
+             x:Class="FitClub.Admin.Views.StatisticsView"
+             x:CompileBindings="False"
+             Background="#F4F7F9">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="20">
+            <Grid ColumnDefinitions="*, Auto">
+                <TextBlock Grid.Column="0" Text="📊 Общая статистика" FontSize="28" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="15" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="За месяц:" VerticalAlignment="Center" Foreground="#7F8C8D" FontWeight="SemiBold"/>
+                        <DatePicker x:Name="MonthPicker" VerticalAlignment="Center" Width="150" CornerRadius="5"/>
+                        <Button Content="📥 Скачать" Click="ExportMonthlyReport" Background="#3498DB" Foreground="White" CornerRadius="5" Padding="15,8" FontWeight="Bold" Cursor="Hand"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="15,0,0,0">
+                        <TextBlock Text="За день:" VerticalAlignment="Center" Foreground="#7F8C8D" FontWeight="SemiBold"/>
+                        <CalendarDatePicker x:Name="DayPicker" VerticalAlignment="Center" Width="150" CornerRadius="5"/>
+                        <Button Content="📥 Скачать" Click="ExportDailyReport" Background="#FF8955" Foreground="White" CornerRadius="5" Padding="15,8" FontWeight="Bold" Cursor="Hand"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            
+            <Border Height="2" Background="#FF8955" HorizontalAlignment="Stretch"/>
+
+            <StackPanel Spacing="8">
+                <TextBlock Text="КЛЮЧЕВЫЕ ПОКАЗАТЕЛИ" FontSize="12" FontWeight="Bold" Foreground="#FF8955" LetterSpacing="1" Margin="5,0,0,0"/>
+                <UniformGrid Columns="3" Rows="1">
+                    <Border Background="#F4F9FF" Margin="5" Padding="20" CornerRadius="10" BorderBrush="#3498DB" BorderThickness="2">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="ВСЕГО КЛИЕНТОВ" FontSize="11" FontWeight="SemiBold" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding TotalClients}" FontSize="32" FontWeight="Bold" Foreground="#3498DB" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="#F4FFF7" Margin="5" Padding="20" CornerRadius="10" BorderBrush="#27AE60" BorderThickness="2">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="АКТИВНЫХ АБОНЕМЕНТОВ" FontSize="11" FontWeight="SemiBold" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding ActiveSubscriptionsCount}" FontSize="32" FontWeight="Bold" Foreground="#27AE60" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="#FFF9F4" Margin="5" Padding="20" CornerRadius="10" BorderBrush="#E67E22" BorderThickness="2">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="ШТАТ ТРЕНЕРОВ" FontSize="11" FontWeight="SemiBold" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding StaffTrainersCount}" FontSize="32" FontWeight="Bold" Foreground="#E67E22" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+            </StackPanel>
+
+            <StackPanel Spacing="8">
+                <TextBlock Text="ФИНАНСОВЫЕ ПОКАЗАТЕЛИ" FontSize="12" FontWeight="Bold" Foreground="#FF8955" LetterSpacing="1" Margin="5,0,0,0"/>
+                <Grid ColumnDefinitions="*, *">
+                    <Border Grid.Column="0" Background="#F9F4FF" Margin="5" Padding="20" CornerRadius="10" BorderBrush="#8E44AD" BorderThickness="2">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="ВЫРУЧКА ЗА СЕГОДНЯ" FontSize="11" FontWeight="SemiBold" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding TodayRevenueText}" FontSize="32" FontWeight="Bold" Foreground="#8E44AD" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="1" Background="#FFF0EA" Margin="5" Padding="20" CornerRadius="10" BorderBrush="#FF8955" BorderThickness="2">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="ВЫРУЧКА В ТЕКУЩЕМ МЕСЯЦЕ" FontSize="11" FontWeight="SemiBold" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding MonthRevenueText}" FontSize="32" FontWeight="Bold" Foreground="#FF8955" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Spacing="8">
+                <TextBlock Text="{Binding CurrentMonthText}" FontSize="12" FontWeight="Bold" Foreground="#FF8955" LetterSpacing="1" Margin="5,0,0,0"/>
+                <Border BorderBrush="#FF8955" BorderThickness="2" CornerRadius="12" Padding="20" Background="#FAFBFC">
+                    <Grid ColumnDefinitions="*, *">
+                        <Border Grid.Column="0" Background="White" BorderBrush="#E0E6ED" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,10,0">
+                            <StackPanel>
+                                <TextBlock Text="ПРОДАЖИ АБОНЕМЕНТОВ" FontSize="12" FontWeight="Bold" Foreground="#95A5A6" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                    <ItemsControl ItemsSource="{Binding SubscriptionItems}" HorizontalAlignment="Center">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Height="170" Spacing="6"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="local:SubscriptionBarItem">
+                                                <StackPanel VerticalAlignment="Bottom" Width="18">
+                                                    <TextBlock Text="{Binding CountText}" FontSize="10" FontWeight="Bold" Foreground="#7F8C8D" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                                    <Border Background="{Binding BarColor}" Width="14" Height="{Binding BarHeight}" CornerRadius="3,3,0,0" HorizontalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding DateFormatted}" FontSize="10" FontWeight="SemiBold" Foreground="#2C3E50" HorizontalAlignment="Center" Margin="0,6,0,0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1" Background="White" BorderBrush="#E0E6ED" BorderThickness="1" CornerRadius="10" Padding="15" Margin="10,0,0,0">
+                            <StackPanel>
+                                <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,20">
+                                    <TextBlock Grid.Column="0" Text="АКТИВНОСТЬ ТРЕНИРОВОК" FontSize="12" FontWeight="Bold" Foreground="#95A5A6" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="15">
+                                        <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                            <Border Width="12" Height="12" Background="#3498DB" CornerRadius="3"/>
+                                            <TextBlock Text="Групповые" FontSize="11" Foreground="#7F8C8D" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                            <Border Width="12" Height="12" Background="#FF8955" CornerRadius="3"/>
+                                            <TextBlock Text="Индивид." FontSize="11" Foreground="#7F8C8D" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                                
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                    <ItemsControl ItemsSource="{Binding TrainingItems}" HorizontalAlignment="Center">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Height="170" Spacing="6"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="local:TrainingBarItem">
+                                                <StackPanel VerticalAlignment="Bottom">
+                                                    <StackPanel Orientation="Horizontal" Spacing="2" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                                        <StackPanel VerticalAlignment="Bottom" Width="14">
+                                                            <TextBlock Text="{Binding GroupCountText}" FontSize="9" FontWeight="Bold" Foreground="#3498DB" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                                            <Border Background="#3498DB" Width="10" Height="{Binding GroupBarHeight}" CornerRadius="2,2,0,0" HorizontalAlignment="Center"/>
+                                                        </StackPanel>
+                                                        <StackPanel VerticalAlignment="Bottom" Width="14">
+                                                            <TextBlock Text="{Binding IndividualCountText}" FontSize="9" FontWeight="Bold" Foreground="#FF8955" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                                            <Border Background="#FF8955" Width="10" Height="{Binding IndividualBarHeight}" CornerRadius="2,2,0,0" HorizontalAlignment="Center"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{Binding DateFormatted}" FontSize="10" FontWeight="SemiBold" Foreground="#2C3E50" HorizontalAlignment="Center" Margin="0,6,0,0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

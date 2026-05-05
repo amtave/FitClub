@@ -1,0 +1,108 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="clr-namespace:FitClub.Models;assembly=FitClub"
+        x:Class="FitClub.Views.PremiumTrainingSelectionWindow"
+        Title="Премиум абонемент" Width="850" Height="600"
+        WindowStartupLocation="CenterOwner" Background="#F4F7F9">
+    
+    <Grid RowDefinitions="Auto, *">
+        <Border Grid.Row="0" Background="White" Padding="25" BoxShadow="0 4 20 0 #10000000">
+            <StackPanel Spacing="5">
+                <TextBlock Text="ПРЕМИУМ АБОНЕМЕНТ 👑" FontSize="22" FontWeight="Heavy" Foreground="#2C3E50" HorizontalAlignment="Center"/>
+                <TextBlock Text="Настройте групповые и индивидуальные занятия для пакета &quot;Все включено&quot;" FontSize="13" Foreground="#95A5A6" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*, *" Margin="20">
+            <Border Grid.Column="0" Background="White" CornerRadius="16" Padding="25" Margin="0,0,10,20" BoxShadow="0 4 15 0 #05000000" BorderBrush="#3498DB" BorderThickness="2,0,0,0">
+                <StackPanel Spacing="20">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="👥" FontSize="24" VerticalAlignment="Center"/>
+                        <TextBlock Text="ГРУППОВЫЕ" FontSize="16" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="1. Выберите направление" FontSize="12" FontWeight="Bold" Foreground="#7F8C8D"/>
+                        <ComboBox Name="GroupTrainingTypeComboBox" HorizontalAlignment="Stretch" CornerRadius="8" Background="#F8F9FA" BorderBrush="#E0E6ED">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="models:GroupTraining">
+                                    <TextBlock Text="{Binding Name}" FontWeight="Medium" Foreground="#2C3E50"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="2. Выберите тренера" FontSize="12" FontWeight="Bold" Foreground="#7F8C8D"/>
+                        <ComboBox Name="GroupTrainerComboBox" HorizontalAlignment="Stretch" CornerRadius="8" Background="#F8F9FA" BorderBrush="#E0E6ED" IsEnabled="False">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="models:Trainer">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <Border Width="24" Height="24" CornerRadius="12" ClipToBounds="True">
+                                            <Image Source="{Binding PhotoBitmap}" Stretch="UniformToFill"/>
+                                        </Border>
+                                        <TextBlock Text="{Binding FullName}" FontWeight="Medium" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" Background="White" CornerRadius="16" Padding="25" Margin="10,0,0,20" BoxShadow="0 4 15 0 #05000000" BorderBrush="#E74C3C" BorderThickness="2,0,0,0">
+                <StackPanel Spacing="20">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="💪" FontSize="24" VerticalAlignment="Center"/>
+                        <TextBlock Text="ИНДИВИДУАЛЬНЫЕ" FontSize="16" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="1. Выберите специализацию" FontSize="12" FontWeight="Bold" Foreground="#7F8C8D"/>
+                        <ComboBox Name="IndividualTrainingTypeComboBox" HorizontalAlignment="Stretch" CornerRadius="8" Background="#F8F9FA" BorderBrush="#E0E6ED">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="models:TrainingType">
+                                    <TextBlock Text="{Binding Name}" FontWeight="Medium" Foreground="#2C3E50"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="2. Ваш персональный тренер" FontSize="12" FontWeight="Bold" Foreground="#7F8C8D"/>
+                        <ComboBox Name="IndividualTrainerComboBox" HorizontalAlignment="Stretch" CornerRadius="8" Background="#F8F9FA" BorderBrush="#E0E6ED" IsEnabled="False">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="models:Trainer">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <Border Width="24" Height="24" CornerRadius="12" ClipToBounds="True">
+                                            <Image Source="{Binding PhotoBitmap}" Stretch="UniformToFill"/>
+                                        </Border>
+                                        <TextBlock Text="{Binding FullName}" FontWeight="Medium" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="1" VerticalAlignment="Bottom" Background="White" Padding="20" BorderBrush="#F2F4F4" BorderThickness="0,1,0,0">
+            <Grid ColumnDefinitions="*, Auto">
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <Border Name="SelectionInfoBorder" Background="#F8F9FA" CornerRadius="8" Padding="15,10" IsVisible="False" HorizontalAlignment="Left">
+                        <StackPanel Spacing="4">
+                            <TextBlock Name="GroupSelectionText" FontSize="12" FontWeight="Bold" Foreground="#3498DB"/>
+                            <TextBlock Name="IndividualSelectionText" FontSize="12" FontWeight="Bold" Foreground="#E74C3C"/>
+                        </StackPanel>
+                    </Border>
+                    <TextBlock Name="SelectionStatusText" Text="Заполните все поля для продолжения" FontSize="13" Foreground="#E74C3C" FontWeight="Medium" Margin="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                    <Button Content="Отмена" Click="CloseButton_Click" Background="#F2F4F4" Foreground="#7F8C8D" Padding="20,10" CornerRadius="8"/>
+                    <Button Name="ContinueButton" Content="Перейти к оплате" Click="ContinueButton_Click" IsEnabled="False" Background="#FF8955" Foreground="White" Padding="30,10" CornerRadius="8" FontWeight="Bold"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

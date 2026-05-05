@@ -1,0 +1,160 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:FitClub.Trainer.Views;assembly=FitClub"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="1000"
+             x:Class="FitClub.Trainer.Views.AccountView"
+             Background="#F4F7F9">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="30" Spacing="25">
+            
+            <Grid ColumnDefinitions="*, Auto">
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="👤 МОЙ АККАУНТ" FontSize="28" FontWeight="ExtraBold" Foreground="#2C3E50" LetterSpacing="1"/>
+                    <Border Height="4" Width="80" Background="#FF8955" HorizontalAlignment="Left" Margin="0,8,0,0" CornerRadius="2"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="15" VerticalAlignment="Center">
+                    <Button x:Name="CancelEditBtn" Content="Отмена" Background="#FDEDEC" Foreground="#E74C3C" FontSize="14" FontWeight="Bold" CornerRadius="8" Padding="20,10" Cursor="Hand" Click="CancelEdit_Click" IsVisible="False"/>
+                    <Button x:Name="EditDataBtn" Content="Изменить данные" Background="#EBF5FB" Foreground="#3498DB" FontSize="14" FontWeight="Bold" CornerRadius="8" Padding="20,10" Cursor="Hand" Click="EditData_Click"/>
+                    <Button x:Name="ChangePasswordBtn" Content="Сменить пароль" Background="#F4ECF7" Foreground="#8E44AD" FontSize="14" FontWeight="Bold" CornerRadius="8" Padding="20,10" Cursor="Hand" Click="ChangePassword_Click"/>
+                </StackPanel>
+            </Grid>
+            
+            <Border Background="White" CornerRadius="12" Padding="25" BorderBrush="#E0E6ED" BorderThickness="1" BoxShadow="0 4 15 0 #05000000">
+                <Grid ColumnDefinitions="Auto, 40, *">
+                    <StackPanel Grid.Column="0" Spacing="15" Width="260">
+                        <Border BorderBrush="#E0E6ED" BorderThickness="1" CornerRadius="12" ClipToBounds="True" Background="#F8F9FA" Width="260" Height="260">
+                            <Image Name="PhotoImage" Stretch="UniformToFill"/>
+                        </Border>
+                        
+                        <Grid ColumnDefinitions="*, *">
+                            <Button Grid.Column="0" Content="Изменить" Background="#F8F9FA" Foreground="#3498DB" BorderBrush="#E0E6ED" BorderThickness="1" FontSize="13" FontWeight="Bold" CornerRadius="8" Padding="0,12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,5,0" Cursor="Hand" Click="ChangePhoto_Click"/>
+                            <Button Grid.Column="1" Content="Удалить" Background="#FDEDEC" Foreground="#E74C3C" BorderThickness="0" FontSize="13" FontWeight="Bold" CornerRadius="8" Padding="0,12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,0,0,0" Cursor="Hand" Click="RemovePhoto_Click"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Spacing="20">
+                        <TextBlock Text="Основная информация" FontSize="20" FontWeight="Bold" Foreground="#2C3E50"/>
+                        
+                        <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto" RowSpacing="15" ColumnSpacing="20">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="6">
+                                <TextBlock Text="ФИО" FontSize="12" FontWeight="SemiBold" Foreground="#95A5A6"/>
+                                <Border Background="#F8F9FA" CornerRadius="8" Padding="15,12" BorderBrush="#E0E6ED" BorderThickness="1">
+                                    <TextBlock Name="FullNameText" FontSize="15" FontWeight="Bold" Foreground="#2C3E50"/>
+                                </Border>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="6">
+                                <TextBlock Text="Email" FontSize="12" FontWeight="SemiBold" Foreground="#95A5A6"/>
+                                <Border Background="#F8F9FA" CornerRadius="8" Padding="15,12" BorderBrush="#E0E6ED" BorderThickness="1">
+                                    <TextBlock Name="EmailText" FontSize="15" FontWeight="Bold" Foreground="#2C3E50"/>
+                                </Border>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="6">
+                                <TextBlock Text="Телефон" FontSize="12" FontWeight="SemiBold" Foreground="#95A5A6"/>
+                                <Border Background="#F8F9FA" CornerRadius="8" Padding="15,12" BorderBrush="#E0E6ED" BorderThickness="1">
+                                    <TextBlock Name="PhoneText" FontSize="15" FontWeight="Bold" Foreground="#2C3E50"/>
+                                </Border>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="1" Grid.Column="1" Spacing="6">
+                                <TextBlock Text="Специализация" FontSize="12" FontWeight="SemiBold" Foreground="#95A5A6"/>
+                                <Border Background="#F8F9FA" CornerRadius="8" Padding="15,12" BorderBrush="#E0E6ED" BorderThickness="1">
+                                    <TextBlock Name="SpecializationText" FontSize="15" FontWeight="Bold" Foreground="#2C3E50"/>
+                                </Border>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Spacing="6">
+                                <TextBlock Text="Стаж работы" FontSize="12" FontWeight="SemiBold" Foreground="#95A5A6"/>
+                                <Border Background="#F8F9FA" CornerRadius="8" Padding="15,12" BorderBrush="#E0E6ED" BorderThickness="1">
+                                    <TextBlock Name="ExperienceText" FontSize="15" FontWeight="Bold" Foreground="#2C3E50"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Background="White" CornerRadius="12" Padding="25" BorderBrush="#E0E6ED" BorderThickness="1" BoxShadow="0 4 15 0 #05000000">
+                <StackPanel Spacing="20">
+                    <TextBlock Text="Дополнительная информация" FontSize="20" FontWeight="Bold" Foreground="#2C3E50"/>
+                    
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
+                        <Border Grid.Column="0" Background="#FEF9E7" CornerRadius="12" Padding="20">
+                            <StackPanel Spacing="10">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Border Background="White" CornerRadius="8" Width="36" Height="36">
+                                        <TextBlock Text="📖" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="Биография" FontSize="16" FontWeight="ExtraBold" Foreground="#F39C12" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <TextBlock Name="BioText" FontSize="14" Foreground="#2C3E50" TextWrapping="Wrap" LineHeight="22"/>
+                                <TextBox Name="BioEditBox" IsVisible="False" FontSize="14" Foreground="#2C3E50" TextWrapping="Wrap" MinHeight="100" AcceptsReturn="True" Background="White" BorderBrush="#E0E6ED" CornerRadius="8" Padding="12"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1" Background="#EAFaf1" CornerRadius="12" Padding="20">
+                            <StackPanel Spacing="10">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Border Background="White" CornerRadius="8" Width="36" Height="36">
+                                        <TextBlock Text="🏆" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="Достижения" FontSize="16" FontWeight="ExtraBold" Foreground="#27AE60" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <TextBlock Name="AchievementsText" FontSize="14" Foreground="#2C3E50" TextWrapping="Wrap" LineHeight="22"/>
+                                <TextBox Name="AchievementsEditBox" IsVisible="False" FontSize="14" Foreground="#2C3E50" TextWrapping="Wrap" MinHeight="100" AcceptsReturn="True" Background="White" BorderBrush="#E0E6ED" CornerRadius="8" Padding="12"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Margin="0,10,0,20" Spacing="15">
+                <StackPanel Margin="0,0,0,5">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="💬" FontSize="20" VerticalAlignment="Center"/>
+                        <TextBlock Text="ОТЗЫВЫ КЛИЕНТОВ" FontSize="16" FontWeight="Heavy" Foreground="#2C3E50" VerticalAlignment="Center" LetterSpacing="1"/>
+                    </StackPanel>
+                    <Border Height="3" Width="60" Background="#FF8955" HorizontalAlignment="Left" Margin="32,6,0,0" CornerRadius="1.5"/>
+                </StackPanel>
+
+                <TextBlock x:Name="AverageRatingText" FontSize="16" FontWeight="Bold" Foreground="#27AE60"/>
+                <TextBlock x:Name="NoReviewsText" Text="У вас пока нет отзывов" Foreground="#BDC3C7" FontStyle="Italic" IsVisible="False"/>
+
+                <ItemsControl x:Name="ReviewsItemsControl">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="local:TrainerReviewItem">
+                            <Border Background="White" CornerRadius="16" Padding="20" Margin="0,0,0,15" BoxShadow="0 4 10 0 #05000000" BorderBrush="#E0E6ED" BorderThickness="1">
+                                <StackPanel Spacing="10">
+                                    <Grid ColumnDefinitions="Auto, *, Auto">
+                                        <Border Grid.Column="0" Width="46" Height="46" CornerRadius="23" Background="#EAF2F8" ClipToBounds="True" Margin="0,0,15,0">
+                                            <Image Source="{Binding ClientAvatar}" Stretch="UniformToFill"/>
+                                        </Border>
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+                                            <TextBlock Text="{Binding ClientFullName}" FontSize="16" FontWeight="Bold" Foreground="#2C3E50"/>
+                                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                                <Border Background="#F4F7F9" CornerRadius="4" Padding="6,2">
+                                                    <TextBlock Text="{Binding TrainingTypeBadge}" FontSize="10" FontWeight="Bold" Foreground="#7F8C8D"/>
+                                                </Border>
+                                                <TextBlock Text="{Binding DateString}" FontSize="12" Foreground="#95A5A6" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="2" Text="{Binding Stars}" FontSize="16" Foreground="#F1C40F" VerticalAlignment="Top"/>
+                                    </Grid>
+                                    <TextBlock Text="{Binding ReviewText}" FontSize="14" Foreground="#34495E" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Button x:Name="ShowMoreBtn" Content="Показать больше" Background="Transparent" Foreground="#3498DB" FontWeight="Bold" HorizontalAlignment="Center" Cursor="Hand" Click="ShowMoreReviews_Click" IsVisible="False" Margin="0,5,0,0"/>
+            </StackPanel>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

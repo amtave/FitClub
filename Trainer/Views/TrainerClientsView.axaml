@@ -1,0 +1,121 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FitClub.Trainer.Views;assembly=FitClub"
+             x:Class="FitClub.Trainer.Views.TrainerClientsView"
+             Background="#F4F7F9">
+             
+    <Grid RowDefinitions="Auto, *" Margin="30">
+        
+        <StackPanel Grid.Row="0" Margin="0,0,0,25">
+            <TextBlock Text="👥 МОИ КЛИЕНТЫ" FontSize="28" FontWeight="ExtraBold" Foreground="#2C3E50" LetterSpacing="1"/>
+            <Border Height="4" Width="80" Background="#FF8955" HorizontalAlignment="Left" Margin="0,8,0,0" CornerRadius="2"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Background="White" CornerRadius="12" Padding="25" BorderBrush="#E0E6ED" BorderThickness="1" BoxShadow="0 4 15 0 #05000000">
+            <Grid RowDefinitions="Auto, *">
+                
+                <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,20">
+                    <TextBox Grid.Column="0" x:Name="SearchTextBox" 
+                             Watermark="🔍 Поиск по ФИО клиента..." 
+                             CornerRadius="8" 
+                             Padding="15,12" 
+                             FontSize="15" 
+                             Background="#F8F9FA"
+                             BorderBrush="#E0E6ED"
+                             KeyUp="SearchTextBox_KeyUp"/>
+                             
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Spacing="15" Margin="20,0,0,0">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="План:" VerticalAlignment="Center" Foreground="#95A5A6" FontSize="12" FontWeight="SemiBold"/>
+                            <ComboBox x:Name="PlanFilterComboBox" Width="120" CornerRadius="6" SelectionChanged="FilterComboBox_SelectionChanged" SelectedIndex="0">
+                                <ComboBoxItem Content="Все"/>
+                                <ComboBoxItem Content="Есть"/>
+                                <ComboBoxItem Content="Нет"/>
+                            </ComboBox>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="Абонемент:" VerticalAlignment="Center" Foreground="#95A5A6" FontSize="12" FontWeight="SemiBold"/>
+                            <ComboBox x:Name="SubFilterComboBox" Width="160" CornerRadius="6" SelectionChanged="FilterComboBox_SelectionChanged" SelectedIndex="0">
+                                <ComboBoxItem Content="Все"/>
+                                <ComboBoxItem Content="Индивидуальные"/>
+                                <ComboBoxItem Content="Групповые"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                
+                <ScrollViewer Grid.Row="1">
+                    <StackPanel>
+                        <ItemsControl x:Name="ClientsItemsControl">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="local:TrainerClientViewModel">
+                                    <Border Background="#FDFEFE" CornerRadius="10" Padding="20" Margin="0,0,0,15" BorderBrush="#EBEDF0" BorderThickness="1">
+                                        <Grid ColumnDefinitions="Auto, *, Auto, Auto">
+                                            
+                                            <Border Grid.Column="0" Width="60" Height="60" CornerRadius="30" Background="#EAF2F8" ClipToBounds="True" Margin="0,0,20,0">
+                                                <Image Source="{Binding AvatarBitmap}" Stretch="UniformToFill"/>
+                                            </Border>
+
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="5">
+                                                <TextBlock Text="{Binding ClientFullName}" FontSize="18" FontWeight="Bold" Foreground="#2C3E50"/>
+                                                <StackPanel Orientation="Horizontal" Spacing="15">
+                                                    <StackPanel Orientation="Horizontal" Spacing="5">
+                                                        <TextBlock Text="📞" Foreground="#3498DB" FontSize="12" VerticalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding ClientPhone}" FontSize="13" Foreground="#7F8C8D" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" Spacing="5">
+                                                        <TextBlock Text="✉️" Foreground="#3498DB" FontSize="12" VerticalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding ClientEmail}" FontSize="13" Foreground="#7F8C8D" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="20,0,30,0" Spacing="6">
+                                                <TextBlock Text="{Binding TariffName}" FontSize="14" FontWeight="Bold" Foreground="#34495E"/>
+                                                
+                                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                                    <Border Background="#F1E8F7" CornerRadius="6" Padding="8,4" IsVisible="{Binding ShowGroup}">
+                                                        <TextBlock Text="{Binding GroupVisitsText}" FontSize="11" FontWeight="Bold" Foreground="#8E44AD"/>
+                                                    </Border>
+                                                    <Border Background="#EAFaf1" CornerRadius="6" Padding="8,4" IsVisible="{Binding ShowInd}">
+                                                        <TextBlock Text="{Binding IndVisitsText}" FontSize="11" FontWeight="Bold" Foreground="#27AE60"/>
+                                                    </Border>
+                                                </StackPanel>
+                                                
+                                                <TextBlock Text="{Binding ExpirationText}" FontSize="12" FontWeight="SemiBold" Foreground="{Binding ExpirationColor}"/>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="3" VerticalAlignment="Center" Spacing="10">
+                                                <Border Background="#FDEDEC" CornerRadius="6" Padding="10,4" IsVisible="{Binding NeedsPlan}" HorizontalAlignment="Center">
+                                                    <TextBlock Text="Нужен план" FontSize="11" FontWeight="Bold" Foreground="#E74C3C"/>
+                                                </Border>
+                                                <Button Content="{Binding PlanButtonText}" 
+                                                        Background="#3498DB" 
+                                                        Foreground="White" 
+                                                        CornerRadius="8" 
+                                                        Padding="20,10" 
+                                                        FontWeight="Bold" 
+                                                        Cursor="Hand"
+                                                        HorizontalAlignment="Stretch"
+                                                        HorizontalContentAlignment="Center"
+                                                        Click="OpenPlanWindow_Click"
+                                                        Tag="{Binding}"/>
+                                            </StackPanel>
+                                            
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <StackPanel x:Name="NoClientsPanel" IsVisible="False" Margin="0,60,0,0" Spacing="10">
+                            <TextBlock Text="🔍" FontSize="45" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Клиентов по заданным фильтрам не найдено" FontSize="16" Foreground="#95A5A6" FontStyle="Italic" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

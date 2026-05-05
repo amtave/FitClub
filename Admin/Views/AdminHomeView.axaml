@@ -1,0 +1,250 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="clr-namespace:FitClub.Models;assembly=FitClub"
+             x:Class="FitClub.Admin.Views.AdminHomeView"
+             x:CompileBindings="False"
+             Background="#F4F7F9">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="30" Spacing="15">
+            <StackPanel Spacing="5">
+                <TextBlock Text="🏠 Главная панель" FontSize="26" FontWeight="Bold" Foreground="#2C3E50"/>
+                <Border Height="4" Background="#FF8955" HorizontalAlignment="Stretch" CornerRadius="2" Margin="0,5,0,5"/>
+            </StackPanel>
+
+            <Border x:Name="StatusBorder" Background="#27AE60" CornerRadius="5" Padding="15" IsVisible="False" HorizontalAlignment="Stretch">
+                <TextBlock x:Name="StatusText" Foreground="White" FontWeight="SemiBold"/>
+            </Border>
+
+            <Border Background="White" BorderBrush="#E0E6ED" BorderThickness="2" CornerRadius="15" Padding="25" HorizontalAlignment="Stretch">
+                <StackPanel>
+                    <TextBlock Text="ИНФОРМАЦИЯ О КЛУБЕ" FontSize="13" FontWeight="Bold" Foreground="#95A5A6" LetterSpacing="1" Margin="0,0,0,15"/>
+
+                    <StackPanel x:Name="ViewModePanel" Spacing="15">
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Border Grid.Column="0" Width="450" Height="150" CornerRadius="15" ClipToBounds="True" Margin="0,0,25,0" BorderBrush="#E0E6ED" BorderThickness="1" Background="#F8F9FA">
+                                <Panel>
+                                    <TextBlock x:Name="LogoPlaceholder" Text="📷" FontSize="50" Foreground="#BDC3C7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Image x:Name="LogoImage" Stretch="UniformToFill"/>
+                                </Panel>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="10">
+                                <TextBlock Text="{Binding ClubInfo.ClubName}" FontSize="32" FontWeight="Black" Foreground="#2C3E50" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding ClubInfo.WelcomeText}" FontSize="15" Foreground="#7F8C8D" TextWrapping="Wrap" LineHeight="22"/>
+                            </StackPanel>
+                        </Grid>
+                        
+                        <Border Background="#FAFBFC" CornerRadius="12" Padding="15,20" BorderBrush="#E0E6ED" BorderThickness="1">
+                            <Grid ColumnDefinitions="*, *, *">
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Left" Margin="10,0,0,0">
+                                    <Border Background="#EBF5FB" Width="40" Height="40" CornerRadius="20">
+                                        <TextBlock Text="📍" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                                    </Border>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="Адрес клуба" FontSize="11" FontWeight="Bold" Foreground="#95A5A6"/>
+                                        <TextBlock Text="{Binding ClubInfo.Address}" FontSize="14" FontWeight="Bold" Foreground="#2C3E50" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Center">
+                                    <Border Background="#FFF0EA" Width="40" Height="40" CornerRadius="20">
+                                        <TextBlock Text="📞" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                                    </Border>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="Телефон" FontSize="11" FontWeight="Bold" Foreground="#95A5A6"/>
+                                        <TextBlock Text="{Binding ClubInfo.Phone}" FontSize="14" FontWeight="Bold" Foreground="#2C3E50"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Right" Margin="0,0,10,0">
+                                    <Border Background="#F4FFF7" Width="40" Height="40" CornerRadius="20">
+                                        <TextBlock Text="🕒" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                                    </Border>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="Режим работы" FontSize="11" FontWeight="Bold" Foreground="#95A5A6"/>
+                                        <TextBlock Text="{Binding ClubInfo.WorkingHours}" FontSize="14" FontWeight="Bold" Foreground="#2C3E50"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        
+                        <Button Content="✏️ Редактировать информацию" Click="EditButton_Click" Background="#FF8955" Foreground="White" CornerRadius="8" Padding="20,10" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left" Cursor="Hand"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="EditModePanel" Spacing="15" IsVisible="False">
+                        <Border Background="#FFF0EA" BorderBrush="#FF8955" BorderThickness="1" CornerRadius="10" Padding="10" Margin="0,0,0,5">
+                            <TextBlock Text="Режим редактирования активен" Foreground="#D35400" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        </Border>
+
+                        <Grid ColumnDefinitions="Auto, *">
+                            <StackPanel Grid.Column="0" Spacing="10" Margin="0,0,25,0" VerticalAlignment="Top">
+                                <TextBlock Text="Логотип / Баннер" Foreground="#7F8C8D" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <Border Width="300" Height="120" CornerRadius="10" ClipToBounds="True" BorderBrush="#E0E6ED" BorderThickness="1" Background="#F8F9FA">
+                                    <Panel>
+                                        <TextBlock x:Name="EditLogoPlaceholder" Text="📷" FontSize="35" Foreground="#BDC3C7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Image x:Name="EditLogoImage" Stretch="UniformToFill"/>
+                                    </Panel>
+                                </Border>
+                                <Button Content="Изменить" Click="LoadLogoButton_Click" Background="#EBF5FB" Foreground="#2980B9" BorderThickness="0" CornerRadius="5" Padding="10,6" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" Cursor="Hand"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Column="1" Spacing="10">
+                                <StackPanel Spacing="5">
+                                    <TextBlock Text="Название клуба" Foreground="#7F8C8D" FontSize="12" FontWeight="Bold"/>
+                                    <TextBox Text="{Binding EditClubInfo.ClubName}" CornerRadius="8" FontSize="15" FontWeight="Bold" Padding="10,8"/>
+                                </StackPanel>
+
+                                <StackPanel Spacing="5">
+                                    <TextBlock Text="Приветственный текст / Описание" Foreground="#7F8C8D" FontSize="12" FontWeight="Bold"/>
+                                    <TextBox Text="{Binding EditClubInfo.WelcomeText}" CornerRadius="8" TextWrapping="Wrap" AcceptsReturn="True" Height="70" Padding="10,8"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Spacing="5">
+                            <TextBlock Text="Адрес" Foreground="#7F8C8D" FontSize="12" FontWeight="Bold"/>
+                            <TextBox Text="{Binding EditClubInfo.Address}" CornerRadius="8" Padding="10,8"/>
+                        </StackPanel>
+
+                        <Grid ColumnDefinitions="*, *">
+                            <StackPanel Grid.Column="0" Spacing="5" Margin="0,0,10,0">
+                                <TextBlock Text="Телефон" Foreground="#7F8C8D" FontSize="12" FontWeight="Bold"/>
+                                <TextBox x:Name="PhoneBox" Text="{Binding EditClubInfo.Phone}" CornerRadius="8" Padding="10,8" TextChanged="PhoneBox_TextChanged"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Spacing="5" Margin="10,0,0,0">
+                                <TextBlock Text="Режим работы" Foreground="#7F8C8D" FontSize="12" FontWeight="Bold"/>
+                                <TextBox Text="{Binding EditClubInfo.WorkingHours}" CornerRadius="8" Padding="10,8"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Orientation="Horizontal" Spacing="15" Margin="0,10,0,0">
+                            <Button Content="💾 Сохранить изменения" Click="SaveButton_Click" Background="#27AE60" Foreground="White" CornerRadius="8" Padding="20,10" FontSize="13" FontWeight="Bold" Cursor="Hand"/>
+                            <Button Content="Отмена" Click="CancelButton_Click" Background="#BDC3C7" Foreground="White" CornerRadius="8" Padding="20,10" FontSize="13" FontWeight="Bold" Cursor="Hand"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Spacing="15" Margin="0,15,0,0" HorizontalAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Column="0" Text="🎁 Управление акциями" FontSize="22" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                    <Button Grid.Column="1" x:Name="AddPromotionButton" Content="➕ Добавить акцию" Background="#FF8955" Foreground="White" BorderThickness="0" Padding="15,8" CornerRadius="5" FontSize="13" FontWeight="SemiBold" Click="AddPromotionButton_Click"/>
+                </Grid>
+
+                <Border Height="2" Background="#FF8955" HorizontalAlignment="Stretch"/>
+
+                <ItemsControl x:Name="PromotionsItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" Spacing="10"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="models:Promotion">
+                            <Border Background="White" CornerRadius="10" Padding="15" BorderBrush="#E0E0E0" BorderThickness="1">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" Width="100" Height="100" CornerRadius="8" BorderBrush="#FF8955" BorderThickness="1" ClipToBounds="True" Background="#F8F9FA">
+                                        <Image Source="{Binding PromotionImage}" Width="100" Height="100" Stretch="UniformToFill"/>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1" Margin="15,0" VerticalAlignment="Center" Spacing="6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Title}" FontSize="16" FontWeight="Bold" Foreground="#2C3E50" TextWrapping="Wrap"/>
+                                            <Border Grid.Column="1" Background="#E74C3C" CornerRadius="5" Padding="8,3" Margin="10,0,0,0">
+                                                <TextBlock Text="{Binding DiscountInfo}" FontSize="11" FontWeight="Bold" Foreground="White"/>
+                                            </Border>
+                                        </Grid>
+                                        <TextBlock Text="{Binding Description}" FontSize="13" Foreground="#7F8C8D" TextWrapping="Wrap" MaxHeight="50"/>
+                                        <TextBlock Text="{Binding ValidUntilFormatted, StringFormat='{}Действует до: {0}'}" FontSize="11" Foreground="#95A5A6"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                                        <Button Content="✏️" Background="#FF8955" Foreground="White" BorderThickness="0" Width="35" Height="35" FontSize="16" CornerRadius="5" Click="EditPromotionButton_Click" Tag="{Binding}" Opacity="0.7"/>
+                                        <Button Content="🗑️" Background="#E74C3C" Foreground="White" BorderThickness="0" Width="35" Height="35" FontSize="16" CornerRadius="5" Click="DeletePromotionButton_Click" Tag="{Binding}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Border x:Name="NoPromotionsMessage" Background="#F8F9FA" CornerRadius="10" Padding="30" IsVisible="False">
+                    <StackPanel Spacing="10" HorizontalAlignment="Center">
+                        <TextBlock Text="🎁" FontSize="40" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Акций пока нет" FontSize="16" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Spacing="15" Margin="0,15,0,0" HorizontalAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="📰 Управление новостями" FontSize="22" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                    <Button Grid.Column="1" x:Name="AddNewsButton" Content="➕ Добавить новость" Background="#27AE60" Foreground="White" BorderThickness="0" Padding="15,8" CornerRadius="5" FontSize="13" FontWeight="SemiBold" Click="AddNewsButton_Click"/>
+                </Grid>
+
+                <Border Height="2" Background="#3498DB" HorizontalAlignment="Stretch"/>
+
+                <ItemsControl x:Name="NewsItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" Spacing="10"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="models:News">
+                            <Border Background="White" CornerRadius="10" Padding="15" BorderBrush="#E0E0E0" BorderThickness="1">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" Width="100" Height="100" CornerRadius="8" BorderBrush="#3498DB" BorderThickness="1" ClipToBounds="True" Background="#F8F9FA">
+                                        <Image Source="{Binding NewsImage}" Width="100" Height="100" Stretch="UniformToFill"/>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1" Margin="15,0" VerticalAlignment="Center" Spacing="6">
+                                        <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="Bold" Foreground="#2C3E50" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding Description}" FontSize="13" Foreground="#7F8C8D" TextWrapping="Wrap" MaxHeight="50"/>
+                                        <TextBlock Text="{Binding CreatedAtFormatted, StringFormat='{}Опубликовано: {0}'}" FontSize="11" Foreground="#95A5A6"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                                        <Button Content="✏️" Background="#3498DB" Foreground="White" BorderThickness="0" Width="35" Height="35" FontSize="16" CornerRadius="5" Click="EditNewsButton_Click" Tag="{Binding}"/>
+                                        <Button Content="🗑️" Background="#E74C3C" Foreground="White" BorderThickness="0" Width="35" Height="35" FontSize="16" CornerRadius="5" Click="DeleteNewsButton_Click" Tag="{Binding}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Border x:Name="NoNewsMessage" Background="#F8F9FA" CornerRadius="10" Padding="30" IsVisible="False">
+                    <StackPanel Spacing="10" HorizontalAlignment="Center">
+                        <TextBlock Text="📭" FontSize="40" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Новостей пока нет" FontSize="16" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

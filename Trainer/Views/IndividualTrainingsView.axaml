@@ -1,0 +1,162 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FitClub.Trainer.Views;assembly=FitClub"
+             x:Class="FitClub.Trainer.Views.IndividualTrainingsView"
+             Background="#F4F7F9">
+             
+    <Grid RowDefinitions="Auto, *" Margin="30">
+        
+        <StackPanel Grid.Row="0" Margin="0,0,0,25">
+            <TextBlock Text="💪 РАСПИСАНИЕ ИНДИВИДУАЛЬНЫХ" FontSize="28" FontWeight="ExtraBold" Foreground="#2C3E50" LetterSpacing="1"/>
+            <Border Height="4" Width="80" Background="#FF8955" HorizontalAlignment="Left" Margin="0,8,0,0" CornerRadius="2"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" ColumnDefinitions="Auto, *">
+            <Border Grid.Column="0" Width="380" Background="White" CornerRadius="12" BorderBrush="#E0E6ED" BorderThickness="1" Margin="0,0,25,0" VerticalAlignment="Top" BoxShadow="0 4 15 0 #05000000" MaxHeight="600">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="15" Margin="20">
+                        <Grid ColumnDefinitions="Auto, *, Auto" Margin="0,0,0,10">
+                            <Button Grid.Column="0" Content="◀" Background="Transparent" Click="PrevMonth_Click" FontSize="20" Cursor="Hand" Foreground="#3498DB" FontWeight="Bold"/>
+                            <TextBlock x:Name="MonthYearText" Grid.Column="1" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#2C3E50"/>
+                            <Button Grid.Column="2" Content="▶" Background="Transparent" Click="NextMonth_Click" FontSize="20" Cursor="Hand" Foreground="#3498DB" FontWeight="Bold"/>
+                        </Grid>
+                        
+                        <UniformGrid Columns="7" Margin="0,5">
+                            <TextBlock Text="Пн" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#95A5A6"/>
+                            <TextBlock Text="Вт" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#95A5A6"/>
+                            <TextBlock Text="Ср" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#95A5A6"/>
+                            <TextBlock Text="Чт" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#95A5A6"/>
+                            <TextBlock Text="Пт" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#95A5A6"/>
+                            <TextBlock Text="Сб" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#E74C3C"/>
+                            <TextBlock Text="Вс" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#E74C3C"/>
+                        </UniformGrid>
+                        
+                        <ItemsControl x:Name="CalendarItemsControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="7"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="local:IndCalendarDay">
+                                    <Button Classes="CalendarDayBtn" Click="CalendarDay_Click" IsEnabled="{Binding IsEnabled}" Width="46" Height="46" Margin="2" CornerRadius="23"
+                                            BorderBrush="{Binding BorderColor}" BorderThickness="{Binding BorderThickness}">
+                                        <Button.Styles>
+                                            <Style Selector="Button.CalendarDayBtn">
+                                                <Setter Property="Background" Value="#F8F9FA"/>
+                                                <Setter Property="Foreground" Value="#2C3E50"/>
+                                                <Setter Property="FontSize" Value="15"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                            <Style Selector="Button.CalendarDayBtn[IsDefault=True]">
+                                                <Setter Property="Background" Value="#3498DB"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Style>
+                                        </Button.Styles>
+                                        <Button.IsDefault>
+                                            <Binding Path="IsSelected"/>
+                                        </Button.IsDefault>
+                                        <TextBlock Text="{Binding Day}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <Border Background="#FDFEFE" CornerRadius="8" Padding="15" Margin="0,10,0,0" BorderBrush="#EBEDF0" BorderThickness="1">
+                            <StackPanel Spacing="10">
+                                <TextBlock Text="Легенда:" FontSize="13" FontWeight="Bold" Foreground="#7F8C8D" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Border Width="14" Height="14" CornerRadius="7" Background="White" BorderBrush="#2ECC71" BorderThickness="2"/>
+                                    <TextBlock Text="Есть тренировки по графику" FontSize="12" Foreground="#34495E" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Border Width="14" Height="14" CornerRadius="7" Background="White" BorderBrush="#8E44AD" BorderThickness="2"/>
+                                    <TextBlock Text="Тренировки в законный ВЫХОДНОЙ" FontSize="12" Foreground="#34495E" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Border Width="14" Height="14" CornerRadius="7" Background="White" BorderBrush="#F39C12" BorderThickness="2"/>
+                                    <TextBlock Text="Уважительная причина (Больничный)" FontSize="12" Foreground="#34495E" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Border Width="14" Height="14" CornerRadius="7" Background="White" BorderBrush="#E74C3C" BorderThickness="2"/>
+                                    <TextBlock Text="НЕУВАЖИТЕЛЬНАЯ причина (Прогул)" FontSize="12" Foreground="#34495E" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <Border Grid.Column="1" Background="White" CornerRadius="12" Padding="25" BorderBrush="#E0E6ED" BorderThickness="1" HorizontalAlignment="Stretch" BoxShadow="0 4 15 0 #05000000">
+                <Grid RowDefinitions="Auto, *">
+                    
+                    <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,25">
+                        <TextBlock Grid.Column="0" x:Name="SelectedDateText" FontSize="22" FontWeight="ExtraBold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" x:Name="DownloadScheduleBtn" Content="⬇ Скачать расписание" Click="DownloadSchedule_Click" Background="#F8F9FA" Foreground="#3498DB" BorderBrush="#3498DB" BorderThickness="1" CornerRadius="6" Padding="15,8" FontWeight="Bold" Cursor="Hand" IsVisible="False"/>
+                    </Grid>
+                    
+                    <ScrollViewer Grid.Row="1">
+                        <StackPanel>
+                            
+                            <Border x:Name="AbsenceInfoBorder" Background="#FFF3E0" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="8" Padding="20" Margin="0,0,0,15" IsVisible="False">
+                                <StackPanel Spacing="15">
+                                    <StackPanel Spacing="5">
+                                        <TextBlock x:Name="AbsenceTitleText" FontSize="18" FontWeight="Bold" Foreground="#E67E22"/>
+                                        <TextBlock x:Name="AbsenceDateRangeText" FontSize="14" FontWeight="SemiBold" Foreground="#2C3E50" IsVisible="False"/>
+                                        <TextBlock x:Name="AbsenceCommentText" FontSize="14" Foreground="#2C3E50" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                    <Border x:Name="AbsencePhotoBorder" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="8" ClipToBounds="True" Height="300" MaxWidth="500" HorizontalAlignment="Left" Background="White" IsVisible="False">
+                                        <Image x:Name="AbsencePhotoPreview" Stretch="Uniform"/>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+
+                            <ItemsControl x:Name="ScheduleItemsControl">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="local:IndScheduleItemViewModel">
+                                        <Border Background="{Binding BackgroundBrush}" CornerRadius="10" Padding="20" Margin="0,0,0,15" BorderBrush="{Binding BorderBrush}" BorderThickness="4,1,1,1">
+                                            <Grid ColumnDefinitions="140, *, Auto">
+                                                
+                                                <TextBlock Grid.Column="0" Text="{Binding TimeRangeFormatted}" FontSize="18" FontWeight="Heavy" Foreground="{Binding BorderBrush}" VerticalAlignment="Center"/>
+                                                
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0" IsVisible="{Binding IsFree}">
+                                                    <TextBlock Text="⚪ Свободное окно" FontSize="18" FontWeight="Bold" Foreground="#2C3E50"/>
+                                                    <TextBlock Text="Доступно для записи" FontSize="14" Foreground="#7F8C8D" Margin="0,4,0,0"/>
+                                                </StackPanel>
+
+                                                <Grid Grid.Column="1" ColumnDefinitions="Auto, *" VerticalAlignment="Center" Margin="15,0" IsVisible="{Binding !IsFree}">
+                                                    <Border Grid.Column="0" Width="46" Height="46" CornerRadius="23" Background="#EAF2F8" ClipToBounds="True" Margin="0,0,15,0">
+                                                        <Image Source="{Binding ClientAvatar}" Stretch="UniformToFill"/>
+                                                    </Border>
+                                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+                                                        <StackPanel Orientation="Horizontal" Spacing="10">
+                                                            <TextBlock Text="{Binding ClientFullName}" FontSize="16" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                                                            <Border Background="#EAFaf1" CornerRadius="6" Padding="8,4" VerticalAlignment="Center" IsVisible="{Binding IsSubscription}">
+                                                                <TextBlock Text="ПО АБОНЕМЕНТУ" FontSize="10" FontWeight="Bold" Foreground="#27AE60"/>
+                                                            </Border>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Spacing="15">
+                                                            <TextBlock Text="{Binding ClientPhone}" FontSize="13" Foreground="#7F8C8D"/>
+                                                            <TextBlock Text="{Binding ClientEmail}" FontSize="13" Foreground="#7F8C8D" TextTrimming="CharacterEllipsis"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Grid>
+
+                                                <Button Grid.Column="2" Content="План тренировок" IsVisible="{Binding IsSubscription}" Background="#EBF5FB" Foreground="#3498DB" BorderBrush="#3498DB" BorderThickness="1" CornerRadius="8" Padding="15,8" FontWeight="Bold" VerticalAlignment="Center" Cursor="Hand" Click="OpenPlanWindow_Click" Tag="{Binding}"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            
+                            <StackPanel x:Name="NoSchedulesPanel" IsVisible="False" Margin="0,60,0,0" Spacing="10">
+                                <TextBlock Text="📭" FontSize="45" HorizontalAlignment="Center"/>
+                                <TextBlock Text="На этот день тренировок не найдено" FontSize="16" Foreground="#95A5A6" FontStyle="Italic" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

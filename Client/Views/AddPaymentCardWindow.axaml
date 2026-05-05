@@ -1,0 +1,147 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Добавление банковской карты"
+        Width="450"
+        Height="550"
+        WindowStartupLocation="CenterOwner"
+        x:Class="FitClub.Client.Views.AddPaymentCardWindow">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="15">
+            <TextBlock Text="💳 Добавление банковской карты" 
+                      FontSize="20" 
+                      FontWeight="Bold" 
+                      Foreground="#3E5F8A"
+                      HorizontalAlignment="Center"/>
+            
+            <!-- Форма ввода данных карты -->
+            <StackPanel Spacing="12">
+                <!-- Имя держателя карты на английском -->
+                <TextBlock Text="Имя и фамилия держателя карты (латиницей)" 
+                          FontSize="12" 
+                          FontWeight="SemiBold" 
+                          Foreground="#2C3E50"/>
+                
+                <TextBox x:Name="CardHolderNameTextBox"
+                        Watermark="IVAN IVANOV"
+                        FontSize="14"
+                        TextChanged="CardHolderNameTextBox_TextChanged"/>
+                
+                <!-- Номер карты -->
+                <TextBlock Text="Номер карты" 
+                          FontSize="12" 
+                          FontWeight="SemiBold" 
+                          Foreground="#2C3E50"/>
+                
+                <TextBox x:Name="CardNumberTextBox"
+                        Watermark="0000 0000 0000 0000"
+                        FontSize="14"
+                        TextChanged="CardNumberTextBox_TextChanged"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0" Spacing="5">
+                        <TextBlock Text="Срок действия" 
+                                  FontSize="12" 
+                                  FontWeight="SemiBold" 
+                                  Foreground="#2C3E50"/>
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBox x:Name="ExpiryMonthTextBox"
+                                    Grid.Column="0"
+                                    Watermark="ММ"
+                                    FontSize="14"
+                                    MaxLength="2"
+                                    TextChanged="ExpiryTextBox_TextChanged"/>
+                            
+                            <TextBlock Grid.Column="1"
+                                      Text="/"
+                                      FontSize="14"
+                                      FontWeight="Bold"
+                                      Foreground="#2C3E50"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Center"/>
+                            
+                            <TextBox x:Name="ExpiryYearTextBox"
+                                    Grid.Column="2"
+                                    Watermark="ГГ"
+                                    FontSize="14"
+                                    MaxLength="2"
+                                    TextChanged="ExpiryTextBox_TextChanged"/>
+                        </Grid>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="2" Spacing="5">
+                        <TextBlock Text="CVV код" 
+                                  FontSize="12" 
+                                  FontWeight="SemiBold" 
+                                  Foreground="#2C3E50"/>
+                        
+                        <TextBox x:Name="CVVTextBox"
+                                Watermark="123"
+                                FontSize="14"
+                                MaxLength="3"/>
+                    </StackPanel>
+                </Grid>
+                
+                <CheckBox x:Name="DefaultCardCheckBox"
+                         Content="Сделать картой по умолчанию"
+                         FontSize="12"
+                         IsChecked="True"/>
+            </StackPanel>
+            
+            <!-- Информация о проверке -->
+            <Border Background="#E8F5E8" 
+                    CornerRadius="8" 
+                    Padding="15">
+                <StackPanel Spacing="5">
+                    <TextBlock Text="ℹ️ Информация о проверке:" 
+                              FontSize="12" 
+                              FontWeight="Bold" 
+                              Foreground="#27AE60"/>
+                    
+                    <TextBlock Text="• Будет списан 1 рубль для проверки карты" 
+                              FontSize="10" 
+                              Foreground="#2C3E50"/>
+                    <TextBlock Text="• На ваш телефон придет SMS с кодом подтверждения" 
+                              FontSize="10" 
+                              Foreground="#2C3E50"/>
+                    <TextBlock Text="• Деньги будут возвращены в течение 24 часов" 
+                              FontSize="10" 
+                              Foreground="#2C3E50"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- Кнопки -->
+            <StackPanel Orientation="Horizontal" 
+                       Spacing="15" 
+                       HorizontalAlignment="Center"
+                       Margin="0,10,0,0">
+                <Button Content="🔍 Проверить карту" 
+                        Background="#27AE60" 
+                        Foreground="White"
+                        Padding="20,10"
+                        Click="VerifyCardButton_Click"
+                        MinWidth="120"/>
+                
+                <Button Content="❌ Отмена" 
+                        Background="#E74C3C" 
+                        Foreground="White"
+                        Padding="20,10"
+                        Click="CancelButton_Click"
+                        MinWidth="120"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

@@ -1,0 +1,387 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="FitClub.Views.SingleVisitPaymentWindow"
+        Title="Оплата разового посещения"
+        Width="500"
+        Height="850"
+        WindowStartupLocation="CenterOwner">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="20">
+            <!-- Заголовок -->
+            <TextBlock Text="Оплата разового посещения" 
+                      FontSize="20" 
+                      FontWeight="Bold" 
+                      Foreground="#2C3E50"
+                      HorizontalAlignment="Center"/>
+            
+            <!-- Информация о посещении -->
+            <Border Background="#E8F6F3" CornerRadius="10" Padding="15">
+                <StackPanel Spacing="8">
+                    <TextBlock Name="ServiceNameText" 
+                              FontSize="16" 
+                              FontWeight="Bold"
+                              Foreground="#2C3E50"/>
+                    <TextBlock Name="VisitDateText" 
+                              FontSize="14"
+                              Foreground="#3498DB"/>
+                    <TextBlock Name="VisitPriceText" 
+                              FontSize="14"
+                              FontWeight="SemiBold"
+                              Foreground="#27AE60"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Выбор карты для оплаты -->
+            <Border Name="SavedCardsSection" 
+                    BorderBrush="#BDC3C7" 
+                    BorderThickness="1" 
+                    CornerRadius="10" 
+                    Padding="15">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Выбор карты для оплаты" 
+                              FontSize="16" 
+                              FontWeight="SemiBold"
+                              Foreground="#2C3E50"/>
+                    
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="Выберите сохраненную карту" 
+                                  FontSize="12"
+                                  FontWeight="SemiBold"
+                                  Foreground="#7F8C8D"/>
+                        <ComboBox Name="SavedCardsComboBox"
+                                  SelectionChanged="SavedCardsComboBox_SelectionChanged">
+                            <!-- Элементы будут добавляться динамически в коде -->
+                        </ComboBox>
+                        
+                        <!-- Кнопка для ввода карты вручную -->
+                        <Button Name="NewCardButton"
+                                Content="💳 Ввести данные новой карты (без сохранения)"
+                                Background="#3498DB"
+                                Foreground="White"
+                                Click="NewCardButton_Click"
+                                Padding="10,5"
+                                FontSize="11"
+                                HorizontalAlignment="Stretch"/>
+                        
+                        <!-- Информация о выбранной карте -->
+                        <Border Name="SelectedCardInfo"
+                                Background="#F8F9FA"
+                                BorderBrush="#BDC3C7"
+                                BorderThickness="1"
+                                CornerRadius="8"
+                                Padding="10"
+                                IsVisible="False">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    
+                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                              Text="Карта:" 
+                                              FontWeight="SemiBold"
+                                              FontSize="11"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="2"
+                                              Name="SelectedCardNumber"
+                                              FontSize="11"/>
+                                    
+                                    <TextBlock Grid.Row="2" Grid.Column="0"
+                                              Text="Держатель:" 
+                                              FontWeight="SemiBold"
+                                              FontSize="11"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="2"
+                                              Name="SelectedCardHolder"
+                                              FontSize="11"/>
+                                    
+                                    <TextBlock Grid.Row="4" Grid.Column="0"
+                                              Text="Срок:" 
+                                              FontWeight="SemiBold"
+                                              FontSize="11"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="2"
+                                              Name="SelectedCardExpiry"
+                                              FontSize="11"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <!-- Бонусная карта -->
+<Border Name="BonusCardSection"
+        BorderBrush="#3E5F8A"
+        BorderThickness="1" 
+        CornerRadius="10" 
+        Padding="15">
+    <StackPanel Spacing="15">
+        <TextBlock Text="🎁 Использовать бонусную карту" 
+                  FontSize="16" 
+                  FontWeight="SemiBold"
+                  Foreground="#2C3E50"/>
+        
+        <!-- Если есть бонусная карта -->
+        <StackPanel Name="HasBonusCardPanel" Spacing="10">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <!-- Информация о балансе -->
+                <StackPanel Grid.Column="0" Spacing="5">
+                    <TextBlock Name="BonusCardInfoText"
+                              FontSize="12"
+                              Foreground="#7F8C8D"/>
+                    <TextBlock Name="BonusCardBalanceText"
+                              FontSize="14"
+                              FontWeight="Bold"
+                              Foreground="#27AE60"/>
+                </StackPanel>
+                
+                <!-- Чекбокс использования бонусов -->
+                <CheckBox Grid.Column="1"
+                         Name="UseBonusPointsCheckBox"
+                         Content="Использовать баллы"
+                         FontSize="12"
+                         IsChecked="False"
+                         Checked="UseBonusPointsCheckBox_Checked"
+                         Unchecked="UseBonusPointsCheckBox_Unchecked"/>
+            </Grid>
+            
+            <!-- Слайдер для выбора суммы списания -->
+            <Border Name="BonusPointsSliderBorder"
+                    Background="#F8F9FA"
+                    BorderBrush="#BDC3C7"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="15"
+                    IsVisible="False">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Списать баллы:" 
+                              FontSize="12"
+                              FontWeight="SemiBold"
+                              Foreground="#7F8C8D"/>
+                    
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Слайдер -->
+                        <Slider Grid.Row="0"
+                               Name="BonusPointsSlider"
+                               Minimum="0"
+                               Maximum="100"
+                               TickFrequency="10"
+                               TickPlacement="BottomRight"
+                               ValueChanged="BonusPointsSlider_ValueChanged"/>
+                        
+                        <!-- Поле для ввода -->
+                        <Grid Grid.Row="2" ColumnDefinitions="*,Auto,*" ColumnSpacing="10">
+                            <Button Grid.Column="0"
+                                   Content="-10"
+                                   FontSize="10"
+                                   Padding="8,2"
+                                   Click="DecreaseBonusPoints_Click"/>
+                            
+                            <TextBox Grid.Column="1"
+                                    Name="BonusPointsTextBox"
+                                    Text="0"
+                                    TextAlignment="Center"
+                                    FontSize="12"
+                                    Width="80"
+                                    TextChanged="BonusPointsTextBox_TextChanged"/>
+                            
+                            <Button Grid.Column="2"
+                                   Content="+10"
+                                   FontSize="10"
+                                   Padding="8,2"
+                                   Click="IncreaseBonusPoints_Click"/>
+                        </Grid>
+                        
+                        <!-- Информация о примененных бонусах -->
+                        <StackPanel Grid.Row="4" Spacing="5">
+                            <TextBlock Name="BonusPointsUsedText"
+                                      FontSize="11"
+                                      Foreground="#7F8C8D"/>
+                            <TextBlock Name="FinalPriceText"
+                                      FontSize="14"
+                                      FontWeight="Bold"
+                                      Foreground="#27AE60"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        
+        <!-- Если нет бонусной карты -->
+        <Border Name="NoBonusCardPanel"
+                Background="#FFF9E6"
+                BorderBrush="#F39C12"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="15"
+                IsVisible="False">
+            <StackPanel Spacing="5">
+                <TextBlock Text="ℹ️ У вас нет бонусной карты" 
+                          FontSize="12"
+                          FontWeight="SemiBold"
+                          Foreground="#E67E22"/>
+                <TextBlock Text="Оформите бонусную карту в разделе 'Мой аккаунт' для накопления и использования баллов" 
+                          FontSize="10"
+                          Foreground="#7F8C8D"
+                          TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</Border>
+
+            <!-- Данные новой карты (скрыт по умолчанию) -->
+            <Border Name="NewCardSection" 
+                    BorderBrush="#BDC3C7" 
+                    BorderThickness="1" 
+                    CornerRadius="10" 
+                    Padding="15"
+                    IsVisible="False">
+                <StackPanel Spacing="15">
+                    <Button Content="← Назад к выбору карты"
+                            Background="#95A5A6"
+                            Foreground="White"
+                            Click="BackToSavedCardsButton_Click"
+                            Padding="10,5"
+                            FontSize="11"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,10"/>
+                    
+                    <TextBlock Text="Данные банковской карты" 
+                              FontSize="16" 
+                              FontWeight="SemiBold"
+                              Foreground="#2C3E50"/>
+                    
+                    <!-- Номер карты -->
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Номер карты" 
+                                  FontSize="12"
+                                  FontWeight="SemiBold"
+                                  Foreground="#7F8C8D"/>
+                        <TextBox Name="CardNumberTextBox" 
+                                Watermark="0000 0000 0000 0000"
+                                TextChanged="CardNumberTextBox_TextChanged"
+                                MaxLength="19"/>
+                    </StackPanel>
+                    
+                    <!-- Срок действия и CVV -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                        <StackPanel Grid.Column="0" Spacing="5">
+                            <TextBlock Text="Срок действия" 
+                                      FontSize="12"
+                                      FontWeight="SemiBold"
+                                      Foreground="#7F8C8D"/>
+                            <TextBox Name="ExpiryDateTextBox" 
+                                    Watermark="ММ/ГГ"
+                                    TextChanged="ExpiryDateTextBox_TextChanged"
+                                    MaxLength="5"/>
+                            <TextBlock Name="ExpiryDateErrorText" 
+                                      FontSize="10"
+                                      Foreground="#E74C3C"
+                                      IsVisible="False"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="1" Spacing="5">
+                            <TextBlock Text="CVV" 
+                                      FontSize="12"
+                                      FontWeight="SemiBold"
+                                      Foreground="#7F8C8D"/>
+                            <TextBox Name="CvvTextBox" 
+                                    Watermark="000"
+                                    TextChanged="CvvTextBox_TextChanged"
+                                    MaxLength="3"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Индикатор загрузки -->
+            <Border Name="LoadingBorder" 
+                    Background="#F8F9FA" 
+                    BorderBrush="#BDC3C7" 
+                    BorderThickness="1"
+                    CornerRadius="10" 
+                    Padding="20"
+                    IsVisible="False">
+                <StackPanel HorizontalAlignment="Center" Spacing="10">
+                    <ProgressBar IsIndeterminate="True" Height="4" Width="200"/>
+                    <TextBlock Text="Обработка платежа..." 
+                              FontSize="12"
+                              Foreground="#7F8C8D"
+                              HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Сообщение об успехе -->
+            <Border Name="SuccessBorder" 
+                    Background="#E8F6F3" 
+                    BorderBrush="#27AE60" 
+                    BorderThickness="1"
+                    CornerRadius="10" 
+                    Padding="20"
+                    IsVisible="False">
+                <StackPanel HorizontalAlignment="Center" Spacing="10">
+                    <TextBlock Text="✅" 
+                              FontSize="24"
+                              HorizontalAlignment="Center"/>
+                    <TextBlock Text="Оплата прошла успешно!" 
+                              FontSize="16"
+                              FontWeight="Bold"
+                              Foreground="#27AE60"
+                              HorizontalAlignment="Center"/>
+                    <TextBlock Text="Разовое посещение оплачено" 
+                              FontSize="12"
+                              Foreground="#7F8C8D"
+                              HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Кнопки -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="15">
+                <Button Name="PayButton"
+                        Content="Оплатить" 
+                        Background="#27AE60" 
+                        Foreground="White"
+                        Click="PayButton_Click"
+                        IsEnabled="False"
+                        Padding="20,10"
+                        FontSize="14"/>
+                
+                <Button Content="Отмена" 
+                        Background="#95A5A6" 
+                        Foreground="White"
+                        Click="CancelButton_Click"
+                        Padding="20,10"
+                        FontSize="14"/>
+            </StackPanel>
+
+            <!-- Кнопка закрытия после успеха -->
+            <Button Name="CloseButton"
+                    Content="Закрыть" 
+                    Background="#3498DB" 
+                    Foreground="White"
+                    Click="CloseButton_Click"
+                    Padding="20,10"
+                    FontSize="14"
+                    HorizontalAlignment="Center"
+                    IsVisible="False"/>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

@@ -1,0 +1,122 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FitClub.Trainer.Views;assembly=FitClub"
+             x:Class="FitClub.Trainer.Views.HomeView"
+             Background="#F4F7F9">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="30" Spacing="25">
+            
+            <StackPanel>
+                <TextBlock Text="🏠 ГЛАВНАЯ" FontSize="28" FontWeight="ExtraBold" Foreground="#2C3E50" LetterSpacing="1"/>
+                <Border Height="4" Width="80" Background="#FF8955" HorizontalAlignment="Left" Margin="0,8,0,0" CornerRadius="2"/>
+            </StackPanel>
+
+            <Border Background="White" CornerRadius="12" Padding="25" BorderBrush="#E0E6ED" BorderThickness="1" BoxShadow="0 4 15 0 #05000000">
+                <StackPanel Spacing="8">
+                    <TextBlock x:Name="GreetingText" FontSize="26" FontWeight="ExtraBold" Foreground="#2C3E50"/>
+                    <TextBlock x:Name="DateText" FontSize="15" Foreground="#7F8C8D" FontWeight="Medium"/>
+                </StackPanel>
+            </Border>
+
+            <Grid ColumnDefinitions="*, 320">
+                
+                <StackPanel Grid.Column="0" Spacing="15" Margin="0,0,25,0">
+                    <Grid ColumnDefinitions="*, Auto">
+                        <TextBlock Grid.Column="0" Text="Расписание на сегодня" FontSize="20" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" x:Name="DownloadScheduleBtn" Content="⬇ Скачать расписание" Click="DownloadSchedule_Click" Background="#F8F9FA" Foreground="#3498DB" BorderBrush="#3498DB" BorderThickness="1" CornerRadius="6" Padding="15,8" FontWeight="Bold" Cursor="Hand" IsVisible="False"/>
+                    </Grid>
+                    
+                    <ItemsControl x:Name="TodayScheduleList" IsVisible="False">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:TodayWorkoutItem">
+                                <Border Background="White" CornerRadius="10" Padding="15,20" Margin="0,0,0,15" BorderBrush="{Binding BorderBrush}" BorderThickness="4,1,1,1" BoxShadow="0 2 8 0 #05000000">
+                                    <Grid ColumnDefinitions="120, Auto, *, Auto">
+                                        
+                                        <TextBlock Grid.Column="0" Text="{Binding TimeFormatted}" FontSize="16" FontWeight="Heavy" Foreground="{Binding BorderBrush}" VerticalAlignment="Center"/>
+                                        
+                                        <Border Grid.Column="1" Width="40" Height="40" CornerRadius="20" Background="#EAF2F8" ClipToBounds="True" Margin="0,0,15,0" IsVisible="{Binding IsIndividual}">
+                                            <Image Source="{Binding ClientAvatar}" Stretch="UniformToFill"/>
+                                        </Border>
+                                        
+                                        <TextBlock Grid.Column="1" Text="👥" FontSize="20" Foreground="#2C3E50" VerticalAlignment="Center" Margin="0,0,10,0" IsVisible="{Binding IsGroup}"/>
+
+                                        <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="4">
+                                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                                <TextBlock Text="{Binding Title}" FontSize="15" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <Border Background="#EAFaf1" CornerRadius="6" Padding="6,2" VerticalAlignment="Center" IsVisible="{Binding IsSubscription}">
+                                                    <TextBlock Text="АБОНЕМЕНТ" FontSize="9" FontWeight="Bold" Foreground="#27AE60"/>
+                                                </Border>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding Subtitle}" FontSize="13" Foreground="#7F8C8D"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                                            <Button Content="Открыть" IsVisible="{Binding IsGroup}" Background="#EAFaf1" Foreground="#27AE60" BorderBrush="#27AE60" BorderThickness="1" CornerRadius="8" Padding="15,8" FontWeight="Bold" FontSize="12" Cursor="Hand" Click="OpenGroup_Click" Tag="{Binding}"/>
+                                            
+                                            <Button Content="План" IsVisible="{Binding IsSubscription}" Background="#EBF5FB" Foreground="#3498DB" BorderBrush="#3498DB" BorderThickness="1" CornerRadius="8" Padding="15,8" FontWeight="Bold" FontSize="12" Cursor="Hand" Click="OpenPlan_Click" Tag="{Binding}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <StackPanel x:Name="NoWorkoutsPanel" IsVisible="False" Spacing="15" Margin="0,40,0,0">
+                        <TextBlock Text="☕" FontSize="50" HorizontalAlignment="Center"/>
+                        <TextBlock Text="На сегодня тренировок не запланировано" FontSize="18" FontWeight="SemiBold" Foreground="#95A5A6" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Отличное время для отдыха или работы с планами клиентов!" FontSize="14" Foreground="#BDC3C7" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Spacing="20">
+                    
+                    <Border Background="White" CornerRadius="12" Padding="20" BorderBrush="#E0E6ED" BorderThickness="1" BoxShadow="0 4 15 0 #05000000">
+                        <StackPanel Spacing="15">
+                            <TextBlock Text="📊 Статистика за неделю" FontSize="16" FontWeight="Bold" Foreground="#2C3E50"/>
+                            
+                            <Grid ColumnDefinitions="*, *" ColumnSpacing="10">
+                                <Border Grid.Column="0" Background="#EAFaf1" CornerRadius="8" Padding="15,12">
+                                    <StackPanel>
+                                        <TextBlock Text="🏃 Занятий" FontSize="11" FontWeight="Bold" Foreground="#27AE60"/>
+                                        <TextBlock x:Name="TrainingsCountText" FontSize="24" FontWeight="Heavy" Foreground="#2C3E50" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Grid.Column="1" Background="#F4ECF7" CornerRadius="8" Padding="15,12">
+                                    <StackPanel>
+                                        <TextBlock Text="💰 Доход" FontSize="11" FontWeight="Bold" Foreground="#8E44AD"/>
+                                        <TextBlock x:Name="EarnedText" FontSize="18" FontWeight="Heavy" Foreground="#2C3E50" Margin="0,6,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="White" CornerRadius="12" Padding="20" BorderBrush="#E0E6ED" BorderThickness="1" BoxShadow="0 4 15 0 #05000000">
+                        <StackPanel Spacing="15">
+                            <TextBlock Text="📰 Жизнь клуба" FontSize="16" FontWeight="Bold" Foreground="#2C3E50"/>
+                            
+                            <ItemsControl x:Name="NewsItemsControl">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="local:ClubNewsItem">
+                                        <Border Background="#F8F9FA" CornerRadius="8" Padding="15" Margin="0,0,0,10" BorderBrush="#E0E6ED" BorderThickness="1">
+                                            <StackPanel Spacing="5">
+                                                <TextBlock Text="{Binding Title}" FontSize="13" FontWeight="Bold" Foreground="#3E5F8A" TextWrapping="Wrap"/>
+                                                <TextBlock Text="{Binding Description}" FontSize="12" Foreground="#7F8C8D" TextWrapping="Wrap" MaxLines="3" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding DateFormatted}" FontSize="10" Foreground="#BDC3C7" HorizontalAlignment="Right" Margin="0,5,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            
+                            <TextBlock x:Name="NoNewsText" Text="Нет активных объявлений" FontSize="13" FontStyle="Italic" Foreground="#BDC3C7" IsVisible="False" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,134 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="clr-namespace:FitClub.Models;assembly=FitClub"
+        xmlns:local="clr-namespace:FitClub.Admin.Views;assembly=FitClub"
+        x:Class="FitClub.Admin.Views.TrainerDetailsWindow"
+        x:CompileBindings="False"
+        Title="Детальная статистика тренера" Width="750" Height="850"
+        WindowStartupLocation="CenterOwner" CanResize="False"
+        Background="#F4F7F9">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <Border Height="4" Background="#FF8955" HorizontalAlignment="Stretch"/>
+            
+            <Border Padding="30" Background="White" Margin="20" CornerRadius="15" BorderBrush="#E0E6ED" BorderThickness="2">
+                <StackPanel Spacing="25">
+                    
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="ДЕТАЛЬНАЯ СТАТИСТИКА" FontSize="20" FontWeight="Bold" Foreground="#2C3E50" HorizontalAlignment="Center"/>
+                        <Border Height="2" Width="60" Background="#FF8955" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+
+                    <Grid ColumnDefinitions="Auto, *, Auto" Margin="0,0,0,10">
+                        <Border Grid.Column="0" Width="100" Height="100" CornerRadius="50" ClipToBounds="True" BorderBrush="#FF8955" BorderThickness="3" Background="#F8F9FA">
+                            <Image Source="{Binding Trainer.PhotoBitmap}" Stretch="UniformToFill"/>
+                        </Border>
+                        
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20,0" Spacing="5">
+                            <TextBlock Text="{Binding Trainer.FullName}" FontSize="22" FontWeight="Bold" Foreground="#2C3E50" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding Trainer.Specialization}" FontSize="13" Foreground="#FF8955" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                            <Border Background="{Binding Trainer.StatusColor}" CornerRadius="5" Padding="8,4" HorizontalAlignment="Left" Margin="0,5,0,0">
+                                <TextBlock Text="{Binding Trainer.StatusText}" FontSize="11" FontWeight="Bold" Foreground="White"/>
+                            </Border>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="10">
+                            <ComboBox x:Name="MonthComboBox" Width="160" HorizontalAlignment="Stretch">
+                                <ComboBoxItem Content="Январь"/>
+                                <ComboBoxItem Content="Февраль"/>
+                                <ComboBoxItem Content="Март"/>
+                                <ComboBoxItem Content="Апрель"/>
+                                <ComboBoxItem Content="Май"/>
+                                <ComboBoxItem Content="Июнь"/>
+                                <ComboBoxItem Content="Июль"/>
+                                <ComboBoxItem Content="Август"/>
+                                <ComboBoxItem Content="Сентябрь"/>
+                                <ComboBoxItem Content="Октябрь"/>
+                                <ComboBoxItem Content="Ноябрь"/>
+                                <ComboBoxItem Content="Декабрь"/>
+                            </ComboBox>
+                            <Button Content="📥 Скачать отчет" Click="ExportReport_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#3498DB" Foreground="White" Padding="15,10" CornerRadius="8" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="КЛЮЧЕВЫЕ ПОКАЗАТЕЛИ ЗА ПЕРИОД" FontSize="11" FontWeight="Bold" Foreground="#FF8955" LetterSpacing="1" Margin="5,0,0,0"/>
+                        <UniformGrid Columns="2" Rows="2">
+                            <Border Background="#F4F9FF" Margin="5" Padding="15" CornerRadius="10" BorderBrush="#3498DB" BorderThickness="2">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="ПРОВЕДЕНО ЗАНЯТИЙ" FontSize="10" FontWeight="SemiBold" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding TotalSessions}" FontSize="28" FontWeight="Bold" Foreground="#3498DB" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Background="#F4FFF7" Margin="5" Padding="15" CornerRadius="10" BorderBrush="#27AE60" BorderThickness="2">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="ВСЕГО КЛИЕНТОВ" FontSize="10" FontWeight="SemiBold" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding TotalClients}" FontSize="28" FontWeight="Bold" Foreground="#27AE60" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Background="#FFF9F4" Margin="5" Padding="15" CornerRadius="10" BorderBrush="#E67E22" BorderThickness="2">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="ВЫРУЧКА" FontSize="10" FontWeight="SemiBold" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding MonthlyRevenue, StringFormat='{}{0:N0} ₽'}" FontSize="28" FontWeight="Bold" Foreground="#E67E22" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Background="#F9F4FF" Margin="5" Padding="15" CornerRadius="10" BorderBrush="#8E44AD" BorderThickness="2">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="РЕЙТИНГ" FontSize="10" FontWeight="SemiBold" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding RankText}" FontSize="20" FontWeight="Bold" Foreground="#8E44AD" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </UniformGrid>
+                    </StackPanel>
+
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="ЛОЯЛЬНОСТЬ КЛИЕНТОВ И ЗАГРУЖЕННОСТЬ" FontSize="11" FontWeight="Bold" Foreground="#FF8955" LetterSpacing="1" Margin="5,0,0,0"/>
+                        <Border BorderBrush="#FF8955" BorderThickness="2" CornerRadius="12" Padding="10" Background="#FAFBFC">
+                            <Grid ColumnDefinitions="*, *">
+                                <Border Grid.Column="0" Background="White" BorderBrush="#E0E6ED" BorderThickness="1" CornerRadius="10" Padding="15" Margin="5">
+                                    <StackPanel Spacing="8">
+                                        <TextBlock Text="САМЫЙ ПРЕДАННЫЙ КЛИЕНТ" FontSize="10" FontWeight="Bold" Foreground="#95A5A6"/>
+                                        <TextBlock Text="{Binding TopClientName}" FontSize="15" FontWeight="Bold" Foreground="#2C3E50" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding TopClientVisits, StringFormat='Посещений: {0}'}" FontSize="12" FontWeight="SemiBold" Foreground="#3498DB"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Column="1" Background="White" BorderBrush="#E0E6ED" BorderThickness="1" CornerRadius="10" Padding="15" Margin="5">
+                                    <StackPanel Spacing="8">
+                                        <TextBlock Text="ЗАГРУЖЕННОСТЬ ГРУПП" FontSize="10" FontWeight="Bold" Foreground="#95A5A6"/>
+                                        <TextBlock Text="{Binding AvgLoad, StringFormat='{}{0:P0}'}" FontSize="15" FontWeight="Bold" Foreground="#2C3E50"/>
+                                        <ProgressBar Value="{Binding AvgLoad}" Minimum="0" Maximum="1" Height="10" CornerRadius="5" Margin="0,5,0,0" Foreground="#27AE60" Background="#E0E6ED"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="ГРАФИК АКТИВНОСТИ (ДНИ МЕСЯЦА)" FontSize="11" FontWeight="Bold" Foreground="#FF8955" LetterSpacing="1" Margin="5,0,0,0"/>
+                        <Border BorderBrush="#FF8955" BorderThickness="2" CornerRadius="12" Padding="20" Background="#FAFBFC">
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                <ItemsControl ItemsSource="{Binding DailyActivity}" HorizontalAlignment="Left">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Height="140" Spacing="10"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="local:ActivityBar">
+                                            <StackPanel VerticalAlignment="Bottom" Width="25">
+                                                <TextBlock Text="{Binding CountText}" FontSize="10" FontWeight="Bold" Foreground="#7F8C8D" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                                <Border Background="#FF8955" Width="25" Height="{Binding BarHeight}" CornerRadius="4,4,0,0"/>
+                                                <TextBlock Text="{Binding Day}" FontSize="10" FontWeight="SemiBold" Foreground="#2C3E50" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Border>
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

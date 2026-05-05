@@ -1,0 +1,147 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:FitClub.Models;assembly=FitClub"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="800"
+             x:Class="FitClub.Views.GroupTrainingsView"
+             Background="#F4F7F9">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="30" Spacing="20">
+            
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+                <StackPanel>
+                    <TextBlock Text="ГРУППОВЫЕ ТРЕНИРОВКИ" 
+                               FontSize="28" 
+                               FontWeight="ExtraBold" 
+                               Foreground="#2C3E50" 
+                               LetterSpacing="1"/>
+                    <Border Height="4" Width="80" Background="#FF8955" HorizontalAlignment="Left" Margin="0,8,0,0" CornerRadius="2"/>
+                </StackPanel>
+            </Grid>
+
+            <Border Name="PassportWarningBorder" Background="#FEF5E7" BorderBrush="#F39C12" BorderThickness="1" CornerRadius="12" Padding="20" IsVisible="False" Margin="0,0,0,10">
+                <StackPanel Spacing="5">
+                    <TextBlock Text="⚠️ Необходимы паспортные данные" FontSize="16" FontWeight="Bold" Foreground="#D35400"/>
+                    <TextBlock Text="Для записи на групповые тренировки добавьте паспортные данные в разделе 'Мой аккаунт'." FontSize="13" FontWeight="SemiBold" Foreground="#E67E22" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <Border Name="ActiveSubscriptionBorder" Background="White" CornerRadius="16" Padding="20" Margin="0,0,0,15" BoxShadow="0 4 15 0 #05000000" BorderBrush="#27AE60" BorderThickness="2" IsVisible="False">
+                <StackPanel Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="🌟" FontSize="20" VerticalAlignment="Center"/>
+                        <TextBlock Text="АКТИВНЫЙ АБОНЕМЕНТ" FontSize="16" FontWeight="Heavy" Foreground="#27AE60" VerticalAlignment="Center" LetterSpacing="1"/>
+                    </StackPanel>
+                    <TextBlock Name="SubscriptionNameText" FontSize="18" FontWeight="Bold" Foreground="#2C3E50"/>
+                    <Grid ColumnDefinitions="Auto, *, Auto, *">
+                        <StackPanel Grid.Column="0" Spacing="5" Margin="0,0,20,0">
+                            <TextBlock Text="Действует до:" FontSize="12" Foreground="#7F8C8D"/>
+                            <TextBlock Name="SubscriptionEndDateText" FontSize="14" FontWeight="Bold" Foreground="#2C3E50"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Spacing="5">
+                            <TextBlock Text="Осталось занятий:" FontSize="12" Foreground="#7F8C8D"/>
+                            <TextBlock Name="SubscriptionRemainingText" FontSize="14" FontWeight="Bold" Foreground="#27AE60"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Spacing="5" Margin="0,0,20,0">
+                            <TextBlock Text="Направление:" FontSize="12" Foreground="#7F8C8D"/>
+                            <TextBlock Name="SubscriptionDirectionText" FontSize="14" FontWeight="Bold" Foreground="#3498DB"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="3" Spacing="5">
+                            <TextBlock Text="Тренер:" FontSize="12" Foreground="#7F8C8D"/>
+                            <TextBlock Name="SubscriptionTrainerText" FontSize="14" FontWeight="Bold" Foreground="#3498DB"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+                <TextBox x:Name="SearchTextBox" 
+                         Grid.Column="0" 
+                         Watermark="🔍 Поиск по направлению или тренеру..." 
+                         CornerRadius="8" 
+                         Height="45" 
+                         VerticalContentAlignment="Center" 
+                         KeyUp="SearchTextBox_KeyUp"
+                         FontSize="14"/>
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Spacing="10" Margin="20,0,0,0">
+                    <TextBlock Text="Интенсивность:" VerticalAlignment="Center" FontWeight="Bold" Foreground="#95A5A6" FontSize="13"/>
+                    <ComboBox x:Name="IntensityComboBox" 
+                              Width="160" 
+                              Height="45" 
+                              CornerRadius="8" 
+                              SelectionChanged="IntensityComboBox_SelectionChanged">
+                        <ComboBoxItem Content="Все"/>
+                        <ComboBoxItem Content="Низкая"/>
+                        <ComboBoxItem Content="Средняя"/>
+                        <ComboBoxItem Content="Высокая"/>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+
+            <ItemsControl Name="TrainingsItemsControl">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="models:GroupTraining">
+                        <Border Background="White" CornerRadius="16" Margin="0,0,20,20" Width="330" BoxShadow="0 6 20 0 #0A000000" ClipToBounds="True">
+                            <StackPanel>
+                                <Border Height="200" ClipToBounds="True">
+                                    <Image Source="{Binding TrainingImage}" Stretch="UniformToFill"/>
+                                </Border>
+                                
+                                <StackPanel Margin="20" Spacing="10">
+                                    <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Heavy" Foreground="#2C3E50" TextWrapping="Wrap"/>
+                                    
+                                    <StackPanel Spacing="4">
+                                        <TextBlock Text="ТРЕНЕРЫ:" FontSize="12" FontWeight="Bold" Foreground="#BDC3C7"/>
+                                        <ItemsControl ItemsSource="{Binding AvailableTrainers}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding FullName}" 
+                                                               FontSize="14" 
+                                                               FontWeight="Bold" 
+                                                               Foreground="#3498DB" 
+                                                               Cursor="Hand" 
+                                                               Margin="0,0,0,4" 
+                                                               Tag="{Binding}" 
+                                                               PointerPressed="TrainerName_PointerPressed"/>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                    
+                                    <TextBlock Text="{Binding Description}" FontSize="13" Foreground="#7F8C8D" TextWrapping="Wrap" MaxLines="3" TextTrimming="CharacterEllipsis" Height="60"/>
+                                    
+                                    <Grid ColumnDefinitions="*,Auto" Margin="0,10,0,0">
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="2">
+                                            <TextBlock Text="{Binding DurationFormatted}" FontSize="13" FontWeight="Bold" Foreground="#95A5A6"/>
+                                            <TextBlock Text="{Binding PriceFormatted}" FontSize="18" FontWeight="ExtraBold" Foreground="#27AE60"/>
+                                        </StackPanel>
+                                        
+                                        <Button Grid.Column="1" 
+                                                Content="Записаться" 
+                                                Background="#EAFaf1" 
+                                                Foreground="#27AE60" 
+                                                BorderBrush="#27AE60" 
+                                                BorderThickness="1" 
+                                                CornerRadius="8" 
+                                                FontWeight="Bold" 
+                                                Padding="20,12" 
+                                                Cursor="Hand" 
+                                                Click="BookTrainingButton_Click"
+                                                Tag="{Binding}"/>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

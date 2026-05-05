@@ -1,0 +1,222 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FitClub.Models;assembly=FitClub"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="700"
+        x:Class="FitClub.Admin.Views.JobApplicationDetailsWindow"
+        Title="Детали заявки на работу"
+        Width="800"
+        Height="700"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Spacing="10" Margin="0,0,0,20">
+            <TextBlock x:Name="TitleText"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="#2C3E50"
+                       HorizontalAlignment="Center"/>
+            <Border x:Name="TitleBorder" Height="2" Width="100" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Spacing="20">
+
+                <Border Background="#F8F9FA" CornerRadius="8" Padding="15">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="Статус заявки"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="#2C3E50"/>
+
+                        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto">
+                            <Border Grid.Row="0" Grid.Column="0"
+                                    x:Name="StatusBadge"
+                                    CornerRadius="5"
+                                    Padding="10,5"
+                                    Margin="0,0,10,0">
+                                <TextBlock x:Name="StatusIconText" FontSize="16"/>
+                            </Border>
+
+                            <Border Grid.Row="0" Grid.Column="1"
+                                    x:Name="StatusTextBadge"
+                                    CornerRadius="5"
+                                    Padding="10,5">
+                                <TextBlock x:Name="StatusText"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           Foreground="White"/>
+                            </Border>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                       x:Name="CreatedAtText"
+                                       Margin="0,10,0,0"
+                                       Foreground="#7F8C8D"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#E8F6F3" CornerRadius="8" Padding="15">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="👤 Информация о кандидате"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="#2C3E50"/>
+
+                        <Grid ColumnDefinitions="120, *" RowDefinitions="Auto, Auto, Auto, Auto">
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="ФИО:" Foreground="#7F8C8D"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="FullNameText" FontWeight="Bold"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Email:" Foreground="#7F8C8D" Margin="0,5,0,0"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="EmailText" Margin="0,5,0,0"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Телефон:" Foreground="#7F8C8D" Margin="0,5,0,0"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="PhoneText" Margin="0,5,0,0"/>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Дата заявки:" Foreground="#7F8C8D" Margin="0,5,0,0"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="DateText" Margin="0,5,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#F0F8FF" CornerRadius="8" Padding="15">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="💪 Профессиональная информация"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="#2C3E50"/>
+
+                        <Grid ColumnDefinitions="150, *" RowDefinitions="Auto, Auto, Auto, Auto">
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Специализация:" Foreground="#7F8C8D"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="SpecializationText" FontWeight="SemiBold"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Опыт работы:" Foreground="#7F8C8D" Margin="0,5,0,0"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="ExperienceText" Margin="0,5,0,0"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Образование:" Foreground="#7F8C8D" Margin="0,5,0,0"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="EducationText" Margin="0,5,0,0" TextWrapping="Wrap"/>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Сертификаты:" Foreground="#7F8C8D" Margin="0,5,0,0"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="CertificatesText" Margin="0,5,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#FFF9E6" CornerRadius="8" Padding="15">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="⭐ Личностные качества"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="#2C3E50"/>
+
+                        <ItemsControl x:Name="RatingsItemsControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Spacing="10"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="local:RatingItem">
+                                    <Grid ColumnDefinitions="150, *, 30">
+                                        <TextBlock Grid.Column="0" 
+                                                   Text="{Binding QualityName}" 
+                                                   Foreground="#2C3E50"/>
+                                        <ProgressBar Grid.Column="1"
+                                                     Value="{Binding RatingValue}"
+                                                     Minimum="1"
+                                                     Maximum="10"
+                                                     Height="20"
+                                                     Margin="10,0"
+                                                     Foreground="#E74C3C"/>
+                                        <TextBlock Grid.Column="2"
+                                                   Text="{Binding RatingValue}"
+                                                   FontWeight="Bold"
+                                                   Foreground="#E74C3C"
+                                                   HorizontalAlignment="Right"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#F0F8FF" CornerRadius="8" Padding="15">
+                    <StackPanel Spacing="15">
+                        <TextBlock Text="🎯 Мотивация и цели"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="#2C3E50"/>
+
+                        <StackPanel Spacing="5">
+                            <TextBlock Text="Почему хочет работать у нас:" FontWeight="SemiBold" Foreground="#2C3E50"/>
+                            <Border Background="White" CornerRadius="5" Padding="10">
+                                <TextBlock x:Name="MotivationText" TextWrapping="Wrap"/>
+                            </Border>
+                        </StackPanel>
+
+                        <StackPanel Spacing="5">
+                            <TextBlock Text="Профессиональные цели:" FontWeight="SemiBold" Foreground="#2C3E50"/>
+                            <Border Background="White" CornerRadius="5" Padding="10">
+                                <TextBlock x:Name="GoalsText" TextWrapping="Wrap"/>
+                            </Border>
+                        </StackPanel>
+
+                        <StackPanel Spacing="5">
+                            <TextBlock Text="Что может предложить клубу:" FontWeight="SemiBold" Foreground="#2C3E50"/>
+                            <Border Background="White" CornerRadius="5" Padding="10">
+                                <TextBlock x:Name="OfferText" TextWrapping="Wrap"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#F5EEF8" CornerRadius="8" Padding="15">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="📌 Дополнительная информация"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="#2C3E50"/>
+
+                        <Grid ColumnDefinitions="150, *" RowDefinitions="Auto, Auto, Auto, Auto">
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Желаемый график:" Foreground="#7F8C8D"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="ScheduleText" FontWeight="SemiBold"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Возрастные группы:" Foreground="#7F8C8D" Margin="0,5,0,0"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="AgeGroupsText" Margin="0,5,0,0" TextWrapping="Wrap"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Медицинская книжка:" Foreground="#7F8C8D" Margin="0,5,0,0"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="MedicalBookText" Margin="0,5,0,0"/>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Иностранные языки:" Foreground="#7F8C8D" Margin="0,5,0,0"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="LanguagesText" Margin="0,5,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,20,0,0">
+            <Button x:Name="CloseButton"
+                    Content="Закрыть детали"
+                    Background="#95A5A6"
+                    Foreground="White"
+                    Padding="40,12"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    CornerRadius="8"
+                    Cursor="Hand"
+                    Click="CloseButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

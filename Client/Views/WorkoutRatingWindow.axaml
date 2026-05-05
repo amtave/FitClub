@@ -1,0 +1,37 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="FitClub.Views.WorkoutRatingWindow"
+        Title="Оценка тренировки" Width="450" Height="550"
+        WindowStartupLocation="CenterOwner" Background="#F8F9FA"
+        CanResize="False">
+    
+    <Border Padding="30">
+        <StackPanel Spacing="25">
+            <StackPanel Spacing="5" HorizontalAlignment="Center">
+                <TextBlock Text="КАК ВСЁ ПРОШЛО? ⭐" FontSize="22" FontWeight="Heavy" Foreground="#2C3E50" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="WorkoutNameText" FontSize="14" Foreground="#7F8C8D" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <StackPanel Spacing="10">
+                <TextBlock Text="Ваша оценка:" FontSize="13" FontWeight="Bold" Foreground="#95A5A6" HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+                    <Button Name="Star1" Content="★" FontSize="32" Background="Transparent" Click="Star_Click" Tag="1"/>
+                    <Button Name="Star2" Content="★" FontSize="32" Background="Transparent" Click="Star_Click" Tag="2"/>
+                    <Button Name="Star3" Content="★" FontSize="32" Background="Transparent" Click="Star_Click" Tag="3"/>
+                    <Button Name="Star4" Content="★" FontSize="32" Background="Transparent" Click="Star_Click" Tag="4"/>
+                    <Button Name="Star5" Content="★" FontSize="32" Background="Transparent" Click="Star_Click" Tag="5"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Spacing="10">
+                <TextBlock Text="Ваш отзыв (обязательно):" FontSize="13" FontWeight="Bold" Foreground="#95A5A6"/>
+                <TextBox Name="CommentTextBox" Height="150" AcceptsReturn="True" TextWrapping="Wrap" CornerRadius="12" Watermark="Расскажите о своих впечатлениях..." Padding="15" BorderThickness="1" BorderBrush="#E0E6ED"/>
+            </StackPanel>
+
+            <StackPanel Spacing="12">
+                <Button Content="Оценить" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#27AE60" Foreground="White" FontWeight="Bold" FontSize="15" Height="50" CornerRadius="10" Click="Submit_Click"/>
+                <Button Content="Назад" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="Transparent" Foreground="#95A5A6" FontWeight="SemiBold" Click="Back_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

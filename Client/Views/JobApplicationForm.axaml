@@ -1,0 +1,454 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:FitClub.Models;assembly=FitClub"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="900"
+             x:Class="FitClub.Client.Views.JobApplicationForm">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="30" Spacing="25">
+            
+            <!-- Заголовок -->
+            <TextBlock Text="Заявка на работу тренером" 
+                      FontSize="28" 
+                      FontWeight="Bold" 
+                      Foreground="#2C3E50"
+                      HorizontalAlignment="Center"/>
+            
+            <!-- Информация о пользователе -->
+<Border Background="#E8F6F3" 
+CornerRadius="10" 
+Padding="20">
+<Grid ColumnDefinitions="Auto, *">
+<!-- Аватар -->
+<Border Grid.Column="0"
+        Width="80"
+        Height="80"
+        CornerRadius="40"
+        BorderBrush="#3498DB"
+        BorderThickness="2"
+        Margin="0,0,20,0"
+        ClipToBounds="True"
+        Background="#3498DB">
+    <Image x:Name="UserAvatarImage"
+           Width="80"
+           Height="80"
+           Stretch="UniformToFill"/>
+</Border>
+
+<!-- Данные пользователя -->
+<StackPanel Grid.Column="1" Spacing="12" VerticalAlignment="Center">
+    <TextBlock Text="👤 Ваши данные" 
+              FontSize="20" 
+              FontWeight="Bold"
+              Foreground="#2C3E50"/>
+    
+    <Grid ColumnDefinitions="80, *" RowDefinitions="Auto,Auto,Auto">
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="ФИО:" FontSize="15" Foreground="#34495E" FontWeight="SemiBold"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="UserFullNameText" FontSize="15" Foreground="#2C3E50" FontWeight="SemiBold"/>
+        
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Email:" FontSize="15" Foreground="#34495E" FontWeight="SemiBold"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="UserEmailText" FontSize="15" Foreground="#2C3E50"/>
+        
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Телефон:" FontSize="15" Foreground="#34495E" FontWeight="SemiBold"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="UserPhoneText" FontSize="15" Foreground="#2C3E50"/>
+    </Grid>
+</StackPanel>
+</Grid>
+</Border>
+
+            <!-- Профессиональная информация -->
+            <Border Background="#F8F9FA" 
+                    CornerRadius="10" 
+                    Padding="20">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="💪 Профессиональная информация" 
+                              FontSize="18" 
+                              FontWeight="Bold"
+                              Foreground="#2C3E50"/>
+                    
+                    <!-- Специализация -->
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Специализация *" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#2C3E50"/>
+                        
+                        <ComboBox x:Name="SpecializationComboBox"
+                                  PlaceholderText="Выберите специализацию"
+                                  Background="White"
+                                  Padding="10"
+                                  CornerRadius="5"
+                                  SelectionChanged="SpecializationComboBox_SelectionChanged"/>
+                        
+                        <TextBox x:Name="SpecializationOtherTextBox"
+                                 Watermark="Укажите вашу специализацию"
+                                 Background="White"
+                                 Padding="10"
+                                 CornerRadius="5"
+                                 IsVisible="False"
+                                 Margin="0,5,0,0"/>
+                    </StackPanel>
+                    
+                    <!-- Опыт работы -->
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Опыт работы (лет)" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#2C3E50"/>
+                        
+                        <NumericUpDown x:Name="ExperienceYearsNumeric"
+                                       Minimum="0"
+                                       Maximum="50"
+                                       Increment="1"
+                                       FormatString="N0"
+                                       Background="White"
+                                       Padding="5"
+                                       CornerRadius="5"/>
+                    </StackPanel>
+                    
+                    <!-- Образование -->
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Образование" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#2C3E50"/>
+                        
+                        <TextBox x:Name="EducationTextBox"
+                                 Watermark="Укажите ваше образование"
+                                 Background="White"
+                                 Padding="10"
+                                 CornerRadius="5"
+                                 Height="80"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"/>
+                    </StackPanel>
+                    
+                    <!-- Наличие сертификатов -->
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Наличие сертификатов" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#2C3E50"/>
+                        
+                        <CheckBox x:Name="HasCertificatesCheckBox"
+                                  Content="У меня есть сертификаты"
+                                  Foreground="#2C3E50"
+                                  IsChecked="False"
+                                  Checked="HasCertificates_Checked"
+                                  Unchecked="HasCertificates_Unchecked"/>
+                        
+                        <Button x:Name="UploadCertificateButton"
+                                Content="📎 Загрузить сертификаты"
+                                Background="#3498DB"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Padding="15,8"
+                                FontSize="12"
+                                Cursor="Hand"
+                                IsVisible="False"
+                                Click="UploadCertificateButton_Click"
+                                HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Личностные качества (с бегунками) -->
+            <Border Background="#FFF9E6" 
+                    CornerRadius="10" 
+                    Padding="20">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="⭐ Личностные качества" 
+                              FontSize="18" 
+                              FontWeight="Bold"
+                              Foreground="#2C3E50"/>
+                    
+                    <TextBlock Text="Оцените себя по шкале от 1 до 10" 
+                              FontSize="12"
+                              Foreground="#7F8C8D"
+                              FontStyle="Italic"/>
+                    
+                    <!-- Дисциплинированность -->
+                    <StackPanel Spacing="3">
+                        <Grid ColumnDefinitions="150,*,30">
+                            <TextBlock Grid.Column="0" Text="Дисциплинированность" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            <Slider Grid.Column="1" 
+                                    x:Name="DisciplineSlider"
+                                    Minimum="1" 
+                                    Maximum="10" 
+                                    Value="7"
+                                    TickFrequency="1"
+                                    TickPlacement="Outside"
+                                    Margin="10,0"/>
+                            <TextBlock Grid.Column="2" 
+                                       x:Name="DisciplineValueText" 
+                                       Text="7" 
+                                       Foreground="#E74C3C"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBlock Text="Соблюдение правил и расписания" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D"
+                                  Margin="0,0,0,5"/>
+                    </StackPanel>
+                    
+                    <!-- Коммуникабельность -->
+                    <StackPanel Spacing="3">
+                        <Grid ColumnDefinitions="150,*,30">
+                            <TextBlock Grid.Column="0" Text="Коммуникабельность" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            <Slider Grid.Column="1" 
+                                    x:Name="CommunicationSlider"
+                                    Minimum="1" 
+                                    Maximum="10" 
+                                    Value="7"
+                                    TickFrequency="1"
+                                    TickPlacement="Outside"
+                                    Margin="10,0"/>
+                            <TextBlock Grid.Column="2" 
+                                       x:Name="CommunicationValueText" 
+                                       Text="7" 
+                                       Foreground="#E74C3C"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBlock Text="Умение находить общий язык с людьми" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D"
+                                  Margin="0,0,0,5"/>
+                    </StackPanel>
+                    
+                    <!-- Ответственность -->
+                    <StackPanel Spacing="3">
+                        <Grid ColumnDefinitions="150,*,30">
+                            <TextBlock Grid.Column="0" Text="Ответственность" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            <Slider Grid.Column="1" 
+                                    x:Name="ResponsibilitySlider"
+                                    Minimum="1" 
+                                    Maximum="10" 
+                                    Value="8"
+                                    TickFrequency="1"
+                                    TickPlacement="Outside"
+                                    Margin="10,0"/>
+                            <TextBlock Grid.Column="2" 
+                                       x:Name="ResponsibilityValueText" 
+                                       Text="8" 
+                                       Foreground="#E74C3C"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBlock Text="Готовность отвечать за результаты своей работы" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D"
+                                  Margin="0,0,0,5"/>
+                    </StackPanel>
+                    
+                    <!-- Эмпатия к клиентам -->
+                    <StackPanel Spacing="3">
+                        <Grid ColumnDefinitions="150,*,30">
+                            <TextBlock Grid.Column="0" Text="Эмпатия к клиентам" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            <Slider Grid.Column="1" 
+                                    x:Name="EmpathySlider"
+                                    Minimum="1" 
+                                    Maximum="10" 
+                                    Value="7"
+                                    TickFrequency="1"
+                                    TickPlacement="Outside"
+                                    Margin="10,0"/>
+                            <TextBlock Grid.Column="2" 
+                                       x:Name="EmpathyValueText" 
+                                       Text="7" 
+                                       Foreground="#E74C3C"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBlock Text="Понимание чувств и потребностей клиентов" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D"
+                                  Margin="0,0,0,5"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Мотивация и цели -->
+            <Border Background="#F0F8FF" 
+                    CornerRadius="10" 
+                    Padding="20">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="🎯 Мотивация и цели" 
+                              FontSize="18" 
+                              FontWeight="Bold"
+                              Foreground="#2C3E50"/>
+                    
+                    <!-- Почему хотите работать у нас -->
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Почему хотите работать у нас? *" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#2C3E50"/>
+                        
+                        <TextBox x:Name="MotivationTextBox"
+                                 Watermark="Напишите, почему вы хотите работать в нашем клубе..."
+                                 Background="White"
+                                 Padding="10"
+                                 CornerRadius="5"
+                                 Height="80"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"/>
+                    </StackPanel>
+                    
+                    <!-- Профессиональные цели -->
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Ваши профессиональные цели" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#2C3E50"/>
+                        
+                        <TextBox x:Name="GoalsTextBox"
+                                 Watermark="Чего вы хотите достичь в профессии..."
+                                 Background="White"
+                                 Padding="10"
+                                 CornerRadius="5"
+                                 Height="60"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"/>
+                    </StackPanel>
+                    
+                    <!-- Что можете предложить клубу -->
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Что можете предложить клубу?" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#2C3E50"/>
+                        
+                        <TextBox x:Name="OfferTextBox"
+                                 Watermark="Ваши сильные стороны, уникальные навыки..."
+                                 Background="White"
+                                 Padding="10"
+                                 CornerRadius="5"
+                                 Height="60"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Дополнительная информация -->
+            <Border Background="#F5EEF8" 
+                    CornerRadius="10" 
+                    Padding="20">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="📌 Дополнительная информация" 
+                              FontSize="18" 
+                              FontWeight="Bold"
+                              Foreground="#2C3E50"/>
+                    
+                    <!-- Желаемый график работы -->
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Желаемый график работы" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#2C3E50"/>
+                        
+                        <ComboBox x:Name="ScheduleComboBox"
+                                  PlaceholderText="Выберите график"
+                                  Background="White"
+                                  Padding="10"
+                                  CornerRadius="5"/>
+                    </StackPanel>
+                    
+                    <!-- Возрастные группы -->
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Готовность работать с возрастными группами" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#2C3E50"/>
+                        
+                        <CheckBox x:Name="ChildrenGroupCheckBox"
+                                  Content="Дети (6-12 лет)"
+                                  Foreground="#2C3E50"
+                                  Margin="0,5"/>
+                        
+                        <CheckBox x:Name="TeensGroupCheckBox"
+                                  Content="Подростки (13-17 лет)"
+                                  Foreground="#2C3E50"
+                                  Margin="0,5"/>
+                        
+                        <CheckBox x:Name="AdultsGroupCheckBox"
+                                  Content="Взрослые (18-45 лет)"
+                                  Foreground="#2C3E50"
+                                  Margin="0,5"/>
+                        
+                        <CheckBox x:Name="SeniorsGroupCheckBox"
+                                  Content="Старшее поколение (45+)"
+                                  Foreground="#2C3E50"
+                                  Margin="0,5"/>
+                    </StackPanel>
+                    
+                    <!-- Медицинская книжка -->
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Медицинская книжка" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#2C3E50"/>
+                        
+                        <CheckBox x:Name="MedicalBookCheckBox"
+                                  Content="У меня есть медицинская книжка"
+                                  Foreground="#2C3E50"/>
+                    </StackPanel>
+                    
+                    <!-- Иностранные языки -->
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Иностранные языки" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#2C3E50"/>
+                        
+                        <TextBox x:Name="LanguagesTextBox"
+                                 Watermark="Укажите языки и уровень владения"
+                                 Background="White"
+                                 Padding="10"
+                                 CornerRadius="5"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Кнопки действий -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20" Margin="0,20">
+                <Button Content="📤 Отправить заявку"
+                        Background="#27AE60"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Padding="30,15"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Cursor="Hand"
+                        Click="SubmitButton_Click">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover">
+                            <Setter Property="Background" Value="#229954"/>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+                
+                <Button Content="✖ Отмена"
+                        Background="#95A5A6"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Padding="30,15"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Cursor="Hand"
+                        Click="CloseButton_Click">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover">
+                            <Setter Property="Background" Value="#7F8C8D"/>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+            </StackPanel>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
